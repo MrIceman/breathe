@@ -1,0 +1,1 @@
+{"version":3,"file":"AbstractRequest.js","sourceRoot":"","sources":["../../../src/model/request/AbstractRequest.ts"],"names":[],"mappings":"AAAA,MAAM;IAGF;QACI,IAAI,CAAC,IAAI,GAAG,IAAI,GAAG,EAAE,CAAC;IAC1B,CAAC;IAED,KAAK,CAAC,GAAW;QACb,MAAM,CAAC,IAAI,CAAC,IAAI,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC;IAC9B,CAAC;CACJ"}

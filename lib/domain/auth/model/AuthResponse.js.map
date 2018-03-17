@@ -1,0 +1,1 @@
+{"version":3,"file":"AuthResponse.js","sourceRoot":"","sources":["../../../../src/domain/auth/model/AuthResponse.ts"],"names":[],"mappings":"AAGA,MAAM;IACF,YAA4B,WAAmB,EAAE,EACrB,UAAmB,EACnB,SAAkB;QAFlB,aAAQ,GAAR,QAAQ,CAAa;QACrB,eAAU,GAAV,UAAU,CAAS;QACnB,cAAS,GAAT,SAAS,CAAS;IAE9C,CAAC;CAEJ"}
