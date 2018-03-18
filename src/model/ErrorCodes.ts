@@ -6,4 +6,6 @@ export class ErrorCodes {
     public static SIGN_IN_FAILED_WRONG_USER: number = 4;
     public static SIGN_IN_FAILED_BANNED: number = 5;
     public static CHECK_PERSISTED_JWT_FAILED: number = 6;
+
+    public static INTERNAL_ERROR = -1;
 }

@@ -56,9 +56,9 @@ export class AuthAction implements Action {
     }
 
     persistToken(token: string) {
-        this.authManager.cacheToken(token).then((result: boolean) => {
-            if (result)
-                this.dispatcher.dispatch(ActionType.CHECK_TOKEN_PERSISTED_SUCCESS, new AuthResponse(token, true));
+        this.authManager.cacheToken(token).then((result: string) => {
+            if (result !== null)
+                this.dispatcher.dispatch(ActionType.CHECK_TOKEN_PERSISTED_SUCCESS, new AuthResponse(result, true));
             else
                 this.dispatcher.dispatch(ActionType.CHECK_TOKEN_PERSISTED_FAIL, new AuthResponse(undefined, false, ErrorCodes.SIGN_IN_FAILED));
         }).catch((_error) => {
