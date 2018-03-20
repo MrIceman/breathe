@@ -92,7 +92,7 @@ export class AuthManagerImpl implements UseCase, AuthManager {
     }
 
     signOut(): Promise<boolean> {
-        return this.repository.invalidateSession();
+        return this.repository.clearAuthToken();
     }
 
 }

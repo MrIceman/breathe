@@ -2,31 +2,34 @@ import {InMemoryRepository} from "../../domain/UserRepository";
 import {LocalDataSourceImpl} from "./LocalDataSourceImpl";
 import {LocalDataSource} from "./LocalDataSource";
 import {Constants} from "../../utils/Constants";
+import {Session} from "../session/Session";
+import {SessionMapper} from "../session/SessionMapper";
 
 export class LocalRepository implements InMemoryRepository {
-
     private static instance: LocalRepository;
     private source: LocalDataSource;
+    private mapper: SessionMapper;
 
-    private constructor(storage: LocalDataSource) {
+    private constructor(storage: LocalDataSource, sessionMapper: SessionMapper) {
         this.source = storage;
+        this.mapper = sessionMapper;
     }
 
     public static getInstance() {
         if (this.instance == null)
-            this.instance = new LocalRepository(new LocalDataSourceImpl());
+            this.instance = new LocalRepository(new LocalDataSourceImpl(), new SessionMapper());
         return this.instance;
     }
 
-    public static getNewInstanceWithDataSource(testingDataSource: LocalDataSource) {
-        this.instance = new LocalRepository(testingDataSource);
+    public static getNewInstanceWithDataSource(testingDataSource: LocalDataSource, sessionMapper: SessionMapper) {
+        this.instance = new LocalRepository(testingDataSource, sessionMapper);
         return this.instance;
     }
 
     isAuthTokenPersisted(): Promise<boolean> {
         return new Promise<boolean>((resolve, _reject) => {
             this.source.getItem(Constants.JWT_TOKEN_KEY).then((result) => {
-                resolve(result !== null);
+                resolve(result.length > 0);
             }, (_) => {
                 resolve(false);
             }).catch((_) => {
@@ -56,16 +59,57 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    insertSession(session: {}): Promise<boolean> {
-        session.toString();
+    insertSession(session: Session): Promise<Session> {
+        return new Promise<Session>(async (resolve, _reject) => {
+            this.addSessionIdToMap(session.id).then((_) => {
+                this.source.setItem('local_' + session.id, session.toJSONString()).then((_) => {
+                    resolve(session);
+                })
+            });
+        });
+    }
+
+    public addSessionIdToMap(id: number): Promise<string> {
+        return new Promise<string>((resolve, _reject) => {
+            const currentPersistedIds: Array<string> = [];
+
+            this.source.getItem(Constants.SESSION_ID_MAP).then(async (result) => {
+                if (result != undefined && result.length > 0) {
+                    const currentIds: Array<string> = result.split(',');
+                    currentPersistedIds.push(...currentIds);
+                }
+                currentPersistedIds.push(id + '');
+                const arrayString = currentPersistedIds.join();
+                await this.source.setItem(Constants.SESSION_ID_MAP, arrayString);
+                resolve(arrayString);
+            });
+        });
+    }
+
+    getAllSessions(): Promise<Array<Session>> {
         return undefined;
     }
 
-    getAllSessions(): Promise<Array<{}>> {
-        return undefined;
+    getPersistedSessionIds(): Promise<Array<string>> {
+        return new Promise<Array<string>>((resolve, _reject) => {
+            this.source.getItem(Constants.SESSION_ID_MAP).then((result) => {
+                const sessionIdArray: Array<string> = result.split(',');
+                resolve(sessionIdArray);
+
+            })
+        });
     }
 
-    invalidateSession(): Promise<boolean> {
+    getSessionById(id: number): Promise<Session> {
+        return new Promise<Session>((resolve, _) => {
+            this.source.getItem('local_' + id).then((result) => {
+                const session = this.mapper.mapSession(result);
+                resolve(session);
+            });
+        });
+    }
+
+    clearAuthToken(): Promise<boolean> {
         return undefined;
     }
 

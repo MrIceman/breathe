@@ -124,7 +124,7 @@ it('caches not token successfully inside the local repository when repository re
 });
 
 it('signs out correctly', (done) => {
-    when(inMemoryRepository.invalidateSession()).thenResolve(true);
+    when(inMemoryRepository.clearAuthToken()).thenResolve(true);
 
     subject.signOut().then((result) => {
         expect(result).toBe(true);
@@ -134,7 +134,7 @@ it('signs out correctly', (done) => {
 
 
 it('fails sign out', (done) => {
-    when(inMemoryRepository.invalidateSession()).thenReject(false);
+    when(inMemoryRepository.clearAuthToken()).thenReject(false);
 
     subject.signOut().then((_) => {
     }, (result) => {

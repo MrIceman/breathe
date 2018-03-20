@@ -16,9 +16,13 @@ export default class StorageMock implements LocalDataSource {
 
     getItem = jest.fn((key) => {
         return new Promise((resolve) => {
-            return this.storageCache.hasOwnProperty(key)
-                ? resolve(this.storageCache[key])
-                : resolve(null);
+            let value = '';
+            try {
+                value = this.storageCache[key];
+            } catch (error) {
+                value = '';
+            }
+            resolve(value);
         });
     });
 

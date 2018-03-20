@@ -1,3 +1,5 @@
+import {Session} from "../data/session/Session";
+
 export interface InMemoryRepository {
     isAuthTokenPersisted(): Promise<boolean>;
 
@@ -5,10 +7,12 @@ export interface InMemoryRepository {
 
     refreshAuthToken(token: string): Promise<string>;
 
-    insertSession(session: {}): Promise<boolean>;
+    insertSession(session: Session): Promise<Session>;
 
-    getAllSessions(): Promise<Array<{}>>;
+    getAllSessions(): Promise<Array<Session>>;
 
-    invalidateSession(): Promise<boolean>;
+    getSessionById(id: number): Promise<Session>;
+
+    clearAuthToken(): Promise<boolean>;
 
 }
