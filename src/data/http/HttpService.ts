@@ -1,6 +1,6 @@
 import {HttpRequest} from "../HttpRequest";
 import {HttpResponse} from "../HttpResponse";
-import {LocalStorage} from "../repository/LocalStorage";
+import {LocalRepository} from "../repository/LocalRepository";
 
 export class HttpService {
 
@@ -33,9 +33,9 @@ export class HttpService {
     static makeSignedRequest(request: HttpRequest): Promise<HttpResponse> {
         return new Promise<HttpResponse>((resolve, reject) => {
             //getting the JWT Token
-            LocalStorage.getInstance().isAuthTokenPersisted().then((result) => {
+            LocalRepository.getInstance().isAuthTokenPersisted().then((result) => {
                 if (result) {
-                    LocalStorage.getInstance().getAuthToken().then((token) => {
+                    LocalRepository.getInstance().getAuthToken().then((token) => {
                         request.sign(token);
                         fetch(request.endpoint, {
                             method: request.method,

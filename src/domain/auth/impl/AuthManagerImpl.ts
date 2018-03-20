@@ -79,18 +79,20 @@ export class AuthManagerImpl implements UseCase, AuthManager {
     }
 
 
-    cacheToken(token: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
+    cacheToken(token: string): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
             this.repository.refreshAuthToken(token).then((result) => {
                 resolve(result);
+            }, (error) => {
+                reject(this.errorMapper.mapEntity(error));
             }).catch((error) => {
-                reject(error);
+                reject(this.errorMapper.mapEntity(error));
             })
         });
     }
 
-    signOut(): Promise<AuthEntity> {
-        return this.authGateway.signOut();
+    signOut(): Promise<boolean> {
+        return this.repository.clearAuthToken();
     }
 
 }

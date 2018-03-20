@@ -1,6 +1,6 @@
 import {anyNumber, deepEqual, instance, mock, when} from "ts-mockito";
 import {AuthManagerImpl} from "../../domain/auth/impl/AuthManagerImpl";
-import {LocalStorage} from "../../data/repository/LocalStorage";
+import {LocalRepository} from "../../data/repository/LocalRepository";
 import {AuthRequest} from "../../domain/auth/model/AuthRequest";
 import {AuthEntity} from "../../model/entity/AuthEntity";
 import {AuthResponse} from "../../domain/auth/model/AuthResponse";
@@ -12,7 +12,7 @@ import {ErrorResponse} from "../../model/domain/ErrorResponse";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
 
 const gateway: AuthGateway = mock(AuthGatewayImpl);
-const inMemoryRepository = mock(LocalStorage);
+const inMemoryRepository = mock(LocalRepository);
 const mapper = mock(AuthResponseMapper);
 const errorMapper = mock(ErrorResponseMapper);
 const subject = new AuthManagerImpl(instance(gateway), instance(inMemoryRepository), instance(mapper), instance(errorMapper));
@@ -102,9 +102,43 @@ it('creates not an account successfully when backend returns error', (done) => {
 
 it('caches a token successfully inside the local repository', async (done) => {
     const token = '';
-    when(inMemoryRepository.refreshAuthToken(deepEqual(token))).thenResolve(true);
+    when(inMemoryRepository.refreshAuthToken(deepEqual(token))).thenResolve(token);
     subject.cacheToken(token).then((result) => {
-        expect(result).toEqual(true);
+        expect(result).toEqual(token);
+        done();
+    })
+});
+
+it('caches not token successfully inside the local repository when repository rejects', async (done) => {
+    const token = '';
+    const errorEntity = instance(mock(ErrorEntity));
+    const errorResponse = instance(mock(ErrorResponse));
+    when(errorMapper.mapEntity(errorEntity)).thenReturn(errorResponse);
+    when(inMemoryRepository.refreshAuthToken(deepEqual(token))).thenReject(errorEntity);
+
+    subject.cacheToken(token).then((_) => {
+    }, (error) => {
+        expect(error).toBe(errorResponse);
+        done();
+    })
+});
+
+it('signs out correctly', (done) => {
+    when(inMemoryRepository.clearAuthToken()).thenResolve(true);
+
+    subject.signOut().then((result) => {
+        expect(result).toBe(true);
+        done();
+    })
+});
+
+
+it('fails sign out', (done) => {
+    when(inMemoryRepository.clearAuthToken()).thenReject(false);
+
+    subject.signOut().then((_) => {
+    }, (result) => {
+        expect(result).toBe(false);
         done();
     })
 });

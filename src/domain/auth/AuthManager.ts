@@ -1,15 +1,14 @@
 import {AuthRequest} from "./model/AuthRequest";
 import {AuthResponse} from "./model/AuthResponse";
-import {AuthEntity} from "../../model/entity/AuthEntity";
 
 export interface AuthManager {
     tryAutoLogIn(): Promise<boolean>;
 
     signIn(request: AuthRequest): Promise<AuthResponse>;
 
-    signOut(): Promise<AuthEntity>;
+    signOut(): Promise<boolean>;
 
-    cacheToken(token: string): Promise<boolean>;
+    cacheToken(token: string): Promise<string>;
 
     createAccount(request: AuthRequest): Promise<AuthResponse>;
 
