@@ -2,7 +2,7 @@ import {Entity} from "../../model/entity/Entity";
 
 export class Session implements Entity {
 
-    constructor(public readonly id: number,
+    constructor(public readonly id: number = Date.now(),
                 public readonly globalId: number, // ID from the Backend
                 public date: number,
                 public amountOfRounds: number,
@@ -20,6 +20,7 @@ export class Session implements Entity {
     }
 
     toJSONString(): string {
+
         return JSON.stringify(this);
     }
 

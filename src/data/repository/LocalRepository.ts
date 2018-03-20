@@ -87,15 +87,33 @@ export class LocalRepository implements InMemoryRepository {
     }
 
     getAllSessions(): Promise<Array<Session>> {
-        return undefined;
+        return new Promise<Array<Session>>(async (resolve, reject) => {
+            const result = [];
+
+            await this.getPersistedSessionIds().then((persistedIds: Array<string>) => {
+                for (const id of persistedIds) {
+                    this.getSessionById(Number(id)).then((session) => {
+                        result.push(session);
+                    })
+                }
+            }, (_error) => {
+                reject([]);
+            }).catch(() => {
+                resolve([]);
+            });
+            resolve(result);
+        });
     }
 
     getPersistedSessionIds(): Promise<Array<string>> {
-        return new Promise<Array<string>>((resolve, _reject) => {
+        return new Promise<Array<string>>((resolve, reject) => {
             this.source.getItem(Constants.SESSION_ID_MAP).then((result) => {
                 const sessionIdArray: Array<string> = result.split(',');
                 resolve(sessionIdArray);
-
+            }, (_error) => {
+                reject([]);
+            }).catch(() => {
+                resolve([]);
             })
         });
     }
