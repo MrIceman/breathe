@@ -41,7 +41,10 @@ export class LocalRepository implements InMemoryRepository {
     getAuthToken(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             this.source.getItem(Constants.JWT_TOKEN_KEY).then((result) => {
-                resolve(result);
+                if (result === undefined || result.length == 0)
+                    reject();
+                else
+                    resolve(result);
             }).catch((error) => {
                 reject(error);
             });
@@ -128,7 +131,10 @@ export class LocalRepository implements InMemoryRepository {
     }
 
     clearAuthToken(): Promise<boolean> {
-        return undefined;
+        return new Promise<boolean>(async (resolve, _reject) => {
+            await this.refreshAuthToken('');
+            resolve(true);
+        });
     }
 
 }

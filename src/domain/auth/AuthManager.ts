@@ -4,7 +4,7 @@ import {AuthResponse} from "./model/AuthResponse";
 export interface AuthManager {
     tryAutoLogIn(): Promise<boolean>;
 
-    signIn(request: AuthRequest): Promise<AuthResponse>;
+    signIn(email: string, password: string): Promise<AuthResponse>;
 
     signOut(): Promise<boolean>;
 

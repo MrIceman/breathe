@@ -20,14 +20,15 @@ export class AuthAction implements Action {
         return this.instance;
     }
 
-    trySignIn(email: string, password: string): void {
-        this.authManager.signIn(new AuthRequest(email, password)).then((result: AuthResponse) => {
-            if (result.successful) {
-                this.persistToken(result.jwtToken);
-            }
+    signIn(email: string, password: string): void {
+        this.dispatcher.dispatch(ActionType.ON_LOG_IN);
+        this.authManager.signIn(email, password).then((result: AuthResponse) => {
+            if (result.successful)
+                this.dispatcher.dispatch(ActionType.ON_LOG_IN_SUCCESS, result);
             else
-                this.loginFailed()
-
+                this.loginFailed();
+        }, (_) => {
+            this.loginFailed();
         }).catch((_error) => {
             this.loginFailed()
         })
@@ -40,8 +41,8 @@ export class AuthAction implements Action {
             }
             else
                 this.loginFailed()
-
-
+        }, (_) => {
+            this.loginFailed();
         });
     }
 

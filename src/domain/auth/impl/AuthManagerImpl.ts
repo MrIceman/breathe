@@ -8,12 +8,14 @@ import {AuthManager} from "../AuthManager";
 import {AuthResponseMapper} from "../../common/AuthResponseMapper";
 import {ErrorCodes} from "../../../model/ErrorCodes";
 import {ErrorResponseMapper} from "../../common/ErrorResponseMapper";
+import {AuthRequestMapper} from "../../common/AuthRequestMapper";
 
 export class AuthManagerImpl implements UseCase, AuthManager {
 
     public constructor(private authGateway: AuthGateway,
                        private repository: InMemoryRepository,
                        private responseMapper: AuthResponseMapper,
+                       private requestMapper: AuthRequestMapper,
                        private errorMapper: ErrorResponseMapper) {
     }
 
@@ -42,9 +44,9 @@ export class AuthManagerImpl implements UseCase, AuthManager {
         });
     }
 
-    signIn(request: AuthRequest): Promise<AuthResponse> {
+    signIn(email: string, password: string): Promise<AuthResponse> {
         return new Promise<AuthResponse>((resolve, reject) => {
-            this.authGateway.signIn(request).then((result: AuthEntity) => {
+            this.authGateway.signIn(this.requestMapper.mapRequest(email, password)).then((result: AuthEntity) => {
                 let response: AuthResponse = this.responseMapper.mapEntity(result);
                 resolve(response);
             }, (error) => {

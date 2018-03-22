@@ -111,4 +111,12 @@ it('gets an empty Array of Sessions when calling getAllSessions() and no session
     })
 });
 
-it('clears an auth token successfully', () => {});
+it('clears an auth token successfully', async (done) => {
+    await subject.refreshAuthToken('123');
+    await subject.clearAuthToken();
+    subject.getAuthToken().then((_) => {
+        fail();
+    }, () => {
+        done();
+    });
+});
