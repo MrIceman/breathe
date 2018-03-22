@@ -37,7 +37,7 @@ export class LoginComponent extends React.Component<{}, LoginStateModel> {
                 value={this.state.userPassword}/>
 
             <Button title={'Sign In'} onPress={() => {
-                this.action.trySignIn(this.state.userEmail, this.state.userPassword);
+                this.action.signIn(this.state.userEmail, this.state.userPassword);
             }}/>
         </View>;
     }

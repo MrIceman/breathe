@@ -66,7 +66,7 @@ it('session gets persisted correctly', async (done) => {
 
     await subject.getPersistedSessionIds().then((persistedIds) => {
         expect(persistedIds).toEqual(['1', '2']);
-    })
+    });
 
     done();
 });
@@ -75,6 +75,48 @@ it('persists multiple session ids within the keymap', async (done) => {
     await subject.addSessionIdToMap(1);
     await subject.addSessionIdToMap(2).then((result) => {
         expect(result).toEqual('1,2');
+        done();
+    });
+});
+
+it('gets a valid Array of Sessions when calling getAllSessions()', async (done) => {
+    const sessionMock = mock(Session);
+    const sessionMock2 = mock(Session);
+    const session = instance(sessionMock);
+    const session2 = instance(sessionMock2);
+    const session_str_1 = '{your momma}';
+    const session_str_2 = '{your poppa}';
+
+    when(sessionMock.toJSONString()).thenReturn(session_str_1);
+    when(sessionMock2.toJSONString()).thenReturn(session_str_2);
+    when(sessionMapperMock.mapSession(session_str_1)).thenReturn(session);
+    when(sessionMapperMock.mapSession(session_str_2)).thenReturn(session2);
+
+    when(sessionMock.id).thenReturn(1);
+    when(sessionMock2.id).thenReturn(2);
+
+    await subject.insertSession(session);
+    await subject.insertSession(session2);
+
+    subject.getAllSessions().then((result) => {
+        expect(result).toEqual([session, session2]);
+        done();
+    })
+});
+
+it('gets an empty Array of Sessions when calling getAllSessions() and no sessions persisted', async (done) => {
+    subject.getAllSessions().then((result) => {
+        expect(result).toEqual([]);
+        done();
+    })
+});
+
+it('clears an auth token successfully', async (done) => {
+    await subject.refreshAuthToken('123');
+    await subject.clearAuthToken();
+    subject.getAuthToken().then((_) => {
+        fail();
+    }, () => {
         done();
     });
 });

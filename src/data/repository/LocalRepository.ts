@@ -41,7 +41,10 @@ export class LocalRepository implements InMemoryRepository {
     getAuthToken(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             this.source.getItem(Constants.JWT_TOKEN_KEY).then((result) => {
-                resolve(result);
+                if (result === undefined || result.length == 0)
+                    reject();
+                else
+                    resolve(result);
             }).catch((error) => {
                 reject(error);
             });
@@ -87,15 +90,33 @@ export class LocalRepository implements InMemoryRepository {
     }
 
     getAllSessions(): Promise<Array<Session>> {
-        return undefined;
+        return new Promise<Array<Session>>(async (resolve, reject) => {
+            const result = [];
+
+            await this.getPersistedSessionIds().then((persistedIds: Array<string>) => {
+                for (const id of persistedIds) {
+                    this.getSessionById(Number(id)).then((session) => {
+                        result.push(session);
+                    })
+                }
+            }, (_error) => {
+                reject([]);
+            }).catch(() => {
+                resolve([]);
+            });
+            resolve(result);
+        });
     }
 
     getPersistedSessionIds(): Promise<Array<string>> {
-        return new Promise<Array<string>>((resolve, _reject) => {
+        return new Promise<Array<string>>((resolve, reject) => {
             this.source.getItem(Constants.SESSION_ID_MAP).then((result) => {
                 const sessionIdArray: Array<string> = result.split(',');
                 resolve(sessionIdArray);
-
+            }, (_error) => {
+                reject([]);
+            }).catch(() => {
+                resolve([]);
             })
         });
     }
@@ -110,7 +131,10 @@ export class LocalRepository implements InMemoryRepository {
     }
 
     clearAuthToken(): Promise<boolean> {
-        return undefined;
+        return new Promise<boolean>(async (resolve, _reject) => {
+            await this.refreshAuthToken('');
+            resolve(true);
+        });
     }
 
 }

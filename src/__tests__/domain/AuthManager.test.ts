@@ -10,22 +10,27 @@ import {AuthGateway} from "../../domain/auth/AuthGateway";
 import {AuthGatewayImpl} from "../../data/auth/AuthGatewayImpl";
 import {ErrorResponse} from "../../model/domain/ErrorResponse";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
+import {AuthRequestMapper} from "../../domain/common/AuthRequestMapper";
 
 const gateway: AuthGateway = mock(AuthGatewayImpl);
 const inMemoryRepository = mock(LocalRepository);
 const mapper = mock(AuthResponseMapper);
 const errorMapper = mock(ErrorResponseMapper);
-const subject = new AuthManagerImpl(instance(gateway), instance(inMemoryRepository), instance(mapper), instance(errorMapper));
+const requestMapper = mock(AuthRequestMapper);
+const subject = new AuthManagerImpl(instance(gateway), instance(inMemoryRepository), instance(mapper), instance(requestMapper), instance(errorMapper));
 
 it('successfully maps AuthEntity to AuthResponse when sign in correct', async (done) => {
     const authEntity = new AuthEntity('123');
     const authResponse = instance(mock(AuthResponse));
-    when(gateway.signIn(deepEqual(new AuthRequest('1@1.com', '123', 'peter'))))
-        .thenResolve(authEntity);
+    const authRequest = instance(mock(AuthRequest));
+    const email = '1';
+    const pw = '2;';
+    when(requestMapper.mapRequest(email, pw)).thenReturn(authRequest);
+    when(gateway.signIn(authRequest)).thenResolve(authEntity);
 
     when(mapper.mapEntity(authEntity)).thenReturn(authResponse);
 
-    await subject.signIn(new AuthRequest('1@1.com', '123', 'peter')).then(
+    await subject.signIn(email, pw).then(
         (result: AuthResponse) => {
             expect(result).toEqual(authResponse);
             done();
@@ -37,12 +42,16 @@ it('maps a Gateway Error correctly into a Domain Error', (done) => {
     const wrongPasswordEntityMock = (mock(ErrorEntity));
     const wrongPasswordEntityInstance = instance(wrongPasswordEntityMock);
     const wrongPasswordResponse = instance(mock(ErrorResponse));
+    const authRequest = instance(mock(AuthRequest));
+    const email = '1';
+    const pw = '2;';
+    when(requestMapper.mapRequest(email, pw)).thenReturn(authRequest);
+
     when(wrongPasswordEntityMock.code).thenReturn(anyNumber());
     when(errorMapper.mapEntity(wrongPasswordEntityInstance)).thenReturn(wrongPasswordResponse);
-    when(gateway.signIn(deepEqual(new AuthRequest('1@1.com', '123', 'peter'))))
-        .thenReject(wrongPasswordEntityInstance);
+    when(gateway.signIn(authRequest)).thenReject(wrongPasswordEntityInstance);
 
-    subject.signIn(new AuthRequest('1@1.com', '123', 'peter')).then(
+    subject.signIn(email, pw).then(
         (_result) => {
         }, (error) => {
             expect(error).toEqual(wrongPasswordResponse);
