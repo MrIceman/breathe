@@ -1,13 +1,19 @@
-import {GlobalStore, Store} from "../../app/globals/BreathStore";
-import {Session} from "../../data/session/Session";
+import {GlobalStore, Store, StoreListener} from "../../app/globals/BreathStore";
+import {deepEqual, instance, mock, verify} from "ts-mockito";
 
-export class StoreMock implements Store {
-    persistedSessions: Array<Session>;
-    loggedIn: boolean;
+class StoreUpdateListener implements StoreListener {
+    onStoreUpdated(store: Store) {
+        store.loggedIn;
+    }
 }
 
-const storeMock = new StoreMock();
-const subject = new GlobalStore(storeMock);
+const subject = new GlobalStore();
+const listener = mock(StoreUpdateListener);
+
+
+beforeEach(() => {
+    subject.clearListeners();
+});
 
 it('has a valid initial state', () => {
     expect(subject.getStore()).toEqual(
@@ -16,4 +22,45 @@ it('has a valid initial state', () => {
             loggedIn: false
         }
     )
+});
+
+it('registers a listener successfully', () => {
+    subject.addListener(listener);
+    expect(subject.getListenersProtected().indexOf(listener)).not.toEqual(-1);
+});
+
+it('can not register a listener twice', () => {
+    subject.addListener(listener);
+    subject.addListener(listener);
+    let counter = 0;
+    for (const listener of subject.getListenersProtected()) {
+        if (listener === listener)
+            counter++;
+    }
+    expect(counter).toEqual(1);
+});
+
+it('unregisters a listener successfully', () => {
+    subject.addListener(listener);
+    subject.removeListener(listener);
+    expect(subject.getListenersProtected().indexOf(listener)).toEqual(-1);
+});
+
+it('updates component when state refreshes', async () => {
+    const store = {persistedSessions: [], loggedIn: false};
+    subject.addListener(instance(listener));
+    await subject.refresh(store);
+    verify(listener.onStoreUpdated(deepEqual(store))).once();
+});
+
+it('updates not component when state refreshes and it unregisters', async () => {
+    const store = {persistedSessions: [], loggedIn: false};
+    const listener_2 = mock(StoreUpdateListener);
+    const listener_2_instance = instance(listener_2);
+    subject.addListener(listener_2_instance);
+    await subject.refresh(store);
+    verify(listener_2.onStoreUpdated(deepEqual(store))).once();
+    await subject.removeListener(listener_2_instance);
+    await subject.refresh(store);
+    verify(listener_2.onStoreUpdated(deepEqual(store))).once();
 });

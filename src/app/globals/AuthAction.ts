@@ -5,7 +5,7 @@ import {AuthResponse} from "../../domain/auth/model/AuthResponse";
 import {AuthRequest} from "../../domain/auth/model/AuthRequest";
 import {AuthManager} from "../../domain/auth/AuthManager";
 import {ErrorCodes} from "../../model/ErrorCodes";
-import {UseCaseFactory} from "../../domain/UseCaseFactory";
+import {ManagerFactory} from "../../domain/ManagerFactory";
 
 export class AuthAction implements Action {
     private static instance: AuthAction;
@@ -15,7 +15,7 @@ export class AuthAction implements Action {
 
     public static getInstance(): AuthAction {
         if (this.instance == null) {
-            this.instance = new AuthAction(Dispatcher.getInstance(), UseCaseFactory.buildAuthUseCase());
+            this.instance = new AuthAction(Dispatcher.getInstance(), ManagerFactory.buildAuthManager());
         }
         return this.instance;
     }
