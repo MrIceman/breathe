@@ -3,6 +3,7 @@ import {Text, View} from "react-native";
 import {Button, FormInput, FormLabel} from "react-native-elements";
 import {AuthAction} from "../globals/AuthAction";
 import {RegisterStateModel, RegisterStore} from "./RegisterStore";
+import {ManagerFactory} from "../../domain/ManagerFactory";
 
 interface RegisterComponentProps {
     message: string,
@@ -14,11 +15,10 @@ export class RegisterComponent extends React.Component<RegisterComponentProps, R
     count: number = 0;
 
     componentWillMount() {
-        this.store = new RegisterStore(this);
     }
 
     componentDidMount() {
-        this.action = AuthAction.getInstance();
+        this.action = new AuthAction(ManagerFactory.buildAuthManager());
     }
 
     getForm(): JSX.Element {

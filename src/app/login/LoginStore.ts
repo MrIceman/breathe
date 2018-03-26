@@ -1,11 +1,7 @@
-import {AbstractStore} from "../common/AbstractStore";
 import {AuthResponse} from "../../domain/auth/model/AuthResponse";
 import {ActionType} from "../common/ActionType";
-import * as React from "react";
 
-import {AbstractStateModel} from "../common/AbstractStateModel";
-
-export interface LoginStateModel extends AbstractStateModel {
+export interface LoginStateModel {
     userEmail: string;
     userPassword: string;
     isAuthInProgress: boolean;
@@ -14,13 +10,8 @@ export interface LoginStateModel extends AbstractStateModel {
     message: string;
 }
 
-export class LoginStore extends AbstractStore<LoginStateModel, AuthResponse> {
+export class LoginStore {
     state: LoginStateModel;
-
-    constructor(component: React.Component) {
-        super(component);
-        this.state = this.getInitialState();
-    }
 
     receive(actionType: ActionType, _response: AuthResponse) {
         switch (actionType) {
@@ -48,8 +39,6 @@ export class LoginStore extends AbstractStore<LoginStateModel, AuthResponse> {
                     message: 'Login Failed'
                 };
         }
-
-        this.updateState();
     }
 
     getInitialState(): LoginStateModel {

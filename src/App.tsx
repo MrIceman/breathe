@@ -4,24 +4,26 @@
  */
 
 import React, {Component} from 'react';
-import {AuthStore, AuthStoreState} from "./app/globals/AuthStore";
+import {AuthController, AuthState} from "./app/globals/AuthController";
 import {LoginComponent} from "./app/login/LoginComponent";
 import {IceComponent} from "./app/IceComponent";
 import {AuthAction} from "./app/globals/AuthAction";
 import {Text, View} from "react-native";
 import {TabBarBottom, TabNavigator} from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {GlobalStore} from "./app/globals/BreathStore";
 
 
-class App extends Component<{}, AuthStoreState> {
-    globalStore: AuthStore;
+class App extends Component<{}, AuthState> {
+    controller: AuthController;
     action: AuthAction;
 
     constructor() {
         super({});
-        this.globalStore = AuthStore.getInstance(this);
-        this.state = this.globalStore.getInitialState();
-        this.action = AuthAction.getInstance();
+        this.state = this.controller.getInitialState();
+        this.action = new AuthAction();
+
+        this.controller = new AuthController(this.action, this, GlobalStore.getInstance());
     }
 
     componentDidMount() {

@@ -34,7 +34,7 @@ export class AuthGatewayImpl implements AuthGateway {
                 'POST', JSON.stringify({
                     'email': request.email,
                     'password': request.password,
-                    'display_name': request.displayName
+                    'display_name': request.username
                 }));
 
             HttpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {

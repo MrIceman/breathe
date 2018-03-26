@@ -1,7 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1521507121375" clover="3.2.0">
-  <project timestamp="1521507121376" name="All files">
-    <metrics statements="195" coveredstatements="75" conditionals="31" coveredconditionals="14" methods="123" coveredmethods="46" elements="349" coveredelements="135" complexity="0" loc="195" ncloc="195" packages="13" files="19" classes="19">
+<coverage generated="1522092791723" clover="3.2.0">
+  <project timestamp="1522092791723" name="All files">
+    <metrics statements="299" coveredstatements="167" conditionals="63" coveredconditionals="35" methods="195" coveredmethods="113" elements="557" coveredelements="315" complexity="0" loc="299" ncloc="299" packages="18" files="28" classes="28">
+      <package name="app.common">
+        <metrics statements="10" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
+        <file name="AbstractController.js" path="/Users/martinnowosad/breathe/lib/app/common/AbstractController.js">
+          <metrics statements="10" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="20" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="25" count="0" type="stmt"/>
+        </file>
+      </package>
+      <package name="app.globals">
+        <metrics statements="76" coveredstatements="64" conditionals="29" coveredconditionals="19" methods="57" coveredmethods="49"/>
+        <file name="AuthAction.js" path="/Users/martinnowosad/breathe/lib/app/globals/AuthAction.js">
+          <metrics statements="24" coveredstatements="19" conditionals="5" coveredconditionals="2" methods="20" coveredmethods="17"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="9" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="21" count="2" type="stmt"/>
+          <line num="22" count="2" type="stmt"/>
+          <line num="23" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+          <line num="30" count="2" type="stmt"/>
+          <line num="31" count="2" type="stmt"/>
+          <line num="32" count="1" type="stmt"/>
+          <line num="34" count="1" type="stmt"/>
+          <line num="36" count="0" type="stmt"/>
+          <line num="41" count="2" type="stmt"/>
+          <line num="42" count="2" type="stmt"/>
+          <line num="43" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="44" count="1" type="stmt"/>
+          <line num="46" count="0" type="stmt"/>
+          <line num="48" count="1" type="stmt"/>
+          <line num="50" count="0" type="stmt"/>
+        </file>
+        <file name="AuthController.js" path="/Users/martinnowosad/breathe/lib/app/globals/AuthController.js">
+          <metrics statements="31" coveredstatements="25" conditionals="13" coveredconditionals="10" methods="24" coveredmethods="20"/>
+          <line num="1" count="1" type="cond" truecount="3" falsecount="0"/>
+          <line num="2" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="3" count="5" type="stmt"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="5" count="10" type="cond" truecount="2" falsecount="0"/>
+          <line num="6" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="19" count="5" type="stmt"/>
+          <line num="20" count="5" type="stmt"/>
+          <line num="21" count="5" type="stmt"/>
+          <line num="22" count="3" type="stmt"/>
+          <line num="23" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="24" count="2" type="stmt"/>
+          <line num="31" count="0" type="stmt"/>
+          <line num="33" count="1" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="45" count="3" type="stmt"/>
+          <line num="53" count="3" type="stmt"/>
+          <line num="54" count="3" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="57" count="1" type="stmt"/>
+          <line num="62" count="12" type="stmt"/>
+          <line num="70" count="0" type="stmt"/>
+          <line num="76" count="0" type="stmt"/>
+          <line num="79" count="10" type="stmt"/>
+          <line num="82" count="5" type="stmt"/>
+        </file>
+        <file name="BreathStore.js" path="/Users/martinnowosad/breathe/lib/app/globals/BreathStore.js">
+          <metrics statements="18" coveredstatements="18" conditionals="11" coveredconditionals="7" methods="10" coveredmethods="10"/>
+          <line num="3" count="3" type="stmt"/>
+          <line num="4" count="3" type="stmt"/>
+          <line num="7" count="3" type="cond" truecount="1" falsecount="1"/>
+          <line num="8" count="3" type="stmt"/>
+          <line num="9" count="3" type="stmt"/>
+          <line num="12" count="3" type="stmt"/>
+          <line num="25" count="7" type="cond" truecount="2" falsecount="0"/>
+          <line num="26" count="6" type="stmt"/>
+          <line num="29" count="2" type="stmt"/>
+          <line num="30" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="31" count="2" type="stmt"/>
+          <line num="34" count="3" type="stmt"/>
+          <line num="37" count="6" type="stmt"/>
+          <line num="40" count="5" type="stmt"/>
+          <line num="44" count="5" type="stmt"/>
+          <line num="47" count="5" type="stmt"/>
+          <line num="50" count="5" type="stmt"/>
+          <line num="51" count="2" type="stmt"/>
+        </file>
+        <file name="BreathStoreMerger.js" path="/Users/martinnowosad/breathe/lib/app/globals/BreathStoreMerger.js">
+          <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="9" count="0" type="stmt"/>
+        </file>
+      </package>
       <package name="data">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <file name="HttpRequest.js" path="/Users/martinnowosad/breathe/lib/data/HttpRequest.js">
@@ -74,7 +181,7 @@
         </file>
       </package>
       <package name="data.repository">
-        <metrics statements="60" coveredstatements="34" conditionals="15" coveredconditionals="13" methods="49" coveredmethods="26"/>
+        <metrics statements="74" coveredstatements="53" conditionals="19" coveredconditionals="16" methods="59" coveredmethods="41"/>
         <file name="LocalDataSourceImpl.js" path="/Users/martinnowosad/breathe/lib/data/repository/LocalDataSourceImpl.js">
           <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="0"/>
           <line num="4" count="0" type="stmt"/>
@@ -89,13 +196,13 @@
           <line num="24" count="0" type="stmt"/>
         </file>
         <file name="LocalRepository.js" path="/Users/martinnowosad/breathe/lib/data/repository/LocalRepository.js">
-          <metrics statements="50" coveredstatements="34" conditionals="15" coveredconditionals="13" methods="39" coveredmethods="26"/>
-          <line num="1" count="2" type="cond" truecount="3" falsecount="0"/>
-          <line num="2" count="8" type="cond" truecount="2" falsecount="0"/>
-          <line num="3" count="5" type="stmt"/>
+          <metrics statements="64" coveredstatements="53" conditionals="19" coveredconditionals="16" methods="49" coveredmethods="41"/>
+          <line num="1" count="4" type="cond" truecount="3" falsecount="0"/>
+          <line num="2" count="15" type="cond" truecount="2" falsecount="0"/>
+          <line num="3" count="10" type="stmt"/>
           <line num="4" count="0" type="stmt"/>
-          <line num="5" count="13" type="cond" truecount="2" falsecount="0"/>
-          <line num="6" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="5" count="25" type="cond" truecount="2" falsecount="0"/>
+          <line num="6" count="15" type="cond" truecount="2" falsecount="0"/>
           <line num="14" count="1" type="stmt"/>
           <line num="15" count="1" type="stmt"/>
           <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -108,44 +215,58 @@
           <line num="29" count="2" type="stmt"/>
           <line num="31" count="0" type="stmt"/>
           <line num="33" count="1" type="stmt"/>
-          <line num="38" count="0" type="stmt"/>
-          <line num="39" count="0" type="stmt"/>
-          <line num="40" count="0" type="stmt"/>
-          <line num="42" count="0" type="stmt"/>
-          <line num="47" count="1" type="stmt"/>
-          <line num="48" count="1" type="stmt"/>
-          <line num="49" count="1" type="stmt"/>
-          <line num="51" count="0" type="stmt"/>
-          <line num="56" count="3" type="stmt"/>
-          <line num="57" count="3" type="stmt"/>
-          <line num="58" count="3" type="stmt"/>
-          <line num="59" count="3" type="stmt"/>
-          <line num="65" count="5" type="stmt"/>
-          <line num="66" count="5" type="stmt"/>
-          <line num="67" count="5" type="stmt"/>
-          <line num="68" count="5" type="cond" truecount="4" falsecount="0"/>
-          <line num="69" count="2" type="stmt"/>
-          <line num="70" count="2" type="stmt"/>
-          <line num="72" count="5" type="stmt"/>
-          <line num="73" count="5" type="stmt"/>
-          <line num="74" count="5" type="stmt"/>
-          <line num="75" count="5" type="stmt"/>
-          <line num="80" count="0" type="stmt"/>
-          <line num="83" count="1" type="stmt"/>
-          <line num="84" count="1" type="stmt"/>
-          <line num="85" count="1" type="stmt"/>
-          <line num="86" count="1" type="stmt"/>
-          <line num="91" count="0" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="39" count="1" type="stmt"/>
+          <line num="40" count="1" type="cond" truecount="3" falsecount="1"/>
+          <line num="41" count="1" type="stmt"/>
+          <line num="43" count="0" type="stmt"/>
+          <line num="45" count="0" type="stmt"/>
+          <line num="50" count="3" type="stmt"/>
+          <line num="51" count="3" type="stmt"/>
+          <line num="52" count="3" type="stmt"/>
+          <line num="54" count="0" type="stmt"/>
+          <line num="59" count="5" type="stmt"/>
+          <line num="60" count="5" type="stmt"/>
+          <line num="61" count="5" type="stmt"/>
+          <line num="62" count="5" type="stmt"/>
+          <line num="68" count="7" type="stmt"/>
+          <line num="69" count="7" type="stmt"/>
+          <line num="70" count="7" type="stmt"/>
+          <line num="71" count="7" type="cond" truecount="4" falsecount="0"/>
+          <line num="72" count="3" type="stmt"/>
+          <line num="73" count="3" type="stmt"/>
+          <line num="75" count="7" type="stmt"/>
+          <line num="76" count="7" type="stmt"/>
+          <line num="77" count="7" type="stmt"/>
+          <line num="78" count="7" type="stmt"/>
+          <line num="83" count="2" type="stmt"/>
+          <line num="84" count="2" type="stmt"/>
+          <line num="85" count="2" type="stmt"/>
+          <line num="86" count="2" type="stmt"/>
+          <line num="87" count="2" type="stmt"/>
+          <line num="88" count="2" type="stmt"/>
           <line num="92" count="0" type="stmt"/>
-          <line num="93" count="0" type="stmt"/>
           <line num="94" count="0" type="stmt"/>
-          <line num="99" count="0" type="stmt"/>
+          <line num="96" count="2" type="stmt"/>
+          <line num="100" count="3" type="stmt"/>
+          <line num="101" count="3" type="stmt"/>
+          <line num="102" count="3" type="stmt"/>
+          <line num="103" count="2" type="stmt"/>
+          <line num="105" count="0" type="stmt"/>
+          <line num="107" count="1" type="stmt"/>
+          <line num="112" count="2" type="stmt"/>
+          <line num="113" count="2" type="stmt"/>
+          <line num="114" count="2" type="stmt"/>
+          <line num="115" count="2" type="stmt"/>
+          <line num="120" count="1" type="stmt"/>
+          <line num="121" count="1" type="stmt"/>
+          <line num="122" count="1" type="stmt"/>
         </file>
       </package>
       <package name="data.session">
-        <metrics statements="13" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="13" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <file name="Session.js" path="/Users/martinnowosad/breathe/lib/data/session/Session.js">
-          <metrics statements="12" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
+          <metrics statements="12" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
           <line num="4" count="0" type="stmt"/>
           <line num="5" count="0" type="stmt"/>
           <line num="6" count="0" type="stmt"/>
@@ -164,61 +285,62 @@
           <line num="3" count="0" type="stmt"/>
         </file>
       </package>
+      <package name="domain">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <file name="ManagerFactory.js" path="/Users/martinnowosad/breathe/lib/domain/ManagerFactory.js">
+          <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="9" count="0" type="stmt"/>
+        </file>
+      </package>
       <package name="domain.auth.impl">
-        <metrics statements="34" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="17"/>
+        <metrics statements="35" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="17"/>
         <file name="AuthManagerImpl.js" path="/Users/martinnowosad/breathe/lib/domain/auth/impl/AuthManagerImpl.js">
-          <metrics statements="34" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="17"/>
+          <metrics statements="35" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="17"/>
           <line num="5" count="1" type="stmt"/>
           <line num="6" count="1" type="stmt"/>
           <line num="7" count="1" type="stmt"/>
           <line num="8" count="1" type="stmt"/>
-          <line num="11" count="0" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
           <line num="12" count="0" type="stmt"/>
           <line num="13" count="0" type="stmt"/>
-          <line num="15" count="0" type="stmt"/>
-          <line num="24" count="2" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
           <line num="25" count="2" type="stmt"/>
           <line num="26" count="2" type="stmt"/>
-          <line num="29" count="0" type="stmt"/>
-          <line num="34" count="2" type="stmt"/>
+          <line num="27" count="2" type="stmt"/>
+          <line num="30" count="0" type="stmt"/>
           <line num="35" count="2" type="stmt"/>
-          <line num="36" count="1" type="stmt"/>
+          <line num="36" count="2" type="stmt"/>
           <line num="37" count="1" type="stmt"/>
-          <line num="39" count="1" type="stmt"/>
-          <line num="41" count="0" type="stmt"/>
-          <line num="46" count="2" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="40" count="1" type="stmt"/>
+          <line num="42" count="0" type="stmt"/>
           <line num="47" count="2" type="stmt"/>
-          <line num="48" count="1" type="stmt"/>
-          <line num="50" count="1" type="stmt"/>
-          <line num="52" count="0" type="stmt"/>
+          <line num="48" count="2" type="stmt"/>
+          <line num="49" count="1" type="stmt"/>
+          <line num="51" count="1" type="stmt"/>
           <line num="53" count="0" type="stmt"/>
-          <line num="58" count="0" type="stmt"/>
+          <line num="54" count="0" type="stmt"/>
           <line num="59" count="0" type="stmt"/>
           <line num="60" count="0" type="stmt"/>
-          <line num="62" count="0" type="stmt"/>
-          <line num="67" count="2" type="stmt"/>
+          <line num="61" count="0" type="stmt"/>
+          <line num="63" count="0" type="stmt"/>
           <line num="68" count="2" type="stmt"/>
-          <line num="69" count="1" type="stmt"/>
-          <line num="71" count="1" type="stmt"/>
-          <line num="73" count="0" type="stmt"/>
-          <line num="78" count="2" type="stmt"/>
+          <line num="69" count="2" type="stmt"/>
+          <line num="70" count="1" type="stmt"/>
+          <line num="72" count="1" type="stmt"/>
+          <line num="74" count="0" type="stmt"/>
+          <line num="79" count="2" type="stmt"/>
         </file>
       </package>
       <package name="domain.auth.model">
-        <metrics statements="14" coveredstatements="8" conditionals="3" coveredconditionals="1" methods="5" coveredmethods="1"/>
+        <metrics statements="7" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <file name="AuthRequest.js" path="/Users/martinnowosad/breathe/lib/domain/auth/model/AuthRequest.js">
-          <metrics statements="11" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="1"/>
-          <line num="4" count="4" type="stmt"/>
-          <line num="5" count="4" type="stmt"/>
-          <line num="6" count="4" type="stmt"/>
-          <line num="7" count="4" type="cond" truecount="1" falsecount="1"/>
-          <line num="8" count="4" type="stmt"/>
-          <line num="11" count="0" type="stmt"/>
-          <line num="14" count="0" type="stmt"/>
-          <line num="17" count="0" type="stmt"/>
-          <line num="20" count="1" type="stmt"/>
-          <line num="21" count="1" type="stmt"/>
-          <line num="22" count="1" type="stmt"/>
+          <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="0" type="stmt"/>
+          <line num="5" count="0" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="7" count="0" type="stmt"/>
         </file>
         <file name="AuthResponse.js" path="/Users/martinnowosad/breathe/lib/domain/auth/model/AuthResponse.js">
           <metrics statements="3" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -228,7 +350,11 @@
         </file>
       </package>
       <package name="domain.common">
-        <metrics statements="8" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <metrics statements="9" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <file name="AuthRequestMapper.js" path="/Users/martinnowosad/breathe/lib/domain/common/AuthRequestMapper.js">
+          <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="0" type="stmt"/>
+        </file>
         <file name="AuthResponseMapper.js" path="/Users/martinnowosad/breathe/lib/domain/common/AuthResponseMapper.js">
           <metrics statements="6" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
           <line num="5" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -244,25 +370,47 @@
           <line num="7" count="0" type="stmt"/>
         </file>
       </package>
+      <package name="domain.session">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="SessionRequestMapper.js" path="/Users/martinnowosad/breathe/lib/domain/session/SessionRequestMapper.js">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="4" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="domain.session.model">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="SessionRequest.js" path="/Users/martinnowosad/breathe/lib/domain/session/model/SessionRequest.js">
+          <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+        </file>
+      </package>
       <package name="model">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <file name="ErrorCodes.js" path="/Users/martinnowosad/breathe/lib/model/ErrorCodes.js">
           <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="4" count="1" type="stmt"/>
-          <line num="5" count="1" type="stmt"/>
-          <line num="6" count="1" type="stmt"/>
-          <line num="7" count="1" type="stmt"/>
-          <line num="8" count="1" type="stmt"/>
-          <line num="9" count="1" type="stmt"/>
-          <line num="10" count="1" type="stmt"/>
+          <line num="4" count="3" type="stmt"/>
+          <line num="5" count="3" type="stmt"/>
+          <line num="6" count="3" type="stmt"/>
+          <line num="7" count="3" type="stmt"/>
+          <line num="8" count="3" type="stmt"/>
+          <line num="9" count="3" type="stmt"/>
+          <line num="10" count="3" type="stmt"/>
         </file>
       </package>
       <package name="model.domain">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <file name="ErrorResponse.js" path="/Users/martinnowosad/breathe/lib/model/domain/ErrorResponse.js">
-          <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-          <line num="3" count="0" type="stmt"/>
-          <line num="4" count="0" type="stmt"/>
+          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
         </file>
       </package>
       <package name="model.entity">
@@ -278,19 +426,17 @@
         </file>
       </package>
       <package name="model.request">
-        <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <file name="AbstractRequest.js" path="/Users/martinnowosad/breathe/lib/model/request/AbstractRequest.js">
-          <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-          <line num="3" count="4" type="stmt"/>
-          <line num="6" count="0" type="stmt"/>
+          <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         </file>
       </package>
       <package name="utils">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <file name="Constants.js" path="/Users/martinnowosad/breathe/lib/utils/Constants.js">
           <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="3" count="2" type="stmt"/>
-          <line num="4" count="2" type="stmt"/>
+          <line num="3" count="4" type="stmt"/>
+          <line num="4" count="4" type="stmt"/>
         </file>
       </package>
     </metrics>

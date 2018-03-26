@@ -6,9 +6,9 @@ import {AuthResponseMapper} from "./common/AuthResponseMapper";
 import {ErrorResponseMapper} from "./common/ErrorResponseMapper";
 import {AuthRequestMapper} from "./common/AuthRequestMapper";
 
-export class UseCaseFactory {
+export class ManagerFactory {
 
-    public static buildAuthUseCase(): AuthManager {
+    public static buildAuthManager(): AuthManager {
         return new AuthManagerImpl(new AuthGatewayImpl(), LocalRepository.getInstance(), new AuthResponseMapper(), new AuthRequestMapper(),
             new ErrorResponseMapper());
     }

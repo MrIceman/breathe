@@ -3,6 +3,7 @@ import {Text, View} from "react-native";
 import {Button, FormInput, FormLabel} from "react-native-elements";
 import {LoginStateModel, LoginStore} from "./LoginStore";
 import {AuthAction} from "../globals/AuthAction";
+import {ManagerFactory} from "../../domain/ManagerFactory";
 
 export class LoginComponent extends React.Component<{}, LoginStateModel> {
     store: LoginStore;
@@ -11,12 +12,12 @@ export class LoginComponent extends React.Component<{}, LoginStateModel> {
 
     constructor(props: {}) {
         super(props);
-        this.store = new LoginStore(this);
+        // this.store = new LoginStore(this);
         this.state = this.store.state;
     }
 
     componentDidMount() {
-        this.action = AuthAction.getInstance();
+        this.action = new AuthAction(ManagerFactory.buildAuthManager());
     }
 
     getForm(): JSX.Element {

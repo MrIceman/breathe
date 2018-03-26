@@ -3,7 +3,7 @@ import {Entity} from "../../model/entity/Entity";
 export class Session implements Entity {
 
     constructor(public readonly id: number = Date.now(),
-                public readonly globalId: number, // ID from the Backend
+                public globalId: number, // ID from the Backend
                 public date: number,
                 public amountOfRounds: number,
                 public custom: boolean,
