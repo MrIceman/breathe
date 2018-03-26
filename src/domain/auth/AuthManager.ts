@@ -1,4 +1,3 @@
-import {AuthRequest} from "./model/AuthRequest";
 import {AuthResponse} from "./model/AuthResponse";
 
 export interface AuthManager {
@@ -10,7 +9,7 @@ export interface AuthManager {
 
     cacheToken(token: string): Promise<string>;
 
-    createAccount(request: AuthRequest): Promise<AuthResponse>;
+    createAccount(email: string, password: string, displayName: string): Promise<AuthResponse>;
 
     isPersistedTokenAvailable(): Promise<AuthResponse>;
 }

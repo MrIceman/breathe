@@ -7,4 +7,8 @@ export class BreathStoreMerger {
     merge(data: Store) {
         this.store.refresh({...this.store.getStore(), ...data});
     }
+
+    getCurrentStoreState(): Store {
+        return {...this.store.getStore()};
+    }
 }

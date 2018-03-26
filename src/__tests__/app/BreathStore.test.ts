@@ -3,11 +3,11 @@ import {deepEqual, instance, mock, verify} from "ts-mockito";
 
 class StoreUpdateListener implements StoreListener {
     onStoreUpdated(store: Store) {
-        store.loggedIn;
+        store.login;
     }
 }
 
-const subject = new GlobalStore();
+const subject = GlobalStore.getInstance();
 const listener = mock(StoreUpdateListener);
 
 
@@ -18,8 +18,15 @@ beforeEach(() => {
 it('has a valid initial state', () => {
     expect(subject.getStore()).toEqual(
         {
-            persistedSessions: [],
-            loggedIn: false
+            session: {persistedSessions: []},
+            login: {
+                userEmail: '',
+                userPassword: '',
+                isLoggedIn: false,
+                logInFailed: false,
+                message: '',
+                token: ''
+            }
         }
     )
 });
@@ -47,14 +54,34 @@ it('unregisters a listener successfully', () => {
 });
 
 it('updates component when state refreshes', async () => {
-    const store = {persistedSessions: [], loggedIn: false};
+    const store = {
+        session: {persistedSessions: []},
+        login: {
+            userEmail: '',
+            userPassword: '',
+            isLoggedIn: false,
+            logInFailed: false,
+            message: '',
+            token: ''
+        }
+    };
     subject.addListener(instance(listener));
     await subject.refresh(store);
     verify(listener.onStoreUpdated(deepEqual(store))).once();
 });
 
 it('updates not component when state refreshes and it unregisters', async () => {
-    const store = {persistedSessions: [], loggedIn: false};
+    const store = {
+        session: {persistedSessions: []},
+        login: {
+            userEmail: '',
+            userPassword: '',
+            isLoggedIn: false,
+            logInFailed: false,
+            message: '',
+            token: ''
+        }
+    };
     const listener_2 = mock(StoreUpdateListener);
     const listener_2_instance = instance(listener_2);
     subject.addListener(listener_2_instance);

@@ -57,9 +57,9 @@ export class AuthManagerImpl implements Manager, AuthManager {
         });
     }
 
-    createAccount(request: AuthRequest): Promise<AuthResponse> {
+    createAccount(email: string, password: string, displayName: string): Promise<AuthResponse> {
         return new Promise<AuthResponse>((resolve, reject) => {
-            this.authGateway.register(request).then((result: AuthEntity) => {
+            this.authGateway.register(this.requestMapper.mapRequest(email, password, displayName)).then((result: AuthEntity) => {
                 resolve(this.responseMapper.mapEntity(result));
             }, (error) => {
                 reject(this.errorMapper.mapEntity(error));

@@ -1,8 +1,15 @@
 import {Session} from "../../data/session/Session";
 
 export interface Store {
-    persistedSessions?: Array<Session>,
-    loggedIn?: boolean
+    session: { persistedSessions?: Array<Session> },
+    login: {
+        userEmail: string;
+        userPassword: string;
+        isLoggedIn: boolean;
+        logInFailed: boolean;
+        message: string;
+        token: string;
+    }
 }
 
 export interface StoreListener {
@@ -11,15 +18,29 @@ export interface StoreListener {
 
 export class GlobalStore {
     private store: Store;
+    private static instance: GlobalStore;
 
-    constructor(private readonly listeners: Array<StoreListener> = []) {
+    private constructor(private readonly listeners: Array<StoreListener> = []) {
         this.store = this.getInitialStoreState();
+    }
+
+    public static getInstance(): GlobalStore {
+        if (this.instance == null)
+            this.instance = new GlobalStore();
+        return this.instance;
     }
 
     private getInitialStoreState(): Store {
         return {
-            persistedSessions: [],
-            loggedIn: false
+            session: {persistedSessions: []},
+            login: {
+                userEmail: '',
+                userPassword: '',
+                isLoggedIn: false,
+                logInFailed: false,
+                message: '',
+                token: ''
+            }
         }
     }
 
@@ -44,8 +65,8 @@ export class GlobalStore {
 
     public refresh(store: Store) {
         this.store = {
-            persistedSessions: store.persistedSessions === undefined ? this.store.persistedSessions : store.persistedSessions,
-            loggedIn: store.loggedIn === undefined ? this.store.loggedIn : store.loggedIn
+            session: store.session === undefined ? this.store.session : store.session,
+            login: store.login === undefined ? this.store.login : store.login
         };
         this.notifyListeners();
     }

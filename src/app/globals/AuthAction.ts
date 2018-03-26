@@ -1,73 +1,63 @@
 import {Action} from "../common/AbstractAction";
-import {Dispatcher} from "../common/Dispatcher";
-import {ActionType} from "../common/ActionType";
 import {AuthResponse} from "../../domain/auth/model/AuthResponse";
-import {AuthRequest} from "../../domain/auth/model/AuthRequest";
 import {AuthManager} from "../../domain/auth/AuthManager";
-import {ErrorCodes} from "../../model/ErrorCodes";
 import {ManagerFactory} from "../../domain/ManagerFactory";
 
 export class AuthAction implements Action {
-    private static instance: AuthAction;
 
-    constructor(private dispatcher: Dispatcher, private authManager: AuthManager) {
+    constructor(private authManager: AuthManager = ManagerFactory.buildAuthManager()) {
     }
 
-    public static getInstance(): AuthAction {
-        if (this.instance == null) {
-            this.instance = new AuthAction(Dispatcher.getInstance(), ManagerFactory.buildAuthManager());
-        }
-        return this.instance;
-    }
-
-    signIn(email: string, password: string): void {
-        this.dispatcher.dispatch(ActionType.ON_LOG_IN);
-        this.authManager.signIn(email, password).then((result: AuthResponse) => {
-            if (result.successful)
-                this.dispatcher.dispatch(ActionType.ON_LOG_IN_SUCCESS, result);
-            else
-                this.loginFailed();
-        }, (_) => {
-            this.loginFailed();
-        }).catch((_error) => {
-            this.loginFailed()
-        })
-    }
-
-    register(email: string, password: string, displayName: string): void {
-        this.authManager.createAccount(new AuthRequest(email, password, displayName)).then((result: AuthResponse) => {
-            if (result.successful) {
-                this.dispatcher.dispatch(ActionType.ON_REGISTER_SUCCESS, result);
-            }
-            else
-                this.loginFailed()
-        }, (_) => {
-            this.loginFailed();
+    signIn(email: string, password: string): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            this.authManager.signIn(email, password).then((result: AuthResponse) => {
+                if (result.jwtToken.length > 0)
+                    resolve(result.jwtToken);
+                else
+                    reject(result.errorCode);
+            }, (error) => {
+                reject(error);
+            }).catch((error) => {
+                reject(error);
+            })
         });
     }
 
-    isTokenPersisted(): void {
-        this.dispatcher.dispatch(ActionType.ON_TOKEN_PERSIST);
-        this.authManager.isPersistedTokenAvailable().then((result: AuthResponse) => {
-            if (result.successful)
-                this.dispatcher.dispatch(ActionType.ON_TOKEN_PERSIST_SUCCESS, result);
-            else
-                this.loginFailed()
+    register(email: string, password: string, displayName: string): Promise<AuthResponse> {
+        return new Promise<AuthResponse>((resolve, reject) => {
+            this.authManager.createAccount(email, password, displayName).then((result: AuthResponse) => {
+                resolve(result);
+            }, (error) => {
+                reject(error);
+            });
         });
     }
 
-    persistToken(token: string) {
-        this.authManager.cacheToken(token).then((result: string) => {
-            if (result !== null)
-                this.dispatcher.dispatch(ActionType.CHECK_TOKEN_PERSISTED_SUCCESS, new AuthResponse(result, true));
-            else
-                this.dispatcher.dispatch(ActionType.CHECK_TOKEN_PERSISTED_FAIL, new AuthResponse(undefined, false, ErrorCodes.SIGN_IN_FAILED));
-        }).catch((_error) => {
-            this.loginFailed();
+    isTokenPersisted(): Promise<boolean> {
+        return new Promise<boolean>((resolve, _reject) => {
+            this.authManager.isPersistedTokenAvailable().then((_result: AuthResponse) => {
+                resolve(true);
+            }, (_error) => {
+                resolve(false);
+            }).catch((_error) => {
+                resolve(false);
+            });
         });
     }
 
-    private loginFailed() {
-        this.dispatcher.dispatch(ActionType.ON_LOG_IN_FAIL);
+    persistToken(token: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            this.authManager.cacheToken(token).then((result: string) => {
+                if (result.length > 0)
+                    resolve(true);
+                else
+                    reject(false);
+
+            }, (error) => {
+                reject(error);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
     }
 }

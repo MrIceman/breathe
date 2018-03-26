@@ -1,11 +1,7 @@
-import {AbstractStore} from "../common/AbstractStore";
 import {AuthResponse} from "../../domain/auth/model/AuthResponse";
 import {ActionType} from "../common/ActionType";
-import * as React from "react";
 
-import {AbstractStateModel} from "../common/AbstractStateModel";
-
-export interface RegisterStateModel extends AbstractStateModel {
+export interface RegisterStateModel {
     validEmail: boolean,
     validPassword: boolean,
     validDisplayName: boolean,
@@ -17,15 +13,8 @@ export interface RegisterStateModel extends AbstractStateModel {
     registerComplete: boolean
 }
 
-export class RegisterStore extends AbstractStore<RegisterStateModel, AuthResponse> {
+export class RegisterStore {
     state: RegisterStateModel;
-
-    constructor(component: React.Component) {
-        super(component);
-        this.state = this.getInitialState();
-        this.component.setState(this.state);
-    }
-
 
     receive(actionType: ActionType, _response: AuthResponse) {
         switch (actionType) {
@@ -52,8 +41,6 @@ export class RegisterStore extends AbstractStore<RegisterStateModel, AuthRespons
                 };
                 break;
         }
-
-        this.updateState();
     }
 
     getInitialState(): RegisterStateModel {

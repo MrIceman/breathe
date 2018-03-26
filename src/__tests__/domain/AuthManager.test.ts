@@ -38,7 +38,7 @@ it('successfully maps AuthEntity to AuthResponse when sign in correct', async (d
     );
 });
 
-it('maps a Gateway Error correctly into a Domain Error', (done) => {
+it('maps a Gateway Error correctly into a Domain Error', async (done) => {
     const wrongPasswordEntityMock = (mock(ErrorEntity));
     const wrongPasswordEntityInstance = instance(wrongPasswordEntityMock);
     const wrongPasswordResponse = instance(mock(ErrorResponse));
@@ -60,7 +60,7 @@ it('maps a Gateway Error correctly into a Domain Error', (done) => {
     );
 });
 
-it('tryAutoLogIn returns a successful response when it a JWT token is persisted', (done) => {
+it('tryAutoLogIn returns a successful response when it a JWT token is persisted', async (done) => {
     when(inMemoryRepository.isAuthTokenPersisted()).thenResolve(true);
 
     subject.tryAutoLogIn().then((result) => {
@@ -69,7 +69,7 @@ it('tryAutoLogIn returns a successful response when it a JWT token is persisted'
     });
 });
 
-it('tryAutoLogIn returns a false response when no JWT token is persisted', (done) => {
+it('tryAutoLogIn returns a false response when no JWT token is persisted', async (done) => {
     when(inMemoryRepository.isAuthTokenPersisted()).thenResolve(false);
 
     subject.tryAutoLogIn().then((result) => {
@@ -82,25 +82,31 @@ it('creates an account successfully', (done) => {
     const authRequest = instance(mock(AuthRequest));
     const authEntity = instance(mock(AuthEntity));
     const authResponse = instance(mock(AuthResponse));
-
+    const email = '';
+    const pw = '';
+    const displayName = '';
+    when(requestMapper.mapRequest(email, pw, displayName)).thenReturn(authRequest);
     when(gateway.register(authRequest)).thenResolve(authEntity);
     when(mapper.mapEntity(authEntity)).thenReturn(authResponse);
 
-    subject.createAccount(authRequest).then((result) => {
+    subject.createAccount(email, pw, displayName).then((result) => {
         expect(result).toEqual(authResponse);
         done();
     });
 });
 
-it('creates not an account successfully when backend returns error', (done) => {
+it('creates not an account successfully when backend returns error', async (done) => {
     const authRequest = instance(mock(AuthRequest));
     const authErrorEntity = instance(mock(ErrorEntity));
     const authErrorResponse = instance(mock(ErrorResponse));
-
+    const email = '';
+    const pw = '';
+    const displayName = '';
+    when(requestMapper.mapRequest(email, pw, displayName)).thenReturn(authRequest);
     when(gateway.register(authRequest)).thenReject(authErrorEntity);
     when(errorMapper.mapEntity(authErrorEntity)).thenReturn(authErrorResponse);
 
-    subject.createAccount(authRequest).then((_result) => {
+    subject.createAccount(email, pw, displayName).then((_result) => {
         fail();
     }, (error) => {
         expect(error).toEqual(authErrorResponse);
@@ -132,7 +138,7 @@ it('caches not token successfully inside the local repository when repository re
     })
 });
 
-it('signs out correctly', (done) => {
+it('signs out correctly', async (done) => {
     when(inMemoryRepository.clearAuthToken()).thenResolve(true);
 
     subject.signOut().then((result) => {
@@ -142,7 +148,7 @@ it('signs out correctly', (done) => {
 });
 
 
-it('fails sign out', (done) => {
+it('fails sign out', async (done) => {
     when(inMemoryRepository.clearAuthToken()).thenReject(false);
 
     subject.signOut().then((_) => {
