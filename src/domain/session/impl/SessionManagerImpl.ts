@@ -1,10 +1,14 @@
 import {SessionManager} from "../SessionManager";
 import {Session} from "../../../data/session/Session";
 import {SessionGateway} from "../SessionGateway";
+import {InMemoryRepository} from "../../UserRepository";
+import {SessionFactory} from "../../../data/session/SessionFactory";
+import {NetworkChecker} from "../../../utils/NetworkChecker";
 
 export class SessionManagerImpl implements SessionManager {
 
-    constructor(private readonly gateway: SessionGateway, ) {
+    constructor(private readonly gateway: SessionGateway, private readonly repository: InMemoryRepository, private readonly networkChecker: NetworkChecker,
+                private readonly sessionFactory: SessionFactory) {
     }
 
     createSessionLocal(amountOfRounds: number,
@@ -12,7 +16,19 @@ export class SessionManagerImpl implements SessionManager {
                        retentionTimeMap: Map<number, number>,
                        amountOfBreathsPerRetention: Map<number, number>,
                        notes: string): Promise<Session> {
-        return this.gateway.createSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
+
+        const session = this.sessionFactory.createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
+        return new Promise<Session>((resolve, _reject) => {
+            this.repository.insertSession(session)
+                .then(async (cachedSession: Session) => {
+                    const isDeviceOnline = await this.networkChecker.isDeviceConnected();
+                    if (isDeviceOnline)
+                        this.gateway.createSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes).then((_syncedSession) => {
+
+                        });
+                    resolve(cachedSession);
+                });
+        })
     }
 
     getAllSessions(): Promise<Array<Session>> {

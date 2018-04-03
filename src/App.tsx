@@ -1,14 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-
 import React, {Component} from 'react';
 import {AuthController, AuthState} from "./app/globals/AuthController";
-import {LoginComponent} from "./app/login/LoginComponent";
 import {IceComponent} from "./app/IceComponent";
 import {AuthAction} from "./app/globals/AuthAction";
-import {Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {TabBarBottom, TabNavigator} from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {GlobalStore} from "./app/globals/BreathStore";
@@ -17,13 +11,34 @@ import {GlobalStore} from "./app/globals/BreathStore";
 class App extends Component<{}, AuthState> {
     controller: AuthController;
     action: AuthAction;
+    styles;
 
-    constructor() {
-        super({});
-        this.state = this.controller.getInitialState();
+    constructor(props: {}) {
+        super(props);
+
+        this.styles = StyleSheet.create({
+            container: {
+                flex: 1,
+            },
+            navBar: {
+                height: 55,
+                backgroundColor: 'white',
+                elevation: 3,
+                paddingHorizontal: 15,
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+            },
+            titleText: {
+                fontSize: 13,
+                fontWeight: 'bold',
+            },
+            rightNavIcons: {}
+        });
+
         this.action = new AuthAction();
-
         this.controller = new AuthController(this.action, this, GlobalStore.getInstance());
+        this.state = this.controller.getInitialState();
     }
 
     componentDidMount() {
@@ -31,23 +46,19 @@ class App extends Component<{}, AuthState> {
     }
 
     render() {
-        let view;
-
-        if (this.state.checkedIfTokenIsPersisted) {
-            console.warn('CheckedIfToken persisted is fucking true');
-            view = (this.state.isAuthenticated ? <IceComponent/> : <LoginComponent/>);
-        } else {
-            view = <View style={{
-                flex: 1,
-                backgroundColor: 'skyblue',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}><Text>Loading..</Text></View>
-        }
-        return view;
+        return <View style={this.styles.container}>
+            <View style={this.styles.navBar}>
+                <View/>
+                <Text style={this.styles.titleText}>Breathe</Text>
+                <View style={this.styles.rightNavIcons}>
+                    <Ionicons name={'ios-more'} size={25} color={'black'}/>
+                </View>
+            </View>
+        </View>
     }
 }
 
+// Routing
 export default TabNavigator(
     {
         Home: {

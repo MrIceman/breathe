@@ -3,8 +3,8 @@ import {Entity} from "../../model/entity/Entity";
 export class Session implements Entity {
 
     constructor(public readonly id: number = Date.now(),
-                public globalId: number, // ID from the Backend
-                public date: number,
+                public globalId: number = -1, // ID from the Backend, -1 when not initialized yet
+                public date: number = Date.now(),
                 public amountOfRounds: number,
                 public custom: boolean,
                 public retentionTimeMap: Map<number, number>,

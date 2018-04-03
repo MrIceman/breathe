@@ -33,7 +33,7 @@ export class AuthAction implements Action {
         });
     }
 
-    isTokenPersisted(): Promise<boolean> {
+    async isTokenPersisted(): Promise<boolean> {
         return new Promise<boolean>((resolve, _reject) => {
             this.authManager.isPersistedTokenAvailable().then((_result: AuthResponse) => {
                 resolve(true);

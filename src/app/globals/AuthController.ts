@@ -16,6 +16,7 @@ export class AuthController extends AbstractController<AuthState> {
         super(component, store);
         this.persistToken = this.persistToken.bind(this);
         this.authFailed = this.authFailed.bind(this);
+        this.state = this.getInitialState();
     }
 
     async signIn(email: string, password: string) {
@@ -89,6 +90,7 @@ export class AuthController extends AbstractController<AuthState> {
 
     updateState(values: {}) {
         this.state = {...this.getState(), ...values};
+        this.updateView();
     }
 
 }
