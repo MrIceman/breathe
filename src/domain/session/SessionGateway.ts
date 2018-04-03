@@ -9,5 +9,5 @@ export interface SessionGateway {
                        amountOfBreathsPerRetention: Map<number, number>,
                        notes: string): Promise<Session>;
 
-    createSessionGlobal(session: Session): Session;
+    updateSession(session: Session): Session;
 }

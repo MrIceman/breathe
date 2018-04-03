@@ -86,7 +86,7 @@ it('fails to persist a token successfully', async (done) => {
 
 it('returns true when calling isTokenPersisted', async (done) => {
     const responseMock = instance(mock(AuthResponse));
-    when(authManager.isPersistedTokenAvailable()).thenResolve(responseMock);
+    when(authManager.isAuthenticated()).thenResolve(responseMock);
     subject.isTokenPersisted().then((result) => {
         expect(result).toEqual(true);
         done();
@@ -95,7 +95,7 @@ it('returns true when calling isTokenPersisted', async (done) => {
 
 it('returns false when calling isTokenPersisted fails', async (done) => {
     const responseMock = instance(mock(AuthResponse));
-    when(authManager.isPersistedTokenAvailable()).thenReject(responseMock);
+    when(authManager.isAuthenticated()).thenReject(responseMock);
     subject.isTokenPersisted().then((result) => {
         expect(result).toEqual(false);
         done();

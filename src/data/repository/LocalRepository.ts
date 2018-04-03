@@ -137,4 +137,10 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
+    updateSession(session: Session): Promise<Session> {
+        return new Promise<Session>((resolve, _reject) => {
+            resolve(session);
+        });
+    }
+
 }

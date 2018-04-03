@@ -70,7 +70,7 @@ export class AuthManagerImpl implements Manager, AuthManager {
         });
     }
 
-    isPersistedTokenAvailable(): Promise<AuthResponse> {
+    isAuthenticated(): Promise<AuthResponse> {
         return new Promise<AuthResponse>((resolve, _reject) => {
             this.repository.getAuthToken().then((result) => {
                 resolve(new AuthResponse(result, true));
