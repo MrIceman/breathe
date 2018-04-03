@@ -1,5 +1,5 @@
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
-import {instance, mock, verify, when} from "ts-mockito";
+import {instance, mock, reset, verify, when} from "ts-mockito";
 import {SessionGateway} from "../../../domain/session/SessionGateway";
 import {Session} from "../../../data/session/Session";
 import {LocalRepository} from "../../../data/repository/LocalRepository";
@@ -11,6 +11,10 @@ import {ErrorEntity} from "../../../model/entity/ErrorEntity";
 
 
 class GatewayMock implements SessionGateway {
+    getAllSessions(): Promise<Array<Session>> {
+        return undefined;
+    }
+
     getSessionById() {
     }
 
@@ -31,6 +35,9 @@ const sessionFactory = mock(SessionFactory);
 const authManager = mock(AuthManagerImpl);
 const subject = new SessionManagerImpl(instance(gateway), instance(repository), instance(networkChecker), instance(sessionFactory), instance(authManager));
 
+beforeEach(() => {
+    reset(repository);
+});
 it('stores a session only in cache and does no gateway call when no internet available on phone', async (done) => {
     let amountOfRounds = 0;
     let custom = false;
@@ -42,6 +49,7 @@ it('stores a session only in cache and does no gateway call when no internet ava
     when(networkChecker.isDeviceConnected()).thenResolve(false);
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
+
     subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
         verify(repository.insertSession(sessionMock)).once();
@@ -61,6 +69,7 @@ it('stores a session only in cache and does no gateway call when internet is ava
     when(networkChecker.isDeviceConnected()).thenResolve(true);
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
     when(authManager.isAuthenticated()).thenReject(new ErrorEntity(-1));
+
     subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
         verify(repository.insertSession(sessionMock)).once();
@@ -69,8 +78,7 @@ it('stores a session only in cache and does no gateway call when internet is ava
     });
 });
 
-it('stores a session in gateway because user is authenticated and netowrk is available and then updates it in cache', async (done) => {
-
+it('stores a session in gateway because user is authenticated and network is available and then updates it in cache', async (done) => {
     let amountOfRounds = 0;
     let custom = false;
     let map = new Map();
@@ -82,8 +90,8 @@ it('stores a session in gateway because user is authenticated and netowrk is ava
     when(networkChecker.isDeviceConnected()).thenResolve(true);
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
     when(gateway.createSession(amountOfRounds, custom, map, map2, notes)).thenResolve(syncedSessionMock);
-
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
+
     await subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).once();
         verify(repository.insertSession(sessionMock)).once();
@@ -93,3 +101,46 @@ it('stores a session in gateway because user is authenticated and netowrk is ava
     });
 });
 
+it('gets an empty session list from cache when no network connection is available', async (done) => {
+    when(networkChecker.isDeviceConnected()).thenResolve(false);
+    when(repository.getAllSessions()).thenResolve([])
+    const result = await subject.getAllSessions();
+
+    expect(result).toEqual([]);
+    done();
+});
+
+it('gets a non empty session list from cache when no network connection is available', async (done) => {
+    const session = instance(mock(Session));
+    when(networkChecker.isDeviceConnected()).thenResolve(false);
+    when(repository.getAllSessions()).thenResolve([session])
+    const result = await subject.getAllSessions();
+
+    expect(result).toEqual([session]);
+    verify(gateway.getAllSessions()).never();
+    done();
+});
+
+it('gets a non empty session list from cache when network connection is available but user is not authenticated', async (done) => {
+    const session = instance(mock(Session));
+    when(networkChecker.isDeviceConnected()).thenResolve(false);
+    when(repository.getAllSessions()).thenResolve([session]);
+    when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
+    const result = await subject.getAllSessions();
+
+    expect(result).toEqual([session]);
+    verify(gateway.getAllSessions()).never();
+    done();
+});
+
+it('calls session list from API when user is signed in', async () => {
+    const session = instance(mock(Session));
+    reset(repository);
+    when(networkChecker.isDeviceConnected()).thenResolve(true);
+    when(gateway.getAllSessions()).thenResolve([session]);
+    when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
+    const result = await subject.getAllSessions();
+    expect(result).toEqual([session]);
+    verify(gateway.getAllSessions()).once();
+    verify(repository.getAllSessions()).never();
+});

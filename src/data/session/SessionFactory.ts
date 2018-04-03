@@ -3,7 +3,7 @@ import {Session} from "./Session";
 export class SessionFactory {
 
     public createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes,): Session {
-        return new Session(undefined, undefined, undefined, custom, amountOfRounds, retentionTimeMap, amountOfBreathsPerRetention,
-            amountOfBreathsPerRetention, notes,);
+        const timestamp = Date.now();
+        return new Session(timestamp, -1, timestamp, amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes,);
     }
 }

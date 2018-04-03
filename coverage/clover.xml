@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1522769700381" clover="3.2.0">
-  <project timestamp="1522769700381" name="All files">
-    <metrics statements="341" coveredstatements="210" conditionals="85" coveredconditionals="58" methods="227" coveredmethods="136" elements="653" coveredelements="404" complexity="0" loc="341" ncloc="341" packages="19" files="31" classes="31">
+<coverage generated="1522780518691" clover="3.2.0">
+  <project timestamp="1522780518691" name="All files">
+    <metrics statements="350" coveredstatements="221" conditionals="90" coveredconditionals="63" methods="230" coveredmethods="142" elements="670" coveredelements="426" complexity="0" loc="350" ncloc="350" packages="19" files="31" classes="31">
       <package name="app.common">
         <metrics statements="9" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="3"/>
         <file name="AbstractController.js" path="/Users/martinnowosad/breathe/lib/app/common/AbstractController.js">
@@ -189,7 +189,7 @@
         </file>
       </package>
       <package name="data.repository">
-        <metrics statements="76" coveredstatements="53" conditionals="19" coveredconditionals="16" methods="61" coveredmethods="41"/>
+        <metrics statements="76" coveredstatements="55" conditionals="21" coveredconditionals="18" methods="60" coveredmethods="42"/>
         <file name="LocalDataSourceImpl.js" path="/Users/martinnowosad/breathe/lib/data/repository/LocalDataSourceImpl.js">
           <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="0"/>
           <line num="4" count="0" type="stmt"/>
@@ -204,13 +204,13 @@
           <line num="24" count="0" type="stmt"/>
         </file>
         <file name="LocalRepository.js" path="/Users/martinnowosad/breathe/lib/data/repository/LocalRepository.js">
-          <metrics statements="66" coveredstatements="53" conditionals="19" coveredconditionals="16" methods="51" coveredmethods="41"/>
+          <metrics statements="66" coveredstatements="55" conditionals="21" coveredconditionals="18" methods="50" coveredmethods="42"/>
           <line num="1" count="5" type="cond" truecount="3" falsecount="0"/>
-          <line num="2" count="15" type="cond" truecount="2" falsecount="0"/>
-          <line num="3" count="10" type="stmt"/>
+          <line num="2" count="19" type="cond" truecount="2" falsecount="0"/>
+          <line num="3" count="12" type="stmt"/>
           <line num="4" count="0" type="stmt"/>
-          <line num="5" count="25" type="cond" truecount="2" falsecount="0"/>
-          <line num="6" count="15" type="cond" truecount="2" falsecount="0"/>
+          <line num="5" count="31" type="cond" truecount="2" falsecount="0"/>
+          <line num="6" count="19" type="cond" truecount="2" falsecount="0"/>
           <line num="14" count="1" type="stmt"/>
           <line num="15" count="1" type="stmt"/>
           <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -233,50 +233,50 @@
           <line num="51" count="3" type="stmt"/>
           <line num="52" count="3" type="stmt"/>
           <line num="54" count="0" type="stmt"/>
-          <line num="59" count="5" type="stmt"/>
-          <line num="60" count="5" type="stmt"/>
-          <line num="61" count="5" type="stmt"/>
-          <line num="62" count="5" type="stmt"/>
-          <line num="68" count="7" type="stmt"/>
-          <line num="69" count="7" type="stmt"/>
-          <line num="70" count="7" type="stmt"/>
-          <line num="71" count="7" type="cond" truecount="4" falsecount="0"/>
-          <line num="72" count="3" type="stmt"/>
-          <line num="73" count="3" type="stmt"/>
-          <line num="75" count="7" type="stmt"/>
-          <line num="76" count="7" type="stmt"/>
-          <line num="77" count="7" type="stmt"/>
-          <line num="78" count="7" type="stmt"/>
-          <line num="83" count="2" type="stmt"/>
+          <line num="59" count="7" type="stmt"/>
+          <line num="60" count="7" type="stmt"/>
+          <line num="61" count="7" type="stmt"/>
+          <line num="62" count="7" type="stmt"/>
+          <line num="68" count="9" type="stmt"/>
+          <line num="69" count="9" type="stmt"/>
+          <line num="70" count="9" type="stmt"/>
+          <line num="71" count="9" type="cond" truecount="4" falsecount="0"/>
+          <line num="72" count="4" type="stmt"/>
+          <line num="73" count="4" type="stmt"/>
+          <line num="75" count="9" type="cond" truecount="2" falsecount="0"/>
+          <line num="76" count="8" type="stmt"/>
+          <line num="77" count="9" type="stmt"/>
+          <line num="78" count="9" type="stmt"/>
+          <line num="79" count="9" type="stmt"/>
           <line num="84" count="2" type="stmt"/>
           <line num="85" count="2" type="stmt"/>
           <line num="86" count="2" type="stmt"/>
           <line num="87" count="2" type="stmt"/>
           <line num="88" count="2" type="stmt"/>
-          <line num="92" count="0" type="stmt"/>
-          <line num="94" count="0" type="stmt"/>
-          <line num="96" count="2" type="stmt"/>
-          <line num="100" count="3" type="stmt"/>
+          <line num="89" count="2" type="stmt"/>
+          <line num="93" count="0" type="stmt"/>
+          <line num="95" count="0" type="stmt"/>
+          <line num="97" count="2" type="stmt"/>
           <line num="101" count="3" type="stmt"/>
           <line num="102" count="3" type="stmt"/>
-          <line num="103" count="2" type="stmt"/>
-          <line num="105" count="0" type="stmt"/>
-          <line num="107" count="1" type="stmt"/>
-          <line num="112" count="2" type="stmt"/>
-          <line num="113" count="2" type="stmt"/>
-          <line num="114" count="2" type="stmt"/>
-          <line num="115" count="2" type="stmt"/>
-          <line num="120" count="1" type="stmt"/>
+          <line num="103" count="3" type="stmt"/>
+          <line num="104" count="2" type="stmt"/>
+          <line num="106" count="0" type="stmt"/>
+          <line num="108" count="1" type="stmt"/>
+          <line num="113" count="4" type="stmt"/>
+          <line num="114" count="4" type="stmt"/>
+          <line num="115" count="4" type="stmt"/>
+          <line num="116" count="4" type="stmt"/>
           <line num="121" count="1" type="stmt"/>
           <line num="122" count="1" type="stmt"/>
-          <line num="126" count="0" type="stmt"/>
-          <line num="127" count="0" type="stmt"/>
+          <line num="123" count="1" type="stmt"/>
+          <line num="127" count="1" type="stmt"/>
         </file>
       </package>
       <package name="data.session">
-        <metrics statements="14" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="1"/>
+        <metrics statements="15" coveredstatements="9" conditionals="3" coveredconditionals="3" methods="6" coveredmethods="1"/>
         <file name="Session.js" path="/Users/martinnowosad/breathe/lib/data/session/Session.js">
-          <metrics statements="12" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="1"/>
+          <metrics statements="12" coveredstatements="9" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="1"/>
           <line num="4" count="1" type="stmt"/>
           <line num="5" count="1" type="stmt"/>
           <line num="6" count="1" type="stmt"/>
@@ -291,8 +291,9 @@
           <line num="22" count="0" type="stmt"/>
         </file>
         <file name="SessionFactory.js" path="/Users/martinnowosad/breathe/lib/data/session/SessionFactory.js">
-          <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
           <line num="4" count="0" type="stmt"/>
+          <line num="5" count="0" type="stmt"/>
         </file>
         <file name="SessionMapper.js" path="/Users/martinnowosad/breathe/lib/data/session/SessionMapper.js">
           <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -358,9 +359,9 @@
         </file>
         <file name="AuthResponse.js" path="/Users/martinnowosad/breathe/lib/domain/auth/model/AuthResponse.js">
           <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
-          <line num="3" count="2" type="stmt"/>
-          <line num="4" count="2" type="stmt"/>
-          <line num="5" count="2" type="stmt"/>
+          <line num="3" count="4" type="stmt"/>
+          <line num="4" count="4" type="stmt"/>
+          <line num="5" count="4" type="stmt"/>
         </file>
       </package>
       <package name="domain.common">
@@ -392,15 +393,15 @@
         </file>
       </package>
       <package name="domain.session.impl">
-        <metrics statements="28" coveredstatements="23" conditionals="11" coveredconditionals="11" methods="19" coveredmethods="15"/>
+        <metrics statements="36" coveredstatements="32" conditionals="15" coveredconditionals="15" methods="23" coveredmethods="20"/>
         <file name="SessionManagerImpl.js" path="/Users/martinnowosad/breathe/lib/domain/session/impl/SessionManagerImpl.js">
-          <metrics statements="28" coveredstatements="23" conditionals="11" coveredconditionals="11" methods="19" coveredmethods="15"/>
+          <metrics statements="36" coveredstatements="32" conditionals="15" coveredconditionals="15" methods="23" coveredmethods="20"/>
           <line num="1" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="2" count="4" type="cond" truecount="2" falsecount="0"/>
-          <line num="3" count="4" type="stmt"/>
+          <line num="2" count="12" type="cond" truecount="2" falsecount="0"/>
+          <line num="3" count="15" type="stmt"/>
           <line num="4" count="0" type="stmt"/>
-          <line num="5" count="8" type="cond" truecount="2" falsecount="0"/>
-          <line num="6" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="5" count="27" type="cond" truecount="2" falsecount="0"/>
+          <line num="6" count="12" type="cond" truecount="2" falsecount="0"/>
           <line num="11" count="1" type="stmt"/>
           <line num="12" count="1" type="stmt"/>
           <line num="13" count="1" type="stmt"/>
@@ -419,10 +420,18 @@
           <line num="30" count="0" type="stmt"/>
           <line num="33" count="1" type="stmt"/>
           <line num="37" count="1" type="stmt"/>
-          <line num="42" count="0" type="stmt"/>
-          <line num="45" count="0" type="stmt"/>
-          <line num="46" count="0" type="stmt"/>
-          <line num="49" count="1" type="stmt"/>
+          <line num="42" count="4" type="stmt"/>
+          <line num="43" count="4" type="stmt"/>
+          <line num="44" count="4" type="stmt"/>
+          <line num="45" count="4" type="stmt"/>
+          <line num="46" count="4" type="cond" truecount="4" falsecount="0"/>
+          <line num="47" count="1" type="stmt"/>
+          <line num="48" count="1" type="stmt"/>
+          <line num="52" count="3" type="stmt"/>
+          <line num="53" count="3" type="stmt"/>
+          <line num="59" count="0" type="stmt"/>
+          <line num="60" count="0" type="stmt"/>
+          <line num="63" count="1" type="stmt"/>
         </file>
       </package>
       <package name="domain.session.model">

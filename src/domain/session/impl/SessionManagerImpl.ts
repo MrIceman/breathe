@@ -26,7 +26,7 @@ export class SessionManagerImpl implements SessionManager {
                     const isDeviceOnline = await this.networkChecker.isDeviceConnected();
                     if (isDeviceOnline) {
                         // Device is connected to the internet, checking now if user is authenticated
-                        this.authManager.isAuthenticated().then((_cacheResolve) => {
+                        this.authManager.isAuthenticated().then((_) => {
                             this.createSessionGlobal(cachedSession).then(async (syncedSession) => {
                                 await this.repository.updateSession(syncedSession);
                                 resolve(syncedSession);
@@ -42,8 +42,20 @@ export class SessionManagerImpl implements SessionManager {
         })
     }
 
-    getAllSessions(): Promise<Array<Session>> {
-        return undefined;
+    async getAllSessions(): Promise<Array<Session>> {
+        return new Promise<Array<Session>>(async (resolve, _reject) => {
+            const isDeviceOnline = await this.networkChecker.isDeviceConnected();
+            const isUserAuthenticated = await this.authManager.isAuthenticated();
+            if (isDeviceOnline && isUserAuthenticated) {
+                this.gateway.getAllSessions().then((sessions) => {
+                    resolve(sessions);
+                });
+            } else {
+                const result = await this.repository.getAllSessions();
+                resolve(result);
+            }
+
+        });
     }
 
     getSessionById(id: number): Promise<Session> {
@@ -55,4 +67,10 @@ export class SessionManagerImpl implements SessionManager {
         return this.gateway.createSession(session.amountOfRounds, session.custom, session.retentionTimeMap, session.amountOfBreathsPreRetention, session.notes);
     }
 
+    /*
+    private async shouldLoadFromBackend(): boolean {
+        const isDeviceOnline = await this.networkChecker.isDeviceConnected();
+        const isUserAuthenticated = await this.authManager.isAuthenticated();
+        return isDeviceOnline && isUserAuthenticated;
+    } */
 }
