@@ -1,18 +1,27 @@
 import * as React from "react";
-import {FlatList, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {MainWindow} from "./MainWindow";
 
-class ListItem extends React.PureComponent<{ selected: boolean, title: string }> {
+export const styles = StyleSheet.create({
+    menuTitle: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        fontSize: 23,
+        fontWeight: '800',
+        width: 300,
+        color: '#000',
+        textAlign: 'center',
+        margin: 8
+    }
+});
 
+class MenuItem extends React.PureComponent<{ title: string }> {
     render() {
-        const textColor = this.props.selected ? "red" : "black";
         return (
             <TouchableOpacity onPress={() => {
             }}>
-                <View>
-                    <Text style={{color: textColor}}>
-                        {this.props.title}
-                    </Text>
-                </View>
+                <Text style={styles.menuTitle}>
+                    {this.props.title}
+                </Text>
             </TouchableOpacity>
         );
     }
@@ -20,20 +29,20 @@ class ListItem extends React.PureComponent<{ selected: boolean, title: string }>
 
 export class IceComponent extends React.Component {
 
-    _renderItem = ({item}) => (
-        <ListItem
-            selected={true}
-            title={item}
-        />
-    );
-
     render() {
         return (
-            <FlatList
-                style={{flex: 1}}
-                data={['Breath Training', 'Cold Session', 'Stastistics']}
-                renderItem={this._renderItem}
-            />
+            <MainWindow>
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    paddingTop: 20,
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}>
+                    <MenuItem title={'Breathing'}/>
+                    <MenuItem title={'Cold Exposure'}/>
+                </View>
+            </MainWindow>
         );
     }
 }
