@@ -1,6 +1,7 @@
 import {HttpRequest} from "../HttpRequest";
 import {HttpResponse} from "../HttpResponse";
 import {LocalRepository} from "../repository/LocalRepository";
+import {ErrorEntity} from "../../model/entity/ErrorEntity";
 
 export class HttpService {
 
@@ -14,8 +15,10 @@ export class HttpService {
                 }).then((httpResult: Response) => {
                     let response: HttpResponse = new HttpResponse();
                     httpResult.json().then((result: any) => {
-                        response.token = result.token;
-                        httpResult.toString();
+                        if (result.token !== undefined)
+                            response.token = result.token;
+                        if (result.Error !== undefined)
+                            response.error = result.Error as ErrorEntity;
                         resolve(response);
                     });
                 }).catch((httpError) => {

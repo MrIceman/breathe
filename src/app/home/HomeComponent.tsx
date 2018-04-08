@@ -2,21 +2,15 @@ import {MainWindow} from "../MainWindow";
 import * as React from "react";
 import {RequireAuthComponent} from "../common/RequireAuthComponent";
 import {AuthManager} from "../../domain/auth/AuthManager";
-import {AuthManagerImpl} from "../../domain/auth/impl/AuthManagerImpl";
-import {AuthGatewayImpl} from "../../data/auth/AuthGatewayImpl";
-import {LocalRepository} from "../../data/repository/LocalRepository";
-import {AuthResponseMapper} from "../../domain/common/AuthResponseMapper";
-import {AuthRequestMapper} from "../../domain/common/AuthRequestMapper";
-import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
+import {ManagerFactory} from "../../domain/ManagerFactory";
+import {ErrorEntity} from "../../model/entity/ErrorEntity";
 
-interface HomeComponentProps {
-    isLoggedIn: boolean,
-    signIn: void,
-    signUp: void,
-    isProgressing: boolean
+interface HomeComponentState {
+    isProgressing: boolean,
+    isLoggedIn: boolean
 }
 
-export class HomeComponent extends React.Component<HomeComponentProps> {
+export class HomeComponent extends React.Component<{}, HomeComponentState> {
     protected email: string;
     protected password: string;
     protected username: string;
@@ -24,12 +18,20 @@ export class HomeComponent extends React.Component<HomeComponentProps> {
 
     constructor(props) {
         super(props);
-        this.authManager = new AuthManagerImpl(new AuthGatewayImpl(), LocalRepository.getInstance(), new AuthResponseMapper(),
-            new AuthRequestMapper(), new ErrorResponseMapper());
+        this.state = {isProgressing: false, isLoggedIn: false};
+        this.authManager = ManagerFactory.buildAuthManager();
+        this.signUp = this.signUp.bind(this);
+        this.signIn = this.signIn.bind(this);
     }
 
     private signUp(email, password, username): void {
-        this.authManager.createAccount(email, password, username);
+        this.authManager.createAccount(email, password, username).then((_) => {
+            alert('Success!');
+            },
+            (reject: ErrorEntity) => {
+                alert((reject.code * 123) + ' : ' + reject.message)
+            });
+
     }
 
     private signIn(email, password): void {
@@ -40,7 +42,8 @@ export class HomeComponent extends React.Component<HomeComponentProps> {
     render() {
         return (
             <MainWindow>
-                <RequireAuthComponent signUp={this.signUp} signIn={this.signIn}/>
+                <RequireAuthComponent signUp={this.signUp} signIn={this.signIn}
+                                      isProgressing={this.state.isProgressing}/>
             </MainWindow>
         );
     }

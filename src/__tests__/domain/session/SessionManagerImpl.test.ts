@@ -68,7 +68,7 @@ it('stores a session only in cache and does no gateway call when internet is ava
     when(sessionFactory.createNewSession(amountOfRounds, custom, map, map2, notes)).thenReturn(sessionMock);
     when(networkChecker.isDeviceConnected()).thenResolve(true);
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
-    when(authManager.isAuthenticated()).thenReject(new ErrorEntity(-1));
+    when(authManager.isAuthenticated()).thenReject(new ErrorEntity(-1, ''));
 
     subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();

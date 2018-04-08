@@ -64,7 +64,6 @@ export class AuthManagerImpl implements Manager, AuthManager {
             }, (error) => {
                 reject(this.errorMapper.mapEntity(error));
             }).catch((error: string) => {
-                console.warn('AuthManagerIMpl throwing error');
                 reject(error);
             });
         });
