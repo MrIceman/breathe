@@ -8,7 +8,6 @@ export abstract class AbstractController<S extends ViewStoreState> implements St
     protected state: S;
 
     constructor(protected readonly component: React.Component, protected readonly globalStore: GlobalStore) {
-        this.state = this.getInitialState();
         this.registerToStore();
     }
 

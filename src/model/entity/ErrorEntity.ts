@@ -1,9 +1,7 @@
 import {Entity} from "./Entity";
 
-export class ErrorEntity implements Entity{
-    code: number;
+export class ErrorEntity implements Entity {
 
-    constructor(code: number) {
-        this.code = code;
+    constructor(public readonly code: number, public readonly message: string) {
     }
 }

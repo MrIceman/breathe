@@ -1,1 +1,1 @@
-{"version":3,"file":"ErrorEntity.js","sourceRoot":"","sources":["../../../src/model/entity/ErrorEntity.ts"],"names":[],"mappings":"AAEA,MAAM;IAGF,YAAY,IAAY;QACpB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACrB,CAAC;CACJ"}
+{"version":3,"file":"ErrorEntity.js","sourceRoot":"","sources":["../../../src/model/entity/ErrorEntity.ts"],"names":[],"mappings":"AAEA,MAAM;IAEF,YAA4B,IAAY,EAAkB,OAAe;QAA7C,SAAI,GAAJ,IAAI,CAAQ;QAAkB,YAAO,GAAP,OAAO,CAAQ;IACzE,CAAC;CACJ"}

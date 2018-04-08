@@ -77,13 +77,17 @@ export class LocalRepository implements InMemoryRepository {
             const currentPersistedIds: Array<string> = [];
 
             this.source.getItem(Constants.SESSION_ID_MAP).then(async (result) => {
+
                 if (result != undefined && result.length > 0) {
                     const currentIds: Array<string> = result.split(',');
                     currentPersistedIds.push(...currentIds);
                 }
-                currentPersistedIds.push(id + '');
+                if (currentPersistedIds.indexOf(id + '') === -1)
+                    currentPersistedIds.push(id + '');
+
                 const arrayString = currentPersistedIds.join();
                 await this.source.setItem(Constants.SESSION_ID_MAP, arrayString);
+
                 resolve(arrayString);
             });
         });
@@ -135,6 +139,10 @@ export class LocalRepository implements InMemoryRepository {
             await this.refreshAuthToken('');
             resolve(true);
         });
+    }
+
+    updateSession(session: Session): Promise<Session> {
+        return this.insertSession(session);
     }
 
 }

@@ -11,5 +11,5 @@ export interface AuthManager {
 
     createAccount(email: string, password: string, displayName: string): Promise<AuthResponse>;
 
-    isPersistedTokenAvailable(): Promise<AuthResponse>;
+    isAuthenticated(): Promise<AuthResponse>;
 }

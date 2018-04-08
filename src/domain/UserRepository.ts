@@ -9,6 +9,8 @@ export interface InMemoryRepository {
 
     insertSession(session: Session): Promise<Session>;
 
+    updateSession(session: Session): Promise<Session>;
+
     getAllSessions(): Promise<Array<Session>>;
 
     getSessionById(id: number): Promise<Session>;

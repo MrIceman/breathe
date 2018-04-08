@@ -120,3 +120,28 @@ it('clears an auth token successfully', async (done) => {
         done();
     });
 });
+
+it('updates an existing session without changing its local id', async (done) => {
+    const sessionMock = mock(Session);
+    const session = instance(sessionMock);
+    const session_str_1 = '{your momma}';
+
+    when(sessionMock.toJSONString()).thenReturn(session_str_1);
+    when(sessionMapperMock.mapSession(session_str_1)).thenReturn(session);
+
+    when(sessionMock.id).thenReturn(1);
+
+    await subject.insertSession(session);
+    await subject.getSessionById(session.id).then((result) => {
+        expect(result).toEqual(session);
+    });
+
+    session.globalId = 2;
+
+    await subject.updateSession(session);
+
+    await subject.getSessionById(session.id).then((result) => {
+        expect(result.globalId).toEqual(2);
+        done();
+    });
+});

@@ -1,57 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-
-import React, {Component} from 'react';
-import {AuthController, AuthState} from "./app/globals/AuthController";
-import {LoginComponent} from "./app/login/LoginComponent";
+import React from 'react';
 import {IceComponent} from "./app/IceComponent";
-import {AuthAction} from "./app/globals/AuthAction";
-import {Text, View} from "react-native";
 import {TabBarBottom, TabNavigator} from "react-navigation";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {GlobalStore} from "./app/globals/BreathStore";
+import {HomeComponent} from "./app/home/HomeComponent";
 
-
-class App extends Component<{}, AuthState> {
-    controller: AuthController;
-    action: AuthAction;
-
-    constructor() {
-        super({});
-        this.state = this.controller.getInitialState();
-        this.action = new AuthAction();
-
-        this.controller = new AuthController(this.action, this, GlobalStore.getInstance());
-    }
-
-    componentDidMount() {
-        this.action.isTokenPersisted();
-    }
-
-    render() {
-        let view;
-
-        if (this.state.checkedIfTokenIsPersisted) {
-            console.warn('CheckedIfToken persisted is fucking true');
-            view = (this.state.isAuthenticated ? <IceComponent/> : <LoginComponent/>);
-        } else {
-            view = <View style={{
-                flex: 1,
-                backgroundColor: 'skyblue',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}><Text>Loading..</Text></View>
-        }
-        return view;
-    }
-}
-
+// Routing
 export default TabNavigator(
     {
         Home: {
-            screen: App,
+            screen: HomeComponent,
         },
         Session: {
             screen: IceComponent,
@@ -69,8 +26,8 @@ export default TabNavigator(
                 const {routeName} = navigation.state;
                 let iconName: string;
                 if (routeName === 'Home') {
-                    iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-                } else if (routeName === 'Settings') {
+                    iconName = `ios-home${focused ? '' : '-outline'}`;
+                } else if (routeName === 'Session') {
                     iconName = `ios-options${focused ? '' : '-outline'}`;
                 }
 
@@ -81,7 +38,8 @@ export default TabNavigator(
 
         }),
         tabBarOptions: {
-            activeTintColor: 'tomato',
+            activeBackgroundColor: '#1976D2',
+            activeTintColor: '#ffffff',
             inactiveTintColor: 'gray',
         },
         tabBarComponent: TabBarBottom,

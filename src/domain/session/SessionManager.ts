@@ -21,21 +21,12 @@ export interface SessionManager extends Manager {
      * @param {string} notes
      * @returns {Promise<SessionResponse>}
      */
-    createSessionLocal(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
-                       notes: string): Promise<Session>;
+    createSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
+                  notes: string): Promise<Session>;
 
-    syncSessionGlobal(localSession: Session): Promise<Session>;
+    createSessionGlobal(localSession: Session): Promise<Session>;
 
     getAllSessions(): Promise<Array<Session>>;
 
-    getSessionByDetail(id: number): Promise<Session>;
+    getSessionById(id: number): Promise<Session>;
 }
-
-/*
-               public amountOfRounds: number,
-                public custom: boolean,
-                public retentionTimeMap: Map<number, number>,
-                public amountOfBreathsPreRetention: Map<number, number>,
-                public notes: string,
-                public inMemoryOnly: boolean = true
- */

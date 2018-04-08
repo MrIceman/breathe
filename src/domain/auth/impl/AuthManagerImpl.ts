@@ -64,13 +64,12 @@ export class AuthManagerImpl implements Manager, AuthManager {
             }, (error) => {
                 reject(this.errorMapper.mapEntity(error));
             }).catch((error: string) => {
-                console.warn('AuthManagerIMpl throwing error');
                 reject(error);
             });
         });
     }
 
-    isPersistedTokenAvailable(): Promise<AuthResponse> {
+    isAuthenticated(): Promise<AuthResponse> {
         return new Promise<AuthResponse>((resolve, _reject) => {
             this.repository.getAuthToken().then((result) => {
                 resolve(new AuthResponse(result, true));
