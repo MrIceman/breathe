@@ -70,7 +70,7 @@ export class SessionManagerImpl implements SessionManager {
     /*
     private async shouldLoadFromBackend(): boolean {
         const isDeviceOnline = await this.networkChecker.isDeviceConnected();
-        const isUserAuthenticated = await this.authManager.isAuthenticated();
+        const isUserAuthenticated = await this.controller.isAuthenticated();
         return isDeviceOnline && isUserAuthenticated;
     } */
 }
