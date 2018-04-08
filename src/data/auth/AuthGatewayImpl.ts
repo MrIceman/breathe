@@ -15,7 +15,7 @@ export class AuthGatewayImpl implements AuthGateway {
                 'POST', JSON.stringify({'email': request.email, 'password': request.password}));
 
             HttpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {
-                if (http_resolve.error !== null) {
+                if (http_resolve.error !== undefined) {
                     reject(http_resolve.error);
                 }
                 let auth: AuthEntity = new AuthEntity(http_resolve.token);

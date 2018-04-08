@@ -16,8 +16,8 @@ export class HttpService {
                     let response: HttpResponse = new HttpResponse();
                     httpResult.json().then((result: any) => {
                         if (result.token !== undefined)
-                            response.token = result.token;
-                        if (result.Error !== undefined)
+                            response.token = result.token as string;
+                        else if (result.Error !== undefined)
                             response.error = result.Error as ErrorEntity;
                         resolve(response);
                     });

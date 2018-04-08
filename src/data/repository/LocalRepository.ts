@@ -145,4 +145,12 @@ export class LocalRepository implements InMemoryRepository {
         return this.insertSession(session);
     }
 
+    cacheUsername(username: string): Promise<string> {
+        return this.source.setItem(Constants.USERNAME_CACHE_KEY, username);
+    }
+
+    getUsername(): Promise<string> {
+        return this.source.getItem(Constants.USERNAME_CACHE_KEY);
+    }
+
 }

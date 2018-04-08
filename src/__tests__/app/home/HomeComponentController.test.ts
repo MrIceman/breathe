@@ -20,9 +20,27 @@ it('caches token when sign up successful', async () => {
 
     when(authManager.createAccount(email, pw, username)).thenResolve(authResponse);
     when(repository.refreshAuthToken(token)).thenResolve('anyhtnigsio');
+    when(component.displayMessage('')).thenCall(() => {
+    });
 
     await subject.signUp(email, pw, username);
 
     verify(repository.refreshAuthToken(token)).once();
-    verify(component.displayError('')).once();
 });
+
+it('tells the view that user is logged in when he actually is', async (done) => {
+    when(repository.isAuthTokenPersisted()).thenResolve(true);
+    when(repository.getUsername()).thenResolve('');
+    when(component.updateState({
+        isLoggedIn: false,
+        isProgressing: true,
+        currentProgress: 0.1,
+        currentUsername: ''
+    })).thenCall(() => {
+    });
+    subject.tryAuth().then((result) => {
+        expect(result).toEqual(true);
+        done();
+    });
+});
+

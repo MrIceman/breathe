@@ -7,6 +7,10 @@ export interface InMemoryRepository {
 
     refreshAuthToken(token: string): Promise<string>;
 
+    cacheUsername(username: string): Promise<string>;
+
+    getUsername(): Promise<string>;
+
     insertSession(session: Session): Promise<Session>;
 
     updateSession(session: Session): Promise<Session>;
