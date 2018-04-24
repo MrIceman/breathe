@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1523225033211" clover="3.2.0">
-  <project timestamp="1523225033211" name="All files">
-    <metrics statements="439" coveredstatements="254" conditionals="119" coveredconditionals="73" methods="283" coveredmethods="160" elements="841" coveredelements="487" complexity="0" loc="439" ncloc="439" packages="21" files="35" classes="35">
+<coverage generated="1524521114508" clover="3.2.0">
+  <project timestamp="1524521114509" name="All files">
+    <metrics statements="443" coveredstatements="254" conditionals="119" coveredconditionals="73" methods="284" coveredmethods="160" elements="846" coveredelements="487" complexity="0" loc="443" ncloc="443" packages="21" files="35" classes="35">
       <package name="app">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <file name="MainWindow.js" path="/Users/martinnowosad/breathe/lib/app/MainWindow.js">
@@ -156,25 +156,27 @@
         </file>
       </package>
       <package name="app.home">
-        <metrics statements="44" coveredstatements="23" conditionals="19" coveredconditionals="10" methods="32" coveredmethods="16"/>
+        <metrics statements="48" coveredstatements="23" conditionals="19" coveredconditionals="10" methods="33" coveredmethods="16"/>
         <file name="HomeComponent.js" path="/Users/martinnowosad/breathe/lib/app/home/HomeComponent.js">
-          <metrics statements="13" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="9" coveredmethods="0"/>
-          <line num="10" count="0" type="stmt"/>
+          <metrics statements="15" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="10" coveredmethods="0"/>
           <line num="11" count="0" type="stmt"/>
           <line num="12" count="0" type="stmt"/>
           <line num="13" count="0" type="stmt"/>
           <line num="14" count="0" type="stmt"/>
-          <line num="17" count="0" type="stmt"/>
-          <line num="20" count="0" type="stmt"/>
-          <line num="23" count="0" type="stmt"/>
-          <line num="26" count="0" type="stmt"/>
-          <line num="29" count="0" type="stmt"/>
-          <line num="32" count="0" type="stmt"/>
-          <line num="37" count="0" type="stmt"/>
-          <line num="40" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="25" count="0" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
+          <line num="38" count="0" type="stmt"/>
+          <line num="41" count="0" type="stmt"/>
+          <line num="44" count="0" type="stmt"/>
+          <line num="47" count="0" type="stmt"/>
+          <line num="50" count="0" type="stmt"/>
+          <line num="56" count="0" type="stmt"/>
+          <line num="59" count="0" type="stmt"/>
         </file>
         <file name="HomeComponentController.js" path="/Users/martinnowosad/breathe/lib/app/home/HomeComponentController.js">
-          <metrics statements="31" coveredstatements="23" conditionals="11" coveredconditionals="10" methods="23" coveredmethods="16"/>
+          <metrics statements="33" coveredstatements="23" conditionals="11" coveredconditionals="10" methods="23" coveredmethods="16"/>
           <line num="1" count="1" type="cond" truecount="3" falsecount="0"/>
           <line num="2" count="3" type="cond" truecount="2" falsecount="0"/>
           <line num="3" count="1" type="stmt"/>
@@ -202,7 +204,9 @@
           <line num="47" count="1" type="cond" truecount="1" falsecount="1"/>
           <line num="48" count="1" type="stmt"/>
           <line num="49" count="1" type="stmt"/>
-          <line num="56" count="1" type="stmt"/>
+          <line num="52" count="1" type="stmt"/>
+          <line num="55" count="0" type="stmt"/>
+          <line num="56" count="0" type="stmt"/>
           <line num="59" count="0" type="stmt"/>
           <line num="61" count="0" type="stmt"/>
           <line num="62" count="0" type="stmt"/>

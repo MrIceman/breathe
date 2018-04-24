@@ -21,8 +21,8 @@ export interface SessionManager extends Manager {
      * @param {string} notes
      * @returns {Promise<SessionResponse>}
      */
-    createSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
-                  notes: string): Promise<Session>;
+    createAndSaveSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
+                         notes: string): Promise<Session>;
 
     createSessionGlobal(localSession: Session): Promise<Session>;
 

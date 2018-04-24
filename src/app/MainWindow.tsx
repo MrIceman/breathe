@@ -13,7 +13,7 @@ export class MainWindow extends React.Component {
         this.styles = StyleSheet.create({
             container: {
                 flex: 1,
-                backgroundColor: '#2196F3',
+                backgroundColor: '#BBDEFB',
             },
             navBar: {
                 height: 55,

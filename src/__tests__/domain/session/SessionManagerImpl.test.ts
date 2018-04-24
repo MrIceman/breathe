@@ -50,7 +50,7 @@ it('stores a session only in cache and does no gateway call when no internet ava
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
 
-    subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
+    subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
         verify(repository.insertSession(sessionMock)).once();
         expect(result).toEqual(sessionMock);
@@ -70,7 +70,7 @@ it('stores a session only in cache and does no gateway call when internet is ava
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
     when(authManager.isAuthenticated()).thenReject(new ErrorEntity(-1, ''));
 
-    subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
+    subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
         verify(repository.insertSession(sessionMock)).once();
         expect(result).toEqual(sessionMock);
@@ -92,7 +92,7 @@ it('stores a session in gateway because user is authenticated and network is ava
     when(gateway.createSession(amountOfRounds, custom, map, map2, notes)).thenResolve(syncedSessionMock);
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
 
-    await subject.createSession(amountOfRounds, custom, map, map2, notes).then((result) => {
+    await subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
         verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).once();
         verify(repository.insertSession(sessionMock)).once();
         verify(repository.updateSession(syncedSessionMock)).once();

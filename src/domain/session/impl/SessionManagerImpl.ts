@@ -13,11 +13,11 @@ export class SessionManagerImpl implements SessionManager {
                 private readonly authManager: AuthManager) {
     }
 
-    createSession(amountOfRounds: number,
-                  custom: boolean,
-                  retentionTimeMap: Map<number, number>,
-                  amountOfBreathsPerRetention: Map<number, number>,
-                  notes: string): Promise<Session> {
+    createAndSaveSession(amountOfRounds: number,
+                         custom: boolean,
+                         retentionTimeMap: Map<number, number>,
+                         amountOfBreathsPerRetention: Map<number, number>,
+                         notes: string): Promise<Session> {
 
         const session = this.sessionFactory.createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
         return new Promise<Session>((resolve, _reject) => {

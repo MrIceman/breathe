@@ -13,6 +13,7 @@ export class HomeComponentController {
         this.authManager.signIn(id, password).then((_result) => {
             // cache token
             this.component.updateState({
+                ...this.component.getInitialState(),
                 isLoggedIn: true,
                 isProgressing: false,
                 currentProgress: 0,
@@ -33,10 +34,12 @@ export class HomeComponentController {
                 await this.repository.cacheUsername(username);
                 this.component.displayMessage('Congratulations! Your sign up was successful.');
                 this.component.updateState({
+                    ...this.component.getInitialState(),
                     isLoggedIn: true,
                     isProgressing: false,
                     currentProgress: 0,
-                    currentUsername: username
+                    currentUsername: username,
+                    welcomeText: "It's your first time using Breathe. Why don't you go ahead and do your first breathing Session?"
                 });
             });
         }, (error: ErrorEntity) => {
@@ -51,28 +54,26 @@ export class HomeComponentController {
          */
         return new Promise<boolean>((resolve, _reject) => {
             this.component.updateState({
-                isLoggedIn: false,
+                ...this.component.getInitialState(),
                 isProgressing: true,
                 currentProgress: 0.1,
-                currentUsername: ''
             });
             this.repository.isAuthTokenPersisted().then((result) => {
                 if (result) {
                     this.repository.getUsername().then((username) => {
                         this.component.updateState({
+                            ...this.component.getInitialState(),
                             isLoggedIn: result,
-                            isProgressing: false,
-                            currentProgress: 0,
-                            currentUsername: username
+                            currentUsername: username,
+                            welcomeText: `Hey there, today is ${new Date(Date.now()).toISOString()}\nSo far you have 0 Sessions.\nThere are currently 0 new Posts.\nWhy don't you start your first Session or hang around in the Community?
+                            `
+
                         });
                     });
                     resolve(true);
                 } else {
                     this.component.updateState({
-                        isLoggedIn: false,
-                        isProgressing: false,
-                        currentProgress: 0,
-                        currentUsername: ''
+                        ...this.component.getInitialState(),
                     });
                     resolve(false);
                 }
@@ -80,17 +81,11 @@ export class HomeComponentController {
 
             }, (_error) => {
                 this.component.updateState({
-                    isLoggedIn: false,
-                    isProgressing: false,
-                    currentProgress: 0,
-                    currentUsername: ''
+                    ...this.component.getInitialState(),
                 });
             }).catch((_error) => {
                 this.component.updateState({
-                    isLoggedIn: false,
-                    isProgressing: false,
-                    currentProgress: 0,
-                    currentUsername: ''
+                    ...this.component.getInitialState(),
                 });
                 resolve(false);
             })
