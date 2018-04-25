@@ -1,7 +1,8 @@
 import * as React from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {MainWindow} from "./MainWindow";
+import {MainWindow} from "../MainWindow";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {NavigationScreenProps} from "react-navigation";
 
 export const styles = StyleSheet.create({
     menuTitle: {
@@ -29,11 +30,10 @@ export const styles = StyleSheet.create({
     }
 });
 
-class MenuItem extends React.PureComponent<{ title: string, icon: string }> {
+class MenuItem extends React.PureComponent<{ title: string, icon: string, onClick: () => void }> {
     render() {
         return (
-            <TouchableOpacity onPress={() => {
-            }}>
+            <TouchableOpacity onPress={this.props.onClick}>
                 <View style={styles.menuItem}>
                     <Ionicons name={this.props.icon} size={55} color={'#fff'}/>
                     <Text style={styles.menuTitle}>
@@ -44,14 +44,18 @@ class MenuItem extends React.PureComponent<{ title: string, icon: string }> {
     }
 }
 
-export class IceComponent extends React.Component {
+export class PracticeComponent extends React.Component<NavigationScreenProps> {
+
+    private displayBreathingSessionComponent() {
+        this.props.navigation.navigate('Breathing');
+    }
 
     render() {
         return (
             <MainWindow>
                 <View style={styles.menu}>
-                    <MenuItem title={'Breathing'} icon={'ios-clock-outline'}/>
-                    <MenuItem title={'Cold Exposure'} icon={'ios-snow-outline'}/>
+                    <MenuItem title={'Breathing'} icon={'ios-clock-outline'} onClick={() => this.displayBreathingSessionComponent()}/>
+                    <MenuItem title={'Cold Exposure'} icon={'ios-snow-outline'} onClick={() => {alert('Cold Exposure: Under Construction')}}/>
                 </View>
             </MainWindow>
         );

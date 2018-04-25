@@ -1,6 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import {StyleSheet, View} from "react-native";
 
 
 export class MainWindow extends React.Component {
@@ -49,17 +48,6 @@ export class MainWindow extends React.Component {
     render() {
         return <View style={[this.styles.container, {height: 20}]}>
             <View style={this.styles.container}>
-                <View style={this.styles.navBar}>
-                    <View style={this.styles.leftNavPart}/>
-                    <Text style={this.styles.titleText}>Breathe</Text>
-                    <View style={this.styles.rightNavPart}>
-                        <TouchableOpacity onPress={() => {
-                        }}>
-                            <Ionicons name={'ios-menu'} size={25} color={'white'}/>
-                        </TouchableOpacity>
-                    </View>
-                    <View/>
-                </View>
                 <View style={this.styles.body}>
                     {this.props.children}
                 </View>
