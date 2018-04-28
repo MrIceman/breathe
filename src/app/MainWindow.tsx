@@ -13,6 +13,8 @@ export class MainWindow extends React.Component {
             container: {
                 flex: 1,
                 backgroundColor: '#BBDEFB',
+                paddingLeft: 8,
+                paddingRight: 8
             },
             navBar: {
                 height: 55,
