@@ -30,13 +30,20 @@ const style = StyleSheet.create({
     }
 });
 
+export interface BreathingComponentState {
+    trackBreaths: boolean,
+    start: boolean,
+    currentRound: 0
+}
+
 export class BreathingComponent extends React.Component {
 
     constructor(props: {}) {
         super(props);
     }
 
-    public update() {};
+    public update() {
+    };
 
     render() {
         return <View style={style.content}>
