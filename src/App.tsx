@@ -1,23 +1,55 @@
 import React from 'react';
-import {IceComponent} from "./app/IceComponent";
-import {TabBarBottom, TabNavigator} from "react-navigation";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import {PracticeComponent} from "./app/practice/PracticeComponent";
+import {StackNavigator, TabBarBottom, TabNavigator} from "react-navigation";
 import {HomeComponent} from "./app/home/HomeComponent";
+import {BreathingComponent} from "./app/session/BreathingComponent";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const PracticeStack = StackNavigator({
+    Practice: {screen: PracticeComponent},
+    Breathing: {screen: BreathingComponent}
+}, {
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: '#1976D2',
+        },
+        title: 'Practice',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    },
+});
+
+const HomeStack = StackNavigator({
+    Home: {screen: HomeComponent},
+}, {
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: '#1976D2',
+        },
+        title: 'Home',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    },
+});
 
 // Routing
 export default TabNavigator(
     {
         Home: {
-            screen: HomeComponent,
+            screen: HomeStack,
         },
-        Session: {
-            screen: IceComponent,
+        Practice: {
+            screen: PracticeStack,
         },
         Statistics: {
-            screen: IceComponent,
+            screen: PracticeComponent,
         },
         Community: {
-            screen: IceComponent,
+            screen: PracticeComponent,
         }
     },
     {
@@ -26,9 +58,9 @@ export default TabNavigator(
                 const {routeName} = navigation.state;
                 let iconName: string;
                 if (routeName === 'Home') {
-                    iconName = `ios-home${focused ? '' : '-outline'}`;
-                } else if (routeName === 'Session') {
-                    iconName = `ios-options${focused ? '' : '-outline'}`;
+                    iconName = `ios-clock-outline`;
+                } else if (routeName === 'Practice') {
+                    iconName = `ios-stopwatch${focused ? '' : '-outline'}`;
                 }
 
                 // You can return any component that you like here! We usually use an
@@ -44,7 +76,7 @@ export default TabNavigator(
         },
         tabBarComponent: TabBarBottom,
         tabBarPosition: 'bottom',
-        animationEnabled: false,
-        swipeEnabled: false,
+        animationEnabled: true,
+        swipeEnabled: true,
     }
 );

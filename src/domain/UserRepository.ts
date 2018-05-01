@@ -1,11 +1,16 @@
 import {Session} from "../data/session/Session";
+import {SessionGateway} from "./session/SessionGateway";
 
-export interface InMemoryRepository {
+export interface InMemoryRepository extends SessionGateway{
     isAuthTokenPersisted(): Promise<boolean>;
 
     getAuthToken(): Promise<string>;
 
     refreshAuthToken(token: string): Promise<string>;
+
+    cacheUsername(username: string): Promise<string>;
+
+    getUsername(): Promise<string>;
 
     insertSession(session: Session): Promise<Session>;
 

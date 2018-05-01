@@ -145,3 +145,18 @@ it('updates an existing session without changing its local id', async (done) => 
         done();
     });
 });
+
+it('caches an username successfully', async (done) => {
+    const username = 'spiderman';
+    const result = await subject.cacheUsername(username);
+    expect(result).toEqual(username);
+    done();
+});
+
+it('gets a cached username successfully', async (done) => {
+    const username = 'spiderman';
+    await subject.cacheUsername(username);
+    const result = await subject.getUsername();
+    expect(result).toEqual(username);
+    done();
+});

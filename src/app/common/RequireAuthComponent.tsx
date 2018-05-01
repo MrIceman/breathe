@@ -82,6 +82,12 @@ export class RequireAuthComponent extends React.Component<RequireAuthProps, { sh
     protected email: string;
     protected password: string;
     protected username: string;
+    private readonly SIGN_UP_BUTTON: string = 'CREATE';
+    private readonly SIGN_IN_BUTTON: string = 'OKAY';
+    private readonly SIGN_IN_DESCRIPTION: string = 'Use your Email or Username to log in';
+    private readonly SIGN_UP_DESCRIPTION: string = 'To use every feature of Breathe you\'re required to have a Account';
+    private readonly SIGN_UP_LINK: string = 'Already have an account?';
+    private readonly SIGN_IN_LINK: string = 'Create an Account';
 
     constructor(props) {
         super(props);
@@ -92,9 +98,7 @@ export class RequireAuthComponent extends React.Component<RequireAuthProps, { sh
     signUpForm() {
         return <View>
             <View style={styles.form}>
-                <Text style={styles.formDescription}>To use every
-                    feature of this Application you're required to
-                    have a Breathe Account</Text>
+                <Text style={styles.formDescription}>{this.SIGN_UP_DESCRIPTION}</Text>
                 <FormItem label={'Email'} setValue={((x) => {
                     this.email = x
                 })} icon={'ios-mail-outline'} tintColor={'#90CAF9'}/>
@@ -108,20 +112,20 @@ export class RequireAuthComponent extends React.Component<RequireAuthProps, { sh
                     this.username = x
                 })} icon={'ios-contact-outline'} tintColor={'#90CAF9'}/>
             </View>
-            <Button title={'CREATE'} onPress={() => {
+            <Button title={this.SIGN_UP_BUTTON} onPress={() => {
                 this.props.signUp(this.email, this.password, this.username);
             }} backgroundColor={'#2196F3'}/>
             <TouchableOpacity onPress={() => {
                 this.setState({showSignUp: false});
             }}>
-                <Text style={styles.signInText}>Already have an Account?</Text>
+                <Text style={styles.signInText}>{this.SIGN_UP_LINK}</Text>
             </TouchableOpacity></View>;
     }
 
     signInForm() {
         return <View>
             <View style={styles.form}>
-                <Text style={styles.formDescription}>Use your Email or Username to log in</Text>
+                <Text style={styles.formDescription}>{this.SIGN_IN_DESCRIPTION}</Text>
                 <FormItem label={'Email / Username'} setValue={((x) => {
                     this.email = x
                 })} icon={'ios-mail-outline'} tintColor={'#90CAF9'}/>
@@ -132,13 +136,13 @@ export class RequireAuthComponent extends React.Component<RequireAuthProps, { sh
                           password={true}/>
                 <Divider style={{margin: 16}}/>
             </View>
-            <Button title={'SIGN IN'} onPress={() => {
+            <Button title={this.SIGN_IN_BUTTON} onPress={() => {
                 this.props.signIn(this.email, this.password);
             }} backgroundColor={'#2196F3'}/>
             <TouchableOpacity onPress={() => {
                 this.setState({showSignUp: true});
             }}>
-                <Text style={styles.signInText}>Create an Account</Text>
+                <Text style={styles.signInText}>{this.SIGN_IN_LINK}</Text>
             </TouchableOpacity></View>;
     }
 
