@@ -11,20 +11,22 @@ import {ErrorEntity} from "../../../model/entity/ErrorEntity";
 
 
 class GatewayMock implements SessionGateway {
+    createSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>, notes: string): Promise<Session> {
+        return undefined;
+    }
+
     getAllSessions(): Promise<Array<Session>> {
         return undefined;
     }
 
-    getSessionById() {
-    }
-
-    createSession(_amountOfRounds: number, _custom: boolean, _retentionTimeMap: Map<number, number>, _amountOfBreathsPerRetention: Map<number, number>, _notes: string): Promise<Session> {
+    getSessionById(id: number): Promise<Session> {
         return undefined;
     }
 
-    updateSession(_session: Session): Session {
+    updateSession(session: Session): Promise<Session> {
         return undefined;
     }
+
 
 }
 

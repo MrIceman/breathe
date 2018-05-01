@@ -1,8 +1,9 @@
 import {BreathingController} from "../../../app/session/BreathingController";
 import {BreathingComponent} from "../../../app/session/BreathingComponent";
-import {instance, mock, resetCalls, verify, when} from "ts-mockito";
+import {anything, instance, mock, resetCalls, verify, when} from "ts-mockito";
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
 import {Session} from "../../../data/session/Session";
+import any = jasmine.any;
 
 const component = mock(BreathingComponent);
 const sessionManager = mock(SessionManagerImpl);
@@ -32,7 +33,7 @@ it('it creates and saves a session', async () => {
 
     await subject.onSaveSession(amountOfRounds, custom, retentionTime, amountOfBreathsPerRetention, notes);
 
-    verify(component.update()).once();
+    verify(component.updateState(anything())).once();
 });
 
 it('it fails to create and save a session', async () => {
@@ -48,7 +49,7 @@ it('it fails to create and save a session', async () => {
 
     await subject.onSaveSession(amountOfRounds, custom, retentionTime, amountOfBreathsPerRetention, notes);
 
-    verify(component.update()).once();
+    verify(component.updateState(anything())).once();
 });
 
 it('starts a session', () => {

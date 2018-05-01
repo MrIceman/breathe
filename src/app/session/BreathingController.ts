@@ -14,24 +14,38 @@ export class BreathingController {
         , notes: string) {
         this.sessionManager.createAndSaveSession(amountOfRounds, custom, retentionTime, amountOfBreathsPerRetention, notes)
             .then((_result) => {
-                // update ui
-                this.breathingComponent.update();
+                // updateState ui
+                this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaved: true});
             }, (_error) => {
-                this.breathingComponent.update()
+                this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaveFailed: true});
             });
     }
 
+    public launchWithTrackingBreaths() {
+
+        this.breathingComponent.setState({...this.breathingComponent.getState(), start: true});
+    }
+
+    public launchWithoutTrackingBreaths() {
+        this.breathingComponent.setState({...this.breathingComponent.getState(), start: true});
+    }
+
+
     public startSession() {
+        this.amountOfBreaths = new Map();
         this.amountOfRounds = 0;
         this.retentionMap = new Map();
-        this.amountOfBreaths = new Map();
         this.notes = '';
     }
+
 
     public addRound(retentionTime: number, amountOfBreaths?: number) {
         this.amountOfRounds++;
         this.retentionMap.set(this.amountOfRounds, retentionTime);
         if (amountOfBreaths)
             this.amountOfBreaths.set(this.amountOfRounds, amountOfBreaths);
+        const newResults = this.breathingComponent.getState().results;
+        newResults.push('' + this.retentionMap.get(this.retentionMap.size - 1));
+        this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
     }
 }
