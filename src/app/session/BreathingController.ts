@@ -22,12 +22,13 @@ export class BreathingController {
     }
 
     public launchWithTrackingBreaths() {
-
-        this.breathingComponent.setState({...this.breathingComponent.getState(), start: true});
+        this.startSession();
+        this.breathingComponent.updateState({...this.breathingComponent.getState(), start: true});
     }
 
     public launchWithoutTrackingBreaths() {
-        this.breathingComponent.setState({...this.breathingComponent.getState(), start: true});
+        this.startSession();
+        this.breathingComponent.updateState({...this.breathingComponent.getState(), start: true});
     }
 
 
@@ -45,7 +46,7 @@ export class BreathingController {
         if (amountOfBreaths)
             this.amountOfBreaths.set(this.amountOfRounds, amountOfBreaths);
         const newResults = this.breathingComponent.getState().results;
-        newResults.push('' + this.retentionMap.get(this.retentionMap.size - 1));
+        newResults.push(`${this.retentionMap.get(this.retentionMap.size)}`);
         this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
     }
 }

@@ -1,15 +1,23 @@
 import {BreathingController} from "../../../app/session/BreathingController";
-import {BreathingComponent} from "../../../app/session/BreathingComponent";
-import {anything, instance, mock, resetCalls, verify, when} from "ts-mockito";
+import {BreathingComponent, BreathingComponentState} from "../../../app/session/BreathingComponent";
+import {anything, deepEqual, instance, mock, resetCalls, verify, when} from "ts-mockito";
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
 import {Session} from "../../../data/session/Session";
-import any = jasmine.any;
 
 const component = mock(BreathingComponent);
+let componentState = {
+    trackBreaths: false,
+    start: false,
+    currentRound: 0,
+    sessionDone: false,
+    sessionSaveFailed: false,
+    sessionSaved: false,
+    results: []
+};
+
 const sessionManager = mock(SessionManagerImpl);
 const subject = new BreathingController(instance(component), instance(sessionManager));
-
-
+when(component.getState()).thenReturn(componentState);
 beforeEach(() => {
     try {
         subject.retentionMap.clear();
@@ -60,18 +68,23 @@ it('starts a session', () => {
     expect(subject.notes).toEqual('');
 });
 
-it('updates a retention round without tracking breaths', () => {
-    subject.addRound(20);
+it('updates a retention round without tracking breaths', async () => {
+    resetCalls(component);
+    await subject.addRound(20);
     expect(subject.retentionMap).toEqual(new Map().set(1, 20));
     expect(subject.amountOfRounds).toEqual(1);
-    expect(subject.amountOfBreaths).toEqual(new Map())
+    expect(subject.amountOfBreaths).toEqual(new Map());
+    verify(component.updateState(deepEqual({...instance(component).getState(), results: deepEqual(['20'])}))).once();
+
 });
 
 it('updates 2 retention rounds', () => {
+    resetCalls(component);
     subject.addRound(20);
     subject.addRound(40);
     expect(subject.retentionMap).toEqual(new Map().set(1, 20).set(2, 40));
     expect(subject.amountOfRounds).toEqual(2);
+
 });
 
 it('updates a round with retention time and amount of breaths', () => {

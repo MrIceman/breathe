@@ -36,7 +36,7 @@ const style = StyleSheet.create({
 export interface BreathingComponentState {
     trackBreaths: boolean,
     start: boolean,
-    currentRound: 0,
+    currentRound: number,
     sessionDone: boolean,
     sessionSaveFailed: boolean,
     sessionSaved: boolean,
@@ -51,6 +51,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
         this.state = this.getDefaultState();
         this.controller = new BreathingController(this, ManagerFactory.buildSessionManger());
         this.updateState = this.updateState.bind(this);
+        this.stopTimer = this.stopTimer.bind(this);
     }
 
     public getDefaultState(): BreathingComponentState {
@@ -66,9 +67,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
     }
 
     public updateState(state: BreathingComponentState) {
-        //this.setState(state);
-        alert('Hello dude');
-
+        this.setState(state);
     };
 
     public getState(): BreathingComponentState {
@@ -85,8 +84,8 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
 
     private getResults() {
         return <View>
-            {this.state.results.map((text) => {
-                return <Text>text</Text>;
+            {this.state.results.map((val) => {
+                return <Text>{val}</Text>;
             })}
         </View>
 
