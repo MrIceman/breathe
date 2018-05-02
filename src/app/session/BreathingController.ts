@@ -45,8 +45,14 @@ export class BreathingController {
         this.retentionMap.set(this.amountOfRounds, retentionTime);
         if (amountOfBreaths)
             this.amountOfBreaths.set(this.amountOfRounds, amountOfBreaths);
-        const newResults = this.breathingComponent.getState().results;
-        newResults.push(`${this.retentionMap.get(this.retentionMap.size)}`);
+        const newResults = [...this.retentionMap.values()].map((number) => String(number));
+        this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
+    }
+
+    public removeLastRound() {
+        this.retentionMap.delete(this.amountOfRounds);
+        this.amountOfRounds--;
+        const newResults = [...this.retentionMap.values()].map((number) => String(number));
         this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
     }
 }

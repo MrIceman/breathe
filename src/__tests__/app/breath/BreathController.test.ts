@@ -92,3 +92,23 @@ it('updates a round with retention time and amount of breaths', () => {
     expect(subject.retentionMap).toEqual(new Map().set(1, 20));
     expect(subject.amountOfBreaths).toEqual(new Map().set(1, 40));
 });
+
+it('removes last round', () => {
+    subject.addRound(30);
+    resetCalls(component);
+    subject.removeLastRound();
+    expect(subject.retentionMap).toEqual(new Map());
+    expect(subject.amountOfRounds).toEqual(0);
+    verify(component.updateState(deepEqual({...instance(component).getState(), results: deepEqual([])}))).once();
+
+});
+
+it('removes last round from multiple sessions', () => {
+    subject.addRound(30);
+    subject.addRound(90);
+    resetCalls(component);
+    subject.removeLastRound();
+    expect(subject.retentionMap).toEqual(new Map().set(1, 30));
+    expect(subject.amountOfRounds).toEqual(1);
+    verify(component.updateState(deepEqual({...instance(component).getState(), results: deepEqual(['30'])}))).once();
+});

@@ -3,6 +3,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {TimerCircleComponent} from "../practice/Timer/TimerCircleComponent";
 import {BreathingController} from "./BreathingController";
 import {ManagerFactory} from "../../domain/ManagerFactory";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const style = StyleSheet.create({
     content: {
@@ -30,6 +31,56 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-start'
+    },
+
+    result: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding: 8
+    },
+
+    resultText: {
+        fontWeight: 'bold',
+        color: '#fff',
+        paddingLeft: 8,
+        paddingRight: 8,
+        paddingTop: 4,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    resultTextView: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    resultTitleView: {
+        flex: 1
+    },
+    lastResultText: {
+        borderStyle: 'dotted',
+        borderWidth: 1,
+        borderColor: '#fff',
+        marginRight: 8
+    },
+    resultContentView: {
+        flex: 3,
+        flexWrap: 'wrap',
+    },
+    timerView: {
+        paddingTop: 16,
+        flex: 3
+    },
+
+    bottomView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    finishSessionText: {
+        color: '#BBDEFB',
+        fontWeight: '800'
     }
 });
 
@@ -83,10 +134,22 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
     }
 
     private getResults() {
-        return <View>
-            {this.state.results.map((val) => {
-                return <Text>{val}</Text>;
-            })}
+        return <View style={style.result}>
+            <View style={style.resultTitleView}>
+                <Text style={[style.resultText, {paddingBottom: 8}]}>Results</Text>
+            </View>
+            <View style={style.resultContentView}>
+                {this.state.results.map((val, index) => {
+                    const isLastItem = index + 1 === this.state.results.length;
+                    let resultTextStyle = isLastItem ? [style.resultText, style.lastResultText] : style.resultText;
+                    return <View style={style.resultTextView} key={index}><Text style={resultTextStyle}>
+                        {index + 1} - 00:{val} </Text> {isLastItem ?
+                        <TouchableOpacity onPress={() => {
+                            this.controller.removeLastRound();
+                        }}><Ionicons name={'ios-close-outline'} size={30} color={'#BBDEFB'}/></TouchableOpacity> : ''}
+                    </View>
+                })}
+            </View>
         </View>
 
     }
@@ -110,7 +173,15 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
             {this.state.start &&
             <View>
                 {this.getResults()}
-                <TimerCircleComponent onStartCallBack={() => this.startTimer} onStopCallBack={this.stopTimer}/>
+                <View style={style.timerView}>
+                    <TimerCircleComponent onStartCallBack={() => this.startTimer} onStopCallBack={this.stopTimer}/>
+                </View>
+                <View style={style.bottomView}>
+                    <TouchableOpacity onPress={() => {
+                    }}>
+                        <Text style={style.finishSessionText}>Done</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             }
         </View>
