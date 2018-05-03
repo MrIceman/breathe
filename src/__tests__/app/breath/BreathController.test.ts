@@ -1,8 +1,9 @@
 import {BreathingController} from "../../../app/session/BreathingController";
-import {BreathingComponent, BreathingComponentState} from "../../../app/session/BreathingComponent";
+import {BreathingComponent} from "../../../app/session/BreathingComponent";
 import {anything, deepEqual, instance, mock, resetCalls, verify, when} from "ts-mockito";
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
 import {Session} from "../../../data/session/Session";
+import {ResultFormatter} from "../../../app/session/ResultFormatter";
 
 const component = mock(BreathingComponent);
 let componentState = {
@@ -14,10 +15,13 @@ let componentState = {
     sessionSaved: false,
     results: []
 };
-
+const resultFormatter = mock(ResultFormatter);
 const sessionManager = mock(SessionManagerImpl);
-const subject = new BreathingController(instance(component), instance(sessionManager));
+const subject = new BreathingController(instance(component), instance(sessionManager), instance(resultFormatter));
 when(component.getState()).thenReturn(componentState);
+when(resultFormatter.parseSeconds(30)).thenReturn('30');
+when(resultFormatter.parseSeconds(90)).thenReturn('90');
+when(resultFormatter.parseSeconds(20)).thenReturn('20');
 beforeEach(() => {
     try {
         subject.retentionMap.clear();

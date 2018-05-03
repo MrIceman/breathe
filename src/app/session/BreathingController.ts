@@ -1,5 +1,6 @@
 import {SessionManager} from "../../domain/session/SessionManager";
 import {BreathingComponent} from "./BreathingComponent";
+import {ResultFormatter} from "./ResultFormatter";
 
 export class BreathingController {
     public amountOfRounds: number;
@@ -7,7 +8,7 @@ export class BreathingController {
     public amountOfBreaths: Map<number, number>;
     public notes: string;
 
-    constructor(private readonly breathingComponent: BreathingComponent, private readonly sessionManager: SessionManager) {
+    constructor(private readonly breathingComponent: BreathingComponent, private readonly sessionManager: SessionManager, private readonly resultFormatter: ResultFormatter) {
     }
 
     public onSaveSession(amountOfRounds: number, custom: boolean, retentionTime: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>
@@ -45,14 +46,14 @@ export class BreathingController {
         this.retentionMap.set(this.amountOfRounds, retentionTime);
         if (amountOfBreaths)
             this.amountOfBreaths.set(this.amountOfRounds, amountOfBreaths);
-        const newResults = [...this.retentionMap.values()].map((number) => String(number));
+        const newResults = [...this.retentionMap.values()].map((number) => this.resultFormatter.parseSeconds(number));
         this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
     }
 
     public removeLastRound() {
         this.retentionMap.delete(this.amountOfRounds);
         this.amountOfRounds--;
-        const newResults = [...this.retentionMap.values()].map((number) => String(number));
+        const newResults = [...this.retentionMap.values()].map((number) => this.resultFormatter.parseSeconds(number));
         this.breathingComponent.updateState({...this.breathingComponent.getState(), results: newResults});
     }
 }
