@@ -4,6 +4,7 @@ import {HttpRequest} from "../HttpRequest";
 import {HttpService} from "../http/HttpService";
 import {SessionResponseMapper} from "../../domain/session/SessionResponseMapper";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
+import {HttpRequestFactory} from "../http/HttpRequestFactory";
 
 export class SessionGatewayImpl implements SessionGateway {
     private string;
@@ -11,12 +12,13 @@ export class SessionGatewayImpl implements SessionGateway {
 
     constructor(private readonly sessionResponseMapper: SessionResponseMapper,
                 private readonly httpService: HttpService,
-                private readonly errorMapper: ErrorResponseMapper
+                private readonly errorMapper: ErrorResponseMapper,
+                private readonly httpRequestFactory: HttpRequestFactory
     ) {
     }
 
     createSession(session: Session): Promise<Session> {
-        let httpRequest: HttpRequest = new HttpRequest(this.ENDPOINT, 'POST', session);
+        const httpRequest = this.httpRequestFactory.makeCreateSessionRequest(session);
         return new Promise<Session>((resolve, reject) => {
             this.httpService.makeSignedRequest(httpRequest).then((result) => {
                     return this.sessionResponseMapper.mapSession(result);
