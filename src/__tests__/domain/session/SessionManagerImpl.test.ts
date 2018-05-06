@@ -11,10 +11,6 @@ import {ErrorEntity} from "../../../model/entity/ErrorEntity";
 
 
 class GatewayMock implements SessionGateway {
-    createSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>, notes: string): Promise<Session> {
-        return undefined;
-    }
-
     getAllSessions(): Promise<Array<Session>> {
         return undefined;
     }
@@ -24,6 +20,10 @@ class GatewayMock implements SessionGateway {
     }
 
     updateSession(session: Session): Promise<Session> {
+        return undefined;
+    }
+
+    createSession(session: Session): Promise<Session> {
         return undefined;
     }
 
@@ -53,7 +53,7 @@ it('stores a session only in cache and does no gateway call when no internet ava
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
 
     subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
-        verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
+        verify(gateway.createSession(sessionMock)).never();
         verify(repository.insertSession(sessionMock)).once();
         expect(result).toEqual(sessionMock);
         done();
@@ -73,7 +73,7 @@ it('stores a session only in cache and does no gateway call when internet is ava
     when(authManager.isAuthenticated()).thenReject(new ErrorEntity(-1, ''));
 
     subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
-        verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).never();
+        verify(gateway.createSession(sessionMock)).never();
         verify(repository.insertSession(sessionMock)).once();
         expect(result).toEqual(sessionMock);
         done();
@@ -91,11 +91,11 @@ it('stores a session in gateway because user is authenticated and network is ava
     when(sessionFactory.createNewSession(amountOfRounds, custom, map, map2, notes)).thenReturn(sessionMock);
     when(networkChecker.isDeviceConnected()).thenResolve(true);
     when(repository.insertSession(sessionMock)).thenResolve(sessionMock);
-    when(gateway.createSession(amountOfRounds, custom, map, map2, notes)).thenResolve(syncedSessionMock);
+    when(gateway.createSession(sessionMock)).thenResolve(syncedSessionMock);
     when(authManager.isAuthenticated()).thenResolve(new AuthResponse('', true));
 
     await subject.createAndSaveSession(amountOfRounds, custom, map, map2, notes).then((result) => {
-        verify(gateway.createSession(amountOfRounds, custom, map, map2, notes)).once();
+        verify(gateway.createSession(sessionMock)).once();
         verify(repository.insertSession(sessionMock)).once();
         verify(repository.updateSession(syncedSessionMock)).once();
         expect(result).toEqual(syncedSessionMock);

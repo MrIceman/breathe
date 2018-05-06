@@ -4,6 +4,7 @@ import {anything, deepEqual, instance, mock, resetCalls, verify, when} from "ts-
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
 import {Session} from "../../../data/session/Session";
 import {ResultFormatter} from "../../../app/session/ResultFormatter";
+import {DialogManager} from "../../../app/common/DialogManager";
 
 const component = mock(BreathingComponent);
 let componentState = {
@@ -17,7 +18,9 @@ let componentState = {
 };
 const resultFormatter = mock(ResultFormatter);
 const sessionManager = mock(SessionManagerImpl);
-const subject = new BreathingController(instance(component), instance(sessionManager), instance(resultFormatter));
+const dialogManager = mock(DialogManager);
+const subject = new BreathingController(instance(component), instance(sessionManager), instance(resultFormatter),
+    instance(dialogManager));
 when(component.getState()).thenReturn(componentState);
 when(resultFormatter.parseSeconds(30)).thenReturn('30');
 when(resultFormatter.parseSeconds(90)).thenReturn('90');
@@ -115,4 +118,9 @@ it('removes last round from multiple sessions', () => {
     expect(subject.retentionMap).toEqual(new Map().set(1, 30));
     expect(subject.amountOfRounds).toEqual(1);
     verify(component.updateState(deepEqual({...instance(component).getState(), results: deepEqual(['30'])}))).once();
+});
+
+it('shows an alert dialog', () => {
+    subject.onClickedDone();
+    verify(dialogManager.showDialogWithConfigs(anything())).once();
 });

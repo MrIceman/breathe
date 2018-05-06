@@ -153,7 +153,7 @@ export class LocalRepository implements InMemoryRepository {
         return this.source.getItem(Constants.USERNAME_CACHE_KEY);
     }
 
-    createSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>, notes: string): Promise<Session> {
+    createSession(session: Session): Promise<Session> {
         return undefined;
     }
 }

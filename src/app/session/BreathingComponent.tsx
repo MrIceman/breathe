@@ -5,6 +5,7 @@ import {BreathingController} from "./BreathingController";
 import {ManagerFactory} from "../../domain/ManagerFactory";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {ResultFormatter} from "./ResultFormatter";
+import {DialogManager} from "../common/DialogManager";
 
 const style = StyleSheet.create({
     content: {
@@ -101,7 +102,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
     constructor(props: {}) {
         super(props);
         this.state = this.getDefaultState();
-        this.controller = new BreathingController(this, ManagerFactory.buildSessionManger(), new ResultFormatter());
+        this.controller = new BreathingController(this, ManagerFactory.buildSessionManger(), new ResultFormatter(), new DialogManager());
         this.updateState = this.updateState.bind(this);
         this.stopTimer = this.stopTimer.bind(this);
     }
@@ -179,6 +180,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
                 </View>
                 <View style={style.bottomView}>
                     <TouchableOpacity onPress={() => {
+                        this.controller.onClickedDone();
                     }}>
                         <Text style={style.finishSessionText}>Done</Text>
                     </TouchableOpacity>

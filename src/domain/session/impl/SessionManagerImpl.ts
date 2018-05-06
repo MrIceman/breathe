@@ -64,7 +64,7 @@ export class SessionManagerImpl implements SessionManager {
     }
 
     createSessionGlobal(session: Session): Promise<Session> {
-        return this.gateway.createSession(session.amountOfRounds, session.custom, session.retentionTimeMap, session.amountOfBreathsPreRetention, session.notes);
+        return this.gateway.createSession(session);
     }
 
     /*

@@ -1,6 +1,6 @@
 import {AbstractRequest} from "../../../model/request/AbstractRequest";
 
-export class SessionRequest extends AbstractRequest {
+export class Session extends AbstractRequest {
 
     constructor(public readonly date: number,
                 public readonly amountOfRounds: number,
