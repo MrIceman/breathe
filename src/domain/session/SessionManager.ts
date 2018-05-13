@@ -1,5 +1,5 @@
 import {Manager} from "../Manager";
-import {Session} from "../../data/session/Session";
+import {Session} from "./model/Session";
 
 
 /**

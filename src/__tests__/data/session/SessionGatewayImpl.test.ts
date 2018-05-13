@@ -1,8 +1,8 @@
 import {SessionGatewayImpl} from "../../../data/session/SessionGatewayImpl";
-import {SessionResponseMapper} from "../../../domain/session/SessionResponseMapper";
+import {SessionResponseMapper} from "../../../data/SessionResponseMapper";
 import {anything, instance, mock, verify, when} from "ts-mockito";
 import {HttpService} from "../../../data/http/HttpService";
-import {Session} from "../../../data/session/Session";
+import {Session} from "../../../data/session/SessionEntity";
 import {HttpResponse} from "../../../data/HttpResponse";
 import {ErrorResponseMapper} from "../../../domain/common/ErrorResponseMapper";
 import {HttpRequestFactory} from "../../../data/http/HttpRequestFactory";

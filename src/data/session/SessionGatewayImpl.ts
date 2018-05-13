@@ -1,8 +1,7 @@
 import {SessionGateway} from "../../domain/session/SessionGateway";
-import {Session} from "./Session";
-import {HttpRequest} from "../HttpRequest";
+import {SessionEntity} from "./SessionEntity";
 import {HttpService} from "../http/HttpService";
-import {SessionResponseMapper} from "../../domain/session/SessionResponseMapper";
+import {SessionResponseMapper} from "../SessionResponseMapper";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
 import {HttpRequestFactory} from "../http/HttpRequestFactory";
 
@@ -17,9 +16,9 @@ export class SessionGatewayImpl implements SessionGateway {
     ) {
     }
 
-    createSession(session: Session): Promise<Session> {
+    createSession(session: SessionEntity): Promise<SessionEntity> {
         const httpRequest = this.httpRequestFactory.makeCreateSessionRequest(session);
-        return new Promise<Session>((resolve, reject) => {
+        return new Promise<SessionEntity>((resolve, reject) => {
             this.httpService.makeSignedRequest(httpRequest).then((result) => {
                     return this.sessionResponseMapper.mapSession(result);
                 }
@@ -29,15 +28,15 @@ export class SessionGatewayImpl implements SessionGateway {
         })
     };
 
-    getAllSessions(): Promise<Array<Session>> {
+    getAllSessions(): Promise<Array<SessionEntity>> {
         return undefined;
     }
 
-    getSessionById(id: number): Promise<Session> {
+    getSessionById(id: number): Promise<SessionEntity> {
         return undefined;
     }
 
-    updateSession(session: Session): Promise<Session> {
+    updateSession(session: SessionEntity): Promise<SessionEntity> {
         return undefined;
     }
 

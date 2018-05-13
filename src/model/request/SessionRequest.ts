@@ -1,21 +1,17 @@
-import {Entity} from "../../model/entity/Entity";
-
-export class Session implements Entity {
+export class SessionRequest {
 
     constructor(public readonly id: number = Date.now(),
                 public globalId: number, // ID from the Backend, -1 when not initialized yet
                 public date: number = Date.now(),
                 public amountOfRounds: number,
                 public custom: boolean,
-                public retentionTimeMap: Map<number, number>,
-                public amountOfBreathsPreRetention: Map<number, number>,
-                public notes: string,
-                public inMemoryOnly: boolean = true) {
+                public rounds: Array<{ breathes: number, retentionTime: number, inhaleHoldDuration: number }>,
+                public notes: string) {
     }
 
-    static empty(): Session {
+    static empty(): SessionRequest {
         // Use the empty construct if you would like to parse an Entity from JSON
-        return new Session(undefined, undefined, undefined, undefined, undefined, undefined, undefined,
+        return new SessionRequest(undefined, undefined, undefined, undefined, undefined,
             undefined, undefined);
     }
 
@@ -24,7 +20,7 @@ export class Session implements Entity {
         return JSON.stringify(this);
     }
 
-    fromJSONString(json: string): Session {
+    fromJSONString(json: string): SessionRequest {
         return JSON.parse(json);
     }
 

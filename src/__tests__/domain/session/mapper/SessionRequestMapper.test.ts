@@ -1,4 +1,4 @@
-import {SessionResponseMapper} from "../../../../domain/session/SessionResponseMapper";
+import {SessionResponseMapper} from "../../../../data/SessionResponseMapper";
 import {Session} from "../../../../domain/session/model/Session";
 
 const subject = new SessionResponseMapper();

@@ -1,12 +1,13 @@
-import {Session} from "../../data/session/Session";
+import {SessionEntity} from "../../data/session/SessionEntity";
+import {SessionRequest} from "../../model/request/SessionRequest";
 
 export interface SessionGateway {
-    getSessionById(id: number): Promise<Session>;
+    getSessionById(id: number): Promise<SessionEntity>;
 
 
-    createSession(session: Session): Promise<Session>;
+    createSession(session: SessionRequest): Promise<SessionEntity>;
 
-    updateSession(session: Session): Promise<Session>;
+    updateSession(session: SessionRequest): Promise<SessionEntity>;
 
-    getAllSessions(): Promise<Array<Session>>;
+    getAllSessions(): Promise<Array<SessionEntity>>;
 }

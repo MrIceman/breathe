@@ -3,8 +3,8 @@ import {LocalRepository} from "../../../data/repository/LocalRepository";
 import {Constants} from "../../../utils/Constants";
 import StorageMock from "../../mock/StorageMock";
 import {instance, mock, when} from "ts-mockito";
-import {Session} from "../../../data/session/Session";
-import {SessionMapper} from "../../../data/session/SessionMapper";
+import {Session} from "../../../data/session/SessionEntity";
+import {SessionMapper} from "../../../data/repository/SessionMapper";
 
 const dataSource: LocalDataSource = new StorageMock();
 const sessionMapperMock = mock(SessionMapper);

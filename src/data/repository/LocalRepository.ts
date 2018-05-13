@@ -2,8 +2,8 @@ import {InMemoryRepository} from "../../domain/UserRepository";
 import {LocalDataSourceImpl} from "./LocalDataSourceImpl";
 import {LocalDataSource} from "./LocalDataSource";
 import {Constants} from "../../utils/Constants";
-import {Session} from "../session/Session";
-import {SessionMapper} from "../session/SessionMapper";
+import {SessionEntity} from "../session/SessionEntity";
+import {Session} from "../../domain/session/model/Session";
 
 export class LocalRepository implements InMemoryRepository {
     private static instance: LocalRepository;
@@ -62,8 +62,8 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    insertSession(session: Session): Promise<Session> {
-        return new Promise<Session>(async (resolve, _reject) => {
+    insertSession(session: SessionEntity): Promise<SessionEntity> {
+        return new Promise<SessionEntity>(async (resolve, _reject) => {
             this.addSessionIdToMap(session.id).then((_) => {
                 this.source.setItem('local_' + session.id, session.toJSONString()).then((_) => {
                     resolve(session);

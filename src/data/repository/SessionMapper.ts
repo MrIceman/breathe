@@ -1,4 +1,4 @@
-import {Session} from "./Session";
+import {Session} from "../../domain/session/model/Session";
 
 export class SessionMapper {
     mapSession(data: any): Session {

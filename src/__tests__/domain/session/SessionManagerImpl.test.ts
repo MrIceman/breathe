@@ -1,10 +1,10 @@
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
 import {instance, mock, reset, verify, when} from "ts-mockito";
 import {SessionGateway} from "../../../domain/session/SessionGateway";
-import {Session} from "../../../data/session/Session";
+import {Session} from "../../../data/session/SessionEntity";
 import {LocalRepository} from "../../../data/repository/LocalRepository";
 import {NetworkChecker} from "../../../utils/NetworkChecker";
-import {SessionFactory} from "../../../data/session/SessionFactory";
+import {SessionFactory} from "../../../domain/session/model/SessionFactory";
 import {AuthManagerImpl} from "../../../domain/auth/impl/AuthManagerImpl";
 import {AuthResponse} from "../../../domain/auth/model/AuthResponse";
 import {ErrorEntity} from "../../../model/entity/ErrorEntity";
@@ -86,7 +86,7 @@ it('stores a session in gateway because user is authenticated and network is ava
     let map = new Map();
     let map2 = new Map();
     let notes = '';
-    const sessionMock = new Session(undefined, undefined, undefined, amountOfRounds, custom, map, map2, notes);
+    const sessionMock = new Session(undefined, undefined, undefined, amountOfRounds, custom, undefined, notes);
     const syncedSessionMock = instance(mock(Session));
     when(sessionFactory.createNewSession(amountOfRounds, custom, map, map2, notes)).thenReturn(sessionMock);
     when(networkChecker.isDeviceConnected()).thenResolve(true);

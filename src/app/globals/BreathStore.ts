@@ -1,4 +1,4 @@
-import {Session} from "../../data/session/Session";
+import {Session} from "../../data/session/SessionEntity";
 
 export interface Store {
     session: { persistedSessions?: Array<Session> },

@@ -2,7 +2,7 @@ import {BreathingController} from "../../../app/session/BreathingController";
 import {BreathingComponent} from "../../../app/session/BreathingComponent";
 import {anything, deepEqual, instance, mock, resetCalls, verify, when} from "ts-mockito";
 import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
-import {Session} from "../../../data/session/Session";
+import {Session} from "../../../data/session/SessionEntity";
 import {ResultFormatter} from "../../../app/session/ResultFormatter";
 import {DialogManager} from "../../../app/common/DialogManager";
 

@@ -1,10 +1,10 @@
 import {SessionManager} from "../SessionManager";
-import {Session} from "../../../data/session/Session";
 import {SessionGateway} from "../SessionGateway";
 import {InMemoryRepository} from "../../UserRepository";
-import {SessionFactory} from "../../../data/session/SessionFactory";
+import {SessionFactory} from "../model/SessionFactory";
 import {NetworkChecker} from "../../../utils/NetworkChecker";
 import {AuthManager} from "../../auth/AuthManager";
+import {Session} from "../model/Session";
 
 export class SessionManagerImpl implements SessionManager {
 
@@ -21,14 +21,14 @@ export class SessionManagerImpl implements SessionManager {
 
         const session = this.sessionFactory.createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
         return new Promise<Session>((resolve, _reject) => {
-            this.repository.insertSession(session)
+            this.repository.insertLocalSession(session)
                 .then(async (cachedSession: Session) => {
                     const isDeviceOnline = await this.networkChecker.isDeviceConnected();
                     if (isDeviceOnline) {
                         // Device is connected to the internet, checking now if user is authenticated
                         this.authManager.isAuthenticated().then((_) => {
                             this.createSessionGlobal(cachedSession).then(async (syncedSession) => {
-                                await this.repository.updateSession(syncedSession);
+                                await this.repository.updateLocalSession(syncedSession);
                                 resolve(syncedSession);
                             }, (_) => {
                                 resolve(cachedSession);
@@ -47,11 +47,12 @@ export class SessionManagerImpl implements SessionManager {
             const isDeviceOnline = await this.networkChecker.isDeviceConnected();
             const isUserAuthenticated = await this.authManager.isAuthenticated();
             if (isDeviceOnline && isUserAuthenticated) {
-                this.gateway.getAllSessions().then((sessions) => {
+                this.gateway.getAllSessions().then((entities) => {
+                    const sessions: Array<Session> = entities.map((entity) => this.sessionFactory.parseEntityToModel(entity));
                     resolve(sessions);
                 });
             } else {
-                const result = await this.repository.getAllSessions();
+                const result = await this.repository.getAllLocalSessions();
                 resolve(result);
             }
 
@@ -64,7 +65,12 @@ export class SessionManagerImpl implements SessionManager {
     }
 
     createSessionGlobal(session: Session): Promise<Session> {
-        return this.gateway.createSession(session);
+        return new Promise<Session>((resolve, reject) => {
+                this.gateway.createSession(this.sessionFactory.makeSessionRequest(session)).then((entity) => {
+                    resolve(this.sessionFactory.parseEntityToModel(entity));
+                })
+            }
+        );
     }
 
     /*

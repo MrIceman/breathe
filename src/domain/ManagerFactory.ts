@@ -8,9 +8,9 @@ import {AuthRequestMapper} from "./common/AuthRequestMapper";
 import {SessionManager} from "./session/SessionManager";
 import {SessionManagerImpl} from "./session/impl/SessionManagerImpl";
 import {NetworkChecker} from "../utils/NetworkChecker";
-import {SessionFactory} from "../data/session/SessionFactory";
+import {SessionFactory} from "./session/model/SessionFactory";
 import {SessionGatewayImpl} from "../data/session/SessionGatewayImpl";
-import {SessionResponseMapper} from "./session/SessionResponseMapper";
+import {SessionResponseMapper} from "../data/SessionResponseMapper";
 import {HttpService} from "../data/http/HttpService";
 import {HttpRequestFactory} from "../data/http/HttpRequestFactory";
 
