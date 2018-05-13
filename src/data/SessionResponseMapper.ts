@@ -5,7 +5,7 @@ export class SessionResponseMapper {
     constructor() {
     }
 
-    mapSession(data): SessionEntity {
+    parseSessionEntity(data): SessionEntity {
         return new SessionEntity(
             data.id,
             data.id,
@@ -18,6 +18,9 @@ export class SessionResponseMapper {
         );
     }
 
+    public parseSessionEntityArray(data): Array<SessionEntity> {
+        return data.map((session) => this.parseSessionEntity(session));
+    }
 
     private getMap(data: {}) {
         const map = new Map();

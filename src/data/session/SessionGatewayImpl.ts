@@ -3,7 +3,7 @@ import {SessionEntity} from "./SessionEntity";
 import {HttpService} from "../http/HttpService";
 import {SessionResponseMapper} from "../SessionResponseMapper";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
-import {HttpRequestFactory} from "../http/HttpRequestFactory";
+import {SessionRequest} from "../../model/request/SessionRequest";
 
 export class SessionGatewayImpl implements SessionGateway {
     private string;
@@ -12,15 +12,14 @@ export class SessionGatewayImpl implements SessionGateway {
     constructor(private readonly sessionResponseMapper: SessionResponseMapper,
                 private readonly httpService: HttpService,
                 private readonly errorMapper: ErrorResponseMapper,
-                private readonly httpRequestFactory: HttpRequestFactory
     ) {
     }
 
-    createSession(session: SessionEntity): Promise<SessionEntity> {
-        const httpRequest = this.httpRequestFactory.makeCreateSessionRequest(session);
+    createSession(sessionHttpRequest: SessionRequest): Promise<SessionEntity> {
         return new Promise<SessionEntity>((resolve, reject) => {
-            this.httpService.makeSignedRequest(httpRequest).then((result) => {
-                    return this.sessionResponseMapper.mapSession(result);
+            this.httpService.makeSignedRequest(sessionHttpRequest).then((result) => {
+                    const entity = this.sessionResponseMapper.parseSessionEntity(result);
+                    resolve(entity);
                 }
                 , (error) => {
                     reject(this.errorMapper.mapEntity(error));
@@ -29,14 +28,19 @@ export class SessionGatewayImpl implements SessionGateway {
     };
 
     getAllSessions(): Promise<Array<SessionEntity>> {
-        return undefined;
+        const getAllRequest = new SessionRequest(undefined, undefined, undefined, '/session/search', 'GET');
+        return new Promise<Array<SessionEntity>>((resolve, reject) => {
+            this.httpService.makeSignedRequest(getAllRequest).then((result) => {
+                resolve(this.sessionResponseMapper.parseSessionEntityArray(result));
+            });
+        });
     }
 
     getSessionById(id: number): Promise<SessionEntity> {
         return undefined;
     }
 
-    updateSession(session: SessionEntity): Promise<SessionEntity> {
+    updateSession(session: SessionRequest): Promise<SessionEntity> {
         return undefined;
     }
 

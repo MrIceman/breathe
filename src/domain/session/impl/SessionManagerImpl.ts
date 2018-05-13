@@ -8,7 +8,9 @@ import {Session} from "../model/Session";
 
 export class SessionManagerImpl implements SessionManager {
 
-    constructor(private readonly gateway: SessionGateway, private readonly repository: InMemoryRepository, private readonly networkChecker: NetworkChecker,
+    constructor(private readonly gateway: SessionGateway,
+                private readonly repository: InMemoryRepository,
+                private readonly networkChecker: NetworkChecker,
                 private readonly sessionFactory: SessionFactory,
                 private readonly authManager: AuthManager) {
     }

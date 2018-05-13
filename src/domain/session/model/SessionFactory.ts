@@ -12,13 +12,7 @@ export class SessionFactory {
 
     public makeSessionRequest(session: Session): SessionRequest {
         const timestamp = Date.now();
-        return new SessionRequest(timestamp,
-            -1,
-            timestamp,
-            session.amountOfRounds,
-            session.custom,
-            this.createNewRoundsArray(session.amountOfBreathsPreRetention, session.retentionTimeMap),
-            session.notes,);
+        return new SessionRequest(-1, [], '');
     }
 
     public parseEntityToModel(entity: SessionEntity) {
@@ -48,7 +42,7 @@ export class SessionFactory {
         const rounds: Array<RoundEntity> = [];
         breaths.forEach((breathValue, breathKey) => {
             retentions.forEach((retentionValue, retentionKey) => {
-                rounds.push(new RoundEntity(breathValue, retentionValue));
+                rounds.push(new RoundEntity(0, breathValue, retentionValue));
             })
         });
         return rounds;

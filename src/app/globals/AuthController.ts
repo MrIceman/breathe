@@ -1,5 +1,4 @@
 import {AbstractController, ViewStoreState} from "../common/AbstractController";
-import {GlobalStore, Store} from "./BreathStore";
 import {AuthAction} from "./AuthAction";
 
 export interface AuthState extends ViewStoreState {
@@ -12,8 +11,8 @@ export interface AuthState extends ViewStoreState {
 export class AuthController extends AbstractController<AuthState> {
     /** This Store is ment to be used only by the entry point App.tsx */
 
-    constructor(private readonly authAction: AuthAction, component: React.Component, store: GlobalStore) {
-        super(component, store);
+    constructor(private readonly authAction: AuthAction, component: React.Component) {
+        super(component);
         this.persistToken = this.persistToken.bind(this);
         this.authFailed = this.authFailed.bind(this);
         this.state = this.getInitialState();
@@ -72,16 +71,6 @@ export class AuthController extends AbstractController<AuthState> {
             isAuthenticated: false,
             checkedIfTokenIsPersisted: false
         };
-    }
-
-    mergeStoreToViewStore(storeData: Store): AuthState {
-        this.state = {
-            isTokenPersisted: storeData.login.token === undefined && storeData.login.token !== '',
-            authenticationFailed: false,
-            isAuthenticated: storeData.login.isLoggedIn,
-            checkedIfTokenIsPersisted: this.state.checkedIfTokenIsPersisted
-        };
-        return this.state;
     }
 
     getState(): AuthState {

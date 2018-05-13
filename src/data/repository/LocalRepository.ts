@@ -4,6 +4,8 @@ import {LocalDataSource} from "./LocalDataSource";
 import {Constants} from "../../utils/Constants";
 import {SessionEntity} from "../session/SessionEntity";
 import {Session} from "../../domain/session/model/Session";
+import {SessionMapper} from "./SessionMapper";
+import {SessionRequest} from "../../model/request/SessionRequest";
 
 export class LocalRepository implements InMemoryRepository {
     private static instance: LocalRepository;
@@ -93,7 +95,7 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    getAllSessions(): Promise<Array<Session>> {
+    getAllLocalSessionsSessions(): Promise<Array<Session>> {
         return new Promise<Array<Session>>(async (resolve, reject) => {
             const result = [];
 
@@ -125,11 +127,11 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    getSessionById(id: number): Promise<Session> {
-        return new Promise<Session>((resolve, _) => {
+    getSessionById(id: number): Promise<SessionEntity> {
+        return new Promise<SessionEntity>((resolve, _) => {
             this.source.getItem('local_' + id).then((result) => {
                 const session = this.mapper.mapSession(result);
-                resolve(session);
+                resolve();
             });
         });
     }
@@ -141,8 +143,8 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    updateSession(session: Session): Promise<Session> {
-        return this.insertSession(session);
+    updateLocalSession(session: Session): Promise<Session> {
+        return undefined; // this.insertSession(session);
     }
 
     cacheUsername(username: string): Promise<string> {
@@ -153,7 +155,31 @@ export class LocalRepository implements InMemoryRepository {
         return this.source.getItem(Constants.USERNAME_CACHE_KEY);
     }
 
-    createSession(session: Session): Promise<Session> {
+    createLocalSession(session: Session): Promise<Session> {
+        return undefined;
+    }
+
+    createSession(session: SessionRequest): Promise<SessionEntity> {
+        return undefined;
+    }
+
+    getAllLocalSessions(): Promise<Array<Session>> {
+        return undefined;
+    }
+
+    getAllSessions(): Promise<Array<SessionEntity>> {
+        return undefined;
+    }
+
+    getLocalSessionById(id: number): Promise<Session> {
+        return undefined;
+    }
+
+    insertLocalSession(session: Session): Promise<Session> {
+        return undefined;
+    }
+
+    updateSession(session: SessionRequest): Promise<SessionEntity> {
         return undefined;
     }
 }

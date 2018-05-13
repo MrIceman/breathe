@@ -1,6 +1,6 @@
 import {HttpRequestFactory} from "../../data/http/HttpRequestFactory";
-import {Session} from "../../data/session/SessionEntity";
 import {instance, mock} from "ts-mockito";
+import {Session} from "../../domain/session/model/Session";
 
 const subject = new HttpRequestFactory();
 

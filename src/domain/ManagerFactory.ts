@@ -12,7 +12,6 @@ import {SessionFactory} from "./session/model/SessionFactory";
 import {SessionGatewayImpl} from "../data/session/SessionGatewayImpl";
 import {SessionResponseMapper} from "../data/SessionResponseMapper";
 import {HttpService} from "../data/http/HttpService";
-import {HttpRequestFactory} from "../data/http/HttpRequestFactory";
 
 export class ManagerFactory {
     private static authManager: AuthManager;
@@ -34,8 +33,7 @@ export class ManagerFactory {
         if (this.sessionManager === null)
             this.sessionManager =
                 new SessionManagerImpl(
-                    new SessionGatewayImpl(new SessionResponseMapper(), this.httpService, new ErrorResponseMapper(),
-                        new HttpRequestFactory()),
+                    new SessionGatewayImpl(new SessionResponseMapper(), this.httpService, new ErrorResponseMapper()),
                     LocalRepository.getInstance(),
                     new NetworkChecker(),
                     new SessionFactory(),
