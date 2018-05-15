@@ -29,8 +29,8 @@ export class SessionManagerImpl implements SessionManager {
                         // Device is connected to the internet, checking now if user is authenticated
                         this.authManager.isAuthenticated().then((_) => {
                             this.createSessionGlobal(cachedSession).then(async (syncedSession) => {
-                                await this.repository.updateSession(syncedSession);
-                                resolve(syncedSession);
+                                this.repository.updateSession(syncedSession).then((result) =>
+                                    resolve(syncedSession));
                             }, (_) => {
                                 resolve(cachedSession);
                             });
@@ -47,7 +47,7 @@ export class SessionManagerImpl implements SessionManager {
         return new Promise<Array<SessionEntity>>(async (resolve, _reject) => {
             const isDeviceOnline = await this.networkChecker.isDeviceConnected();
             const isUserAuthenticated = await this.authManager.isAuthenticated();
-            if (isDeviceOnline && isUserAuthenticated) {
+            if (isDeviceOnline && isUserAuthenticated.successful) {
                 this.gateway.getAllSessions().then((entities) => {
                     resolve(entities);
                 });
@@ -55,7 +55,6 @@ export class SessionManagerImpl implements SessionManager {
                 const result = await this.repository.getAllPersistedSessionEntities();
                 resolve(result);
             }
-
         });
     }
 

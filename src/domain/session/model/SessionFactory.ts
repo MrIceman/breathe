@@ -11,7 +11,6 @@ export class SessionFactory {
     }
 
     public makeSessionRequest(session: SessionEntity): SessionRequest {
-        const timestamp = Date.now();
         return new SessionRequest(-1, [], '');
     }
 
