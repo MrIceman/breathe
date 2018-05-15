@@ -3,7 +3,6 @@ import {LocalDataSourceImpl} from "./LocalDataSourceImpl";
 import {LocalDataSource} from "./LocalDataSource";
 import {Constants} from "../../utils/Constants";
 import {SessionEntityMapper} from "./SessionEntityMapper";
-import {SessionRequest} from "../../model/request/SessionRequest";
 import {SessionEntity} from "../../model/session/SessionEntity";
 import {SessionEntityFactory} from "../../model/session/SessionEntityFactory";
 import {UUIDBuilder} from "./UUIDBuilder";
@@ -11,12 +10,10 @@ import {DeviceManager} from "../../utils/DeviceManager";
 
 export class LocalRepository implements InMemoryRepository {
     private static instance: LocalRepository;
-    private source: LocalDataSource;
-    private mapper: SessionEntityMapper;
 
-    private constructor(storage: LocalDataSource, sessionMapper: SessionEntityMapper, sessionEntityFactory: SessionEntityFactory) {
-        this.source = storage;
-        this.mapper = sessionMapper;
+    private constructor(private readonly source: LocalDataSource,
+                        private readonly mapper: SessionEntityMapper,
+                        private readonly sessionEntityFactory: SessionEntityFactory) {
     }
 
     public static getInstance() {
@@ -112,6 +109,22 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
+    public removeSessionIdFromMap(id: string): Promise<string> {
+        return new Promise<string>(async (resolve, reject) => {
+            const result = await this.source.getItem(Constants.SESSION_ID_MAP);
+            if (result != undefined && result.length > 0) {
+                const currentPersistedIds = result.split(',');
+                if (currentPersistedIds.indexOf(id) != -1) {
+                    currentPersistedIds.splice(currentPersistedIds.indexOf(id), 1);
+                    const arrayString = currentPersistedIds.length > 0 ? currentPersistedIds.join(',') : undefined;
+                    await this.source.setItem(Constants.SESSION_ID_MAP, arrayString);
+                    resolve(arrayString);
+                }
+
+            }
+        });
+    }
+
     getAllPersistedSessionEntities(): Promise<Array<SessionEntity>> {
         return new Promise<Array<SessionEntity>>(async (resolve, reject) => {
             const result = [];
@@ -148,13 +161,13 @@ export class LocalRepository implements InMemoryRepository {
         return new Promise<SessionEntity>((resolve, _) => {
             this.source.getItem(id).then((result) => {
                 const session = this.mapper.mapSession(result);
-                resolve();
+                resolve(session);
             });
         });
     }
 
-    updateLocalSession(session: SessionEntity): Promise<SessionEntity> {
-        return undefined; // this.insertSessionEntity(session);
+    updateSession(session: SessionEntity): Promise<SessionEntity> {
+        return this.insertSessionEntity(session);
     }
 
     cacheUsername(username: string): Promise<string> {
@@ -165,28 +178,16 @@ export class LocalRepository implements InMemoryRepository {
         return this.source.getItem(Constants.USERNAME_CACHE_KEY);
     }
 
-    createSession(session: SessionRequest): Promise<SessionEntity> {
-        return undefined;
+    deleteSession(id: string): Promise<boolean> {
+        return new Promise<boolean>(async (resolve, reject) => {
+            await this.removeSessionIdFromMap(id);
+            await this.source.setItem(id, undefined);
+            resolve(true);
+        });
     }
 
-    getAllLocalSessions(): Promise<Array<SessionEntity>> {
-        return undefined;
-    }
-
-    getAllSessions(): Promise<Array<SessionEntity>> {
-        return undefined;
-    }
-
-    getLocalSessionById(id: number): Promise<SessionEntity> {
-        return undefined;
-    }
-
-    persistSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>,
-                   amountOfBreathsPerRetention: Map<number, number>, notes: string): Promise<SessionEntity> {
-        return undefined;
-    }
-
-    updateSession(session: SessionRequest): Promise<SessionEntity> {
-        return undefined;
+    persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes): Promise<SessionEntity> {
+        const entity = this.sessionEntityFactory.createFromValues(notes, amountOfBreathsPerRetention, retentionTimeMap, Date.now());
+        return this.insertSessionEntity(entity);
     }
 }

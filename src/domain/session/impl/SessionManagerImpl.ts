@@ -29,7 +29,7 @@ export class SessionManagerImpl implements SessionManager {
                         // Device is connected to the internet, checking now if user is authenticated
                         this.authManager.isAuthenticated().then((_) => {
                             this.createSessionGlobal(cachedSession).then(async (syncedSession) => {
-                                await this.repository.updateLocalSession(syncedSession);
+                                await this.repository.updateSession(syncedSession);
                                 resolve(syncedSession);
                             }, (_) => {
                                 resolve(cachedSession);
@@ -52,7 +52,7 @@ export class SessionManagerImpl implements SessionManager {
                     resolve(entities);
                 });
             } else {
-                const result = await this.repository.getAllLocalSessions();
+                const result = await this.repository.getAllPersistedSessionEntities();
                 resolve(result);
             }
 

@@ -1,7 +1,6 @@
-import {SessionGateway} from "./session/SessionGateway";
 import {SessionEntity} from "../model/session/SessionEntity";
 
-export interface InMemoryRepository extends SessionGateway {
+export interface InMemoryRepository {
     isAuthTokenPersisted(): Promise<boolean>;
 
     getAuthToken(): Promise<string>;
@@ -14,12 +13,14 @@ export interface InMemoryRepository extends SessionGateway {
 
     persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes): Promise<SessionEntity>;
 
-    updateLocalSession(session: SessionEntity): Promise<SessionEntity>;
+    updateSession(session: SessionEntity): Promise<SessionEntity>;
 
-    getAllLocalSessions(): Promise<Array<SessionEntity>>;
+    getAllPersistedSessionEntities(): Promise<Array<SessionEntity>>;
 
-    getLocalSessionById(id: number): Promise<SessionEntity>;
+    getSessionById(id: string): Promise<SessionEntity>;
 
     clearAuthToken(): Promise<boolean>;
+
+    deleteSession(id: string): Promise<boolean>;
 
 }

@@ -10,4 +10,5 @@ export interface SessionGateway {
     updateSession(session: SessionRequest): Promise<SessionEntity>;
 
     getAllSessions(): Promise<Array<SessionEntity>>;
+
 }
