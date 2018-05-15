@@ -1,14 +1,12 @@
 import {AuthController, AuthState} from "../../../app/globals/AuthController";
 import {deepEqual, instance, mock, when} from "ts-mockito";
 import React from "react";
-import {GlobalStore} from "../../../app/globals/BreathStore";
 import {AuthAction} from "../../../app/globals/AuthAction";
-import {ErrorResponse} from "../../../model/domain/ErrorResponse";
+import {ErrorResponse} from "../../../data/ErrorResponse";
 
 const componentMock = mock(React.Component);
-const globalStore = GlobalStore.getInstance();
 const authAction = mock(AuthAction);
-const subject = new AuthController(instance(authAction), instance(componentMock), globalStore);
+const subject = new AuthController(instance(authAction), instance(componentMock));
 
 it('has a correct initial state', () => {
     const initialState: AuthState = {

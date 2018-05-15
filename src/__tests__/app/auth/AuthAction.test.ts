@@ -2,7 +2,7 @@ import {AuthAction} from "../../../app/globals/AuthAction";
 import {instance, mock, when} from "ts-mockito";
 import {AuthManagerImpl} from "../../../domain/auth/impl/AuthManagerImpl";
 import {AuthResponse} from "../../../domain/auth/model/AuthResponse";
-import {ErrorResponse} from "../../../model/domain/ErrorResponse";
+import {ErrorResponse} from "../../../data/ErrorResponse";
 
 const authManager = mock(AuthManagerImpl);
 const subject = new AuthAction(instance(authManager));

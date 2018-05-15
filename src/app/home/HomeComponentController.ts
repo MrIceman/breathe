@@ -39,7 +39,7 @@ export class HomeComponentController {
                     isProgressing: false,
                     currentProgress: 0,
                     currentUsername: username,
-                    welcomeText: "It's your first time using Breathe. Why don't you go ahead and do your first breathing Session?"
+                    welcomeText: "It's your first time using Breathe. Why don't you go ahead and do your first breathing SessionEntity?"
                 });
             });
         }, (error: ErrorEntity) => {

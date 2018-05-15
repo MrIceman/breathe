@@ -7,6 +7,8 @@ import {HttpResponse} from "../HttpResponse";
 
 export class AuthGatewayImpl implements AuthGateway {
 
+    constructor(private readonly httpService: HttpService){}
+
     signIn(request: AuthRequest): Promise<AuthEntity> {
         return new Promise<AuthEntity>((resolve, reject) => {
             let httpRequest: HttpRequest;
@@ -14,7 +16,7 @@ export class AuthGatewayImpl implements AuthGateway {
             httpRequest = new HttpRequest('http://localhost:5000/profile/sign_in',
                 'POST', JSON.stringify({'email': request.email, 'password': request.password}));
 
-            HttpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {
+            this.httpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {
                 if (http_resolve.error !== undefined) {
                     reject(http_resolve.error);
                 }
@@ -37,7 +39,7 @@ export class AuthGatewayImpl implements AuthGateway {
                     'display_name': request.username
                 }));
 
-            HttpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {
+            this.httpService.makeUnsignedRequest(httpRequest).then((http_resolve: HttpResponse) => {
                 if (http_resolve.error !== undefined) {
                     reject(http_resolve.error);
                 } else {

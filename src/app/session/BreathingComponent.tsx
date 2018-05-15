@@ -4,6 +4,8 @@ import {TimerCircleComponent} from "../practice/Timer/TimerCircleComponent";
 import {BreathingController} from "./BreathingController";
 import {ManagerFactory} from "../../domain/ManagerFactory";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {ResultFormatter} from "./ResultFormatter";
+import {DialogManager} from "../common/DialogManager";
 
 const style = StyleSheet.create({
     content: {
@@ -100,7 +102,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
     constructor(props: {}) {
         super(props);
         this.state = this.getDefaultState();
-        this.controller = new BreathingController(this, ManagerFactory.buildSessionManger());
+        this.controller = new BreathingController(this, ManagerFactory.buildSessionManger(), new ResultFormatter(), new DialogManager());
         this.updateState = this.updateState.bind(this);
         this.stopTimer = this.stopTimer.bind(this);
     }
@@ -143,7 +145,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
                     const isLastItem = index + 1 === this.state.results.length;
                     let resultTextStyle = isLastItem ? [style.resultText, style.lastResultText] : style.resultText;
                     return <View style={style.resultTextView} key={index}><Text style={resultTextStyle}>
-                        {index + 1} - 00:{val} </Text> {isLastItem ?
+                        {index + 1} - {val} </Text> {isLastItem ?
                         <TouchableOpacity onPress={() => {
                             this.controller.removeLastRound();
                         }}><Ionicons name={'ios-close-outline'} size={30} color={'#BBDEFB'}/></TouchableOpacity> : ''}
@@ -178,6 +180,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
                 </View>
                 <View style={style.bottomView}>
                     <TouchableOpacity onPress={() => {
+                        this.controller.onClickedDone();
                     }}>
                         <Text style={style.finishSessionText}>Done</Text>
                     </TouchableOpacity>

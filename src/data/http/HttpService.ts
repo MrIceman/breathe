@@ -5,7 +5,7 @@ import {ErrorEntity} from "../../model/entity/ErrorEntity";
 
 export class HttpService {
 
-    static makeUnsignedRequest(request: HttpRequest): Promise<HttpResponse> {
+    public makeUnsignedRequest(request: HttpRequest): Promise<HttpResponse> {
         return new Promise<HttpResponse>((resolve, reject) => {
             try {
                 fetch(request.endpoint, {
@@ -33,7 +33,7 @@ export class HttpService {
         });
     }
 
-    static makeSignedRequest(request: HttpRequest): Promise<HttpResponse> {
+    public makeSignedRequest(request: HttpRequest): Promise<HttpResponse> {
         return new Promise<HttpResponse>((resolve, reject) => {
             //getting the JWT Token
             LocalRepository.getInstance().isAuthTokenPersisted().then((result) => {
