@@ -1,11 +1,11 @@
 import {SessionRequest} from "../../../model/request/SessionRequest";
 import {SessionGatewayImpl} from "../../../data/session/SessionGatewayImpl";
 import {SessionResponseMapper} from "../../../data/SessionResponseMapper";
-import {deepEqual, instance, mock, verify, when} from "ts-mockito";
+import {anything, deepEqual, instance, mock, verify, when} from "ts-mockito";
 import {HttpService} from "../../../data/http/HttpService";
 import {HttpResponse} from "../../../data/HttpResponse";
 import {ErrorResponseMapper} from "../../../domain/common/ErrorResponseMapper";
-import {SessionEntity} from "../../../data/session/SessionEntity";
+import {SessionEntity} from "../../../model/session/SessionEntity";
 
 
 const responseMapper = mock(SessionResponseMapper);
@@ -28,7 +28,7 @@ it('makes a successful create request', async () => {
 it('gets all sessions of user correctly', async () => {
     const httpResponse = instance(mock(HttpResponse));
     const searchRequest = new SessionRequest(undefined, undefined, undefined, '/session/search', 'GET');
-    when(httpService.makeSignedRequest(deepEqual(searchRequest))).thenResolve(httpResponse);
+    when(httpService.makeSignedRequest(anything())).thenResolve(httpResponse);
     const expected = [instance(sessionEntity), instance(sessionEntity)];
 
     when(responseMapper.parseSessionEntityArray(httpResponse)).thenReturn(expected);

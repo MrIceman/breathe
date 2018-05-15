@@ -1,5 +1,4 @@
 import {SessionResponseMapper} from "../../../../data/SessionResponseMapper";
-import {Session} from "../../../../domain/session/model/Session";
 
 const subject = new SessionResponseMapper();
 
@@ -17,8 +16,7 @@ it('maps a correct request object out of json', () => {
     const json = `
         {
             "date": 123,
-            "amountOfRounds": 3,
-            "custom": false,
+            "uuid": "129041",
             "retentionTimeMap": {
                 "1": 63,
                 "2": 33,
@@ -37,7 +35,7 @@ it('maps a correct request object out of json', () => {
     const sessionResponse = JSON.parse(json);
 
     const request = subject.parseSessionEntity(sessionResponse);
-    // expect(request).toEqual(new Session(123, 3, false, retentionTimeMap, amountsOfBreathsPerRound, 'your mom',
+    // expect(request).toEqual(new SessionEntity(123, 3, false, retentionTimeMap, amountsOfBreathsPerRound, 'your mom',
     //    123, 321));
     expect(1).toEqual(1);
 });

@@ -2,29 +2,39 @@ import {InMemoryRepository} from "../../domain/UserRepository";
 import {LocalDataSourceImpl} from "./LocalDataSourceImpl";
 import {LocalDataSource} from "./LocalDataSource";
 import {Constants} from "../../utils/Constants";
-import {SessionEntity} from "../session/SessionEntity";
-import {Session} from "../../domain/session/model/Session";
-import {SessionMapper} from "./SessionMapper";
+import {SessionEntityMapper} from "./SessionEntityMapper";
 import {SessionRequest} from "../../model/request/SessionRequest";
+import {SessionEntity} from "../../model/session/SessionEntity";
+import {SessionEntityFactory} from "../../model/session/SessionEntityFactory";
+import {UUIDBuilder} from "./UUIDBuilder";
+import {DeviceManager} from "../../utils/DeviceManager";
 
 export class LocalRepository implements InMemoryRepository {
     private static instance: LocalRepository;
     private source: LocalDataSource;
-    private mapper: SessionMapper;
+    private mapper: SessionEntityMapper;
 
-    private constructor(storage: LocalDataSource, sessionMapper: SessionMapper) {
+    private constructor(storage: LocalDataSource, sessionMapper: SessionEntityMapper, sessionEntityFactory: SessionEntityFactory) {
         this.source = storage;
         this.mapper = sessionMapper;
     }
 
     public static getInstance() {
         if (this.instance == null)
-            this.instance = new LocalRepository(new LocalDataSourceImpl(), new SessionMapper());
+            this.instance = new LocalRepository(new LocalDataSourceImpl(), new SessionEntityMapper(),
+                new SessionEntityFactory(new UUIDBuilder(new DeviceManager())));
         return this.instance;
     }
 
-    public static getNewInstanceWithDataSource(testingDataSource: LocalDataSource, sessionMapper: SessionMapper) {
-        this.instance = new LocalRepository(testingDataSource, sessionMapper);
+    /**
+     * Use this Method only for testing purpose
+     * @param {LocalDataSource} testingDataSource
+     * @param {SessionEntityMapper} sessionMapper
+     * @param {SessionEntityFactory} sessionEntityFactory
+     * @returns {LocalRepository}
+     */
+    public static makeInstance(testingDataSource: LocalDataSource, sessionMapper: SessionEntityMapper, sessionEntityFactory: SessionEntityFactory) {
+        this.instance = new LocalRepository(testingDataSource, sessionMapper, sessionEntityFactory);
         return this.instance;
     }
 
@@ -64,17 +74,24 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    insertSession(session: SessionEntity): Promise<SessionEntity> {
+    clearAuthToken(): Promise<boolean> {
+        return new Promise<boolean>(async (resolve, _reject) => {
+            await this.refreshAuthToken('');
+            resolve(true);
+        });
+    }
+
+    insertSessionEntity(sessionEntity: SessionEntity): Promise<SessionEntity> {
         return new Promise<SessionEntity>(async (resolve, _reject) => {
-            this.addSessionIdToMap(session.id).then((_) => {
-                this.source.setItem('local_' + session.id, session.toJSONString()).then((_) => {
-                    resolve(session);
+            this.addSessionIdToMap(sessionEntity.uuid).then((_) => {
+                this.source.setItem(sessionEntity.uuid, sessionEntity.toJSONString()).then((_) => {
+                    resolve(sessionEntity);
                 })
             });
         });
     }
 
-    public addSessionIdToMap(id: number): Promise<string> {
+    public addSessionIdToMap(id: string): Promise<string> {
         return new Promise<string>((resolve, _reject) => {
             const currentPersistedIds: Array<string> = [];
 
@@ -95,13 +112,13 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    getAllLocalSessionsSessions(): Promise<Array<Session>> {
-        return new Promise<Array<Session>>(async (resolve, reject) => {
+    getAllPersistedSessionEntities(): Promise<Array<SessionEntity>> {
+        return new Promise<Array<SessionEntity>>(async (resolve, reject) => {
             const result = [];
 
             await this.getPersistedSessionIds().then((persistedIds: Array<string>) => {
                 for (const id of persistedIds) {
-                    this.getSessionById(Number(id)).then((session) => {
+                    this.getSessionById(id).then((session) => {
                         result.push(session);
                     })
                 }
@@ -127,24 +144,17 @@ export class LocalRepository implements InMemoryRepository {
         });
     }
 
-    getSessionById(id: number): Promise<SessionEntity> {
+    getSessionById(id: string): Promise<SessionEntity> {
         return new Promise<SessionEntity>((resolve, _) => {
-            this.source.getItem('local_' + id).then((result) => {
+            this.source.getItem(id).then((result) => {
                 const session = this.mapper.mapSession(result);
                 resolve();
             });
         });
     }
 
-    clearAuthToken(): Promise<boolean> {
-        return new Promise<boolean>(async (resolve, _reject) => {
-            await this.refreshAuthToken('');
-            resolve(true);
-        });
-    }
-
-    updateLocalSession(session: Session): Promise<Session> {
-        return undefined; // this.insertSession(session);
+    updateLocalSession(session: SessionEntity): Promise<SessionEntity> {
+        return undefined; // this.insertSessionEntity(session);
     }
 
     cacheUsername(username: string): Promise<string> {
@@ -155,15 +165,11 @@ export class LocalRepository implements InMemoryRepository {
         return this.source.getItem(Constants.USERNAME_CACHE_KEY);
     }
 
-    createLocalSession(session: Session): Promise<Session> {
-        return undefined;
-    }
-
     createSession(session: SessionRequest): Promise<SessionEntity> {
         return undefined;
     }
 
-    getAllLocalSessions(): Promise<Array<Session>> {
+    getAllLocalSessions(): Promise<Array<SessionEntity>> {
         return undefined;
     }
 
@@ -171,11 +177,12 @@ export class LocalRepository implements InMemoryRepository {
         return undefined;
     }
 
-    getLocalSessionById(id: number): Promise<Session> {
+    getLocalSessionById(id: number): Promise<SessionEntity> {
         return undefined;
     }
 
-    insertLocalSession(session: Session): Promise<Session> {
+    persistSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>,
+                   amountOfBreathsPerRetention: Map<number, number>, notes: string): Promise<SessionEntity> {
         return undefined;
     }
 

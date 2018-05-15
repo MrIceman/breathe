@@ -1,7 +1,7 @@
-import {Session} from "./Session";
-import {RoundEntity} from "../../../data/session/RoundEntity";
+import {RoundEntity} from "../../../model/session/RoundEntity";
 import {SessionRequest} from "../../../model/request/SessionRequest";
-import {SessionEntity} from "../../../data/session/SessionEntity";
+import {SessionEntity} from "../../../model/session/SessionEntity";
+import {Session} from "./Session";
 
 export class SessionFactory {
 
@@ -10,15 +10,15 @@ export class SessionFactory {
         return new Session(timestamp, amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes,);
     }
 
-    public makeSessionRequest(session: Session): SessionRequest {
+    public makeSessionRequest(session: SessionEntity): SessionRequest {
         const timestamp = Date.now();
         return new SessionRequest(-1, [], '');
     }
 
-    public parseEntityToModel(entity: SessionEntity) {
+    public parseEntityToModel(entity: SessionEntity): Session {
         return new Session(
             entity.date,
-            entity.amountOfRounds,
+            entity.rounds.length,
             false,
             this.getBreathsMap(entity.rounds),
             this.getRetentionMap(entity.rounds),
@@ -38,13 +38,4 @@ export class SessionFactory {
         return rounds;
     }
 
-    public createNewRoundsArray(breaths: Map<number, number>, retentions: Map<number, number>): Array<RoundEntity> {
-        const rounds: Array<RoundEntity> = [];
-        breaths.forEach((breathValue, breathKey) => {
-            retentions.forEach((retentionValue, retentionKey) => {
-                rounds.push(new RoundEntity(0, breathValue, retentionValue));
-            })
-        });
-        return rounds;
-    }
 }

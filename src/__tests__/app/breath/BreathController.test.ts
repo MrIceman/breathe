@@ -8,8 +8,8 @@ it('todo', () => {
  import {BreathingController} from "../../../app/session/BreathingController";
  import {BreathingComponent} from "../../../app/session/BreathingComponent";
  import {anything, deepEqual, instance, mock, resetCalls, verify, when} from "ts-mockito";
- import {SessionManagerImpl} from "../../../domain/session/impl/SessionManagerImpl";
- import {Session} from "../../../data/session/SessionEntity";
+ import {SessionManagerImpl} from "../../../error/session/impl/SessionManagerImpl";
+ import {SessionEntity} from "../../../data/session/SessionEntity";
  import {ResultFormatter} from "../../../app/session/ResultFormatter";
  import {DialogManager} from "../../../app/common/DialogManager";
 
@@ -44,7 +44,7 @@ it('todo', () => {
 
 
  it('it creates and saves a session', async () => {
-    const sessionMock = mock(Session);
+    const sessionMock = mock(SessionEntity);
     const amountOfRounds: number = 1;
     const custom: boolean = false;
     const retentionTime: Map<number, number> = new Map();
@@ -60,7 +60,7 @@ it('todo', () => {
 
  it('it fails to create and save a session', async () => {
     resetCalls(component);
-    const sessionMock = mock(Session);
+    const sessionMock = mock(SessionEntity);
     const amountOfRounds: number = 1;
     const custom: boolean = false;
     const retentionTime: Map<number, number> = new Map();

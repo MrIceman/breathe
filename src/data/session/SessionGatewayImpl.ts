@@ -1,5 +1,5 @@
 import {SessionGateway} from "../../domain/session/SessionGateway";
-import {SessionEntity} from "./SessionEntity";
+import {SessionEntity} from "../../model/session/SessionEntity";
 import {HttpService} from "../http/HttpService";
 import {SessionResponseMapper} from "../SessionResponseMapper";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
@@ -36,7 +36,7 @@ export class SessionGatewayImpl implements SessionGateway {
         });
     }
 
-    getSessionById(id: number): Promise<SessionEntity> {
+    getSessionById(id: string): Promise<SessionEntity> {
         return undefined;
     }
 

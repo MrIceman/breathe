@@ -1,4 +1,6 @@
-export class RoundEntity {
+import {Entity} from "../entity/Entity";
+
+export class RoundEntity implements Entity {
     constructor(
         public roundOrder,
         public breathes,

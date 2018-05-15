@@ -1,4 +1,4 @@
-import {SessionEntity} from "./session/SessionEntity";
+import {SessionEntity} from "../model/session/SessionEntity";
 
 export class SessionResponseMapper {
 
@@ -7,14 +7,10 @@ export class SessionResponseMapper {
 
     parseSessionEntity(data): SessionEntity {
         return new SessionEntity(
-            data.id,
-            data.id,
-            data.createdOn,
-            data.amountOfRounds,
-            false,
+            data.uuid,
+            data.date,
             data.rounds,
             data.notes,
-            false
         );
     }
 

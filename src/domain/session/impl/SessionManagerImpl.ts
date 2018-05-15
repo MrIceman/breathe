@@ -4,7 +4,7 @@ import {InMemoryRepository} from "../../UserRepository";
 import {SessionFactory} from "../model/SessionFactory";
 import {NetworkChecker} from "../../../utils/NetworkChecker";
 import {AuthManager} from "../../auth/AuthManager";
-import {Session} from "../model/Session";
+import {SessionEntity} from "../../../model/session/SessionEntity";
 
 export class SessionManagerImpl implements SessionManager {
 
@@ -19,12 +19,11 @@ export class SessionManagerImpl implements SessionManager {
                          custom: boolean,
                          retentionTimeMap: Map<number, number>,
                          amountOfBreathsPerRetention: Map<number, number>,
-                         notes: string): Promise<Session> {
+                         notes: string): Promise<SessionEntity> {
 
-        const session = this.sessionFactory.createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
-        return new Promise<Session>((resolve, _reject) => {
-            this.repository.insertLocalSession(session)
-                .then(async (cachedSession: Session) => {
+        return new Promise<SessionEntity>((resolve, _reject) => {
+            this.repository.persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes)
+                .then(async (cachedSession: SessionEntity) => {
                     const isDeviceOnline = await this.networkChecker.isDeviceConnected();
                     if (isDeviceOnline) {
                         // Device is connected to the internet, checking now if user is authenticated
@@ -44,14 +43,13 @@ export class SessionManagerImpl implements SessionManager {
         })
     }
 
-    async getAllSessions(): Promise<Array<Session>> {
-        return new Promise<Array<Session>>(async (resolve, _reject) => {
+    async getAllSessions(): Promise<Array<SessionEntity>> {
+        return new Promise<Array<SessionEntity>>(async (resolve, _reject) => {
             const isDeviceOnline = await this.networkChecker.isDeviceConnected();
             const isUserAuthenticated = await this.authManager.isAuthenticated();
             if (isDeviceOnline && isUserAuthenticated) {
                 this.gateway.getAllSessions().then((entities) => {
-                    const sessions: Array<Session> = entities.map((entity) => this.sessionFactory.parseEntityToModel(entity));
-                    resolve(sessions);
+                    resolve(entities);
                 });
             } else {
                 const result = await this.repository.getAllLocalSessions();
@@ -61,15 +59,15 @@ export class SessionManagerImpl implements SessionManager {
         });
     }
 
-    getSessionById(id: number): Promise<Session> {
+    getSessionById(id: number): Promise<SessionEntity> {
         id.toString();
         return undefined;
     }
 
-    createSessionGlobal(session: Session): Promise<Session> {
-        return new Promise<Session>((resolve, reject) => {
+    createSessionGlobal(session: SessionEntity): Promise<SessionEntity> {
+        return new Promise<SessionEntity>((resolve, reject) => {
                 this.gateway.createSession(this.sessionFactory.makeSessionRequest(session)).then((entity) => {
-                    resolve(this.sessionFactory.parseEntityToModel(entity));
+                    resolve(entity);
                 })
             }
         );

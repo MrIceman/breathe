@@ -1,5 +1,5 @@
 import {HttpRequest} from "../../data/HttpRequest";
-import {RoundEntity} from "../../data/session/RoundEntity";
+import {RoundEntity} from "../session/RoundEntity";
 
 export class SessionRequest extends HttpRequest {
     /*

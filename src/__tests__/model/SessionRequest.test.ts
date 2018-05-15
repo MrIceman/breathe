@@ -1,5 +1,5 @@
 import {SessionRequest} from "../../model/request/SessionRequest";
-import {RoundEntity} from "../../data/session/RoundEntity";
+import {RoundEntity} from "../../model/session/RoundEntity";
 
 const id = 1;
 const rounds = [new RoundEntity(1, 30, 40), new RoundEntity(2, 10, 20)];

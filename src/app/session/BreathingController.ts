@@ -21,7 +21,7 @@ export class BreathingController {
         this.sessionManager.createAndSaveSession(amountOfRounds, custom, retentionTime, amountOfBreathsPerRetention, notes)
             .then((_result) => {
                 // updateState ui
-                this.dialogManager.buildSimpleAlert('Persisted Session');
+                this.dialogManager.buildSimpleAlert('Persisted SessionEntity');
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaved: true});
             }, (_error) => {
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaveFailed: true});
@@ -64,7 +64,7 @@ export class BreathingController {
 
     public onClickedDone() {
         this.dialogManager.showDialogWithConfigs({
-            title: 'Finish Session',
+            title: 'Finish SessionEntity',
             message: `Are you done with your Session? It will be persisted and used for statistics. If you are authenticated then the results will be synced on all your devices connected to this Account. You can also review your results on the website.`,
             yesText: 'Yes',
             noText: 'No',

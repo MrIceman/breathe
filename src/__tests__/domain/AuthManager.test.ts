@@ -8,7 +8,7 @@ import {AuthResponseMapper} from "../../domain/common/AuthResponseMapper";
 import {ErrorEntity} from "../../model/entity/ErrorEntity";
 import {AuthGateway} from "../../domain/auth/AuthGateway";
 import {AuthGatewayImpl} from "../../data/auth/AuthGatewayImpl";
-import {ErrorResponse} from "../../model/domain/ErrorResponse";
+import {ErrorResponse} from "../../data/ErrorResponse";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
 import {AuthRequestMapper} from "../../domain/common/AuthRequestMapper";
 

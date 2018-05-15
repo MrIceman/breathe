@@ -1,8 +1,8 @@
 import {HttpRequest} from "../HttpRequest";
-import {Session} from "../../domain/session/model/Session";
+import {SessionEntity} from "../../model/session/SessionEntity";
 
 export class HttpRequestFactory {
-    makeCreateSessionRequest(session: Session): HttpRequest {
+    makeCreateSessionRequest(session: SessionEntity): HttpRequest {
         return new HttpRequest('session/create', 'POST', session);
     }
 }

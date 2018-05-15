@@ -2,7 +2,7 @@ import {AuthController, AuthState} from "../../../app/globals/AuthController";
 import {deepEqual, instance, mock, when} from "ts-mockito";
 import React from "react";
 import {AuthAction} from "../../../app/globals/AuthAction";
-import {ErrorResponse} from "../../../model/domain/ErrorResponse";
+import {ErrorResponse} from "../../../data/ErrorResponse";
 
 const componentMock = mock(React.Component);
 const authAction = mock(AuthAction);

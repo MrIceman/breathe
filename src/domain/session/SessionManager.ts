@@ -1,9 +1,9 @@
 import {Manager} from "../Manager";
-import {Session} from "./model/Session";
+import {SessionEntity} from "../../model/session/SessionEntity";
 
 
 /**
- * The Session Manager handles all the domain specific logic
+ * The Session Manager handles all the error specific logic
  * and calls methods from the data layer (gateway) which gets returned then
  * to the app layer
  */
@@ -11,7 +11,7 @@ import {Session} from "./model/Session";
 export interface SessionManager extends Manager {
 
     /**
-     * Creates a Session out of the given parameters.
+     * Creates a SessionEntity out of the given parameters.
      * The session will be given an ID each by the persisting backends
      * (local: localId and backend: globalId)
      * @param {number} amountOfRounds
@@ -22,11 +22,11 @@ export interface SessionManager extends Manager {
      * @returns {Promise<SessionResponse>}
      */
     createAndSaveSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
-                         notes: string): Promise<Session>;
+                         notes: string): Promise<SessionEntity>;
 
-    createSessionGlobal(localSession: Session): Promise<Session>;
+    createSessionGlobal(localSession: SessionEntity): Promise<SessionEntity>;
 
-    getAllSessions(): Promise<Array<Session>>;
+    getAllSessions(): Promise<Array<SessionEntity>>;
 
-    getSessionById(id: number): Promise<Session>;
+    getSessionById(id: number): Promise<SessionEntity>;
 }
