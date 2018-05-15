@@ -16,7 +16,7 @@ export class SessionRequest extends HttpRequest {
             }]
     }
     */
-    constructor(public readonly id: number = Date.now(),
+    constructor(public readonly id: string,
                 public readonly rounds: Array<RoundEntity>,
                 public readonly notes: string,
                 public readonly sessionEndpoint: string = 'session/create',

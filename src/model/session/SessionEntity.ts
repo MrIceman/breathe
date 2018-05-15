@@ -4,7 +4,7 @@ import {RoundEntity} from "./RoundEntity";
 export class SessionEntity implements Entity {
 
     constructor(public readonly uuid: string,
-                public date: number = Date.now(),
+                public date: number = 0,
                 public rounds: Array<RoundEntity>,
                 public notes: string) {
     }

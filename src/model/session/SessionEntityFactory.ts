@@ -7,6 +7,7 @@ export class SessionEntityFactory extends EntityFactory<SessionEntity> {
 
     constructor(private readonly uuidBuilder: UUIDBuilder) {
         super();
+        this.createNewRoundsArray = this.createNewRoundsArray.bind(this);
     }
 
     createFromJSON(data): SessionEntity {
@@ -17,7 +18,7 @@ export class SessionEntityFactory extends EntityFactory<SessionEntity> {
         return new SessionEntity(this.uuidBuilder.buildUUID(),
             date,
             this.createNewRoundsArray(breaths, retentions),
-            notes);
+            notes)
     }
 
     public createNewRoundsArray(breaths: Map<number, number>, retentions: Map<number, number>): Array<RoundEntity> {

@@ -187,7 +187,9 @@ export class LocalRepository implements InMemoryRepository {
     }
 
     persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes): Promise<SessionEntity> {
-        const entity = this.sessionEntityFactory.createFromValues(notes, amountOfBreathsPerRetention, retentionTimeMap, Date.now());
+        alert('About to persist that session guy');
+        const entity = this.sessionEntityFactory.createFromValues(notes, amountOfBreathsPerRetention, retentionTimeMap, 0);
+        console.log('created entity ' + entity.uuid);
         return this.insertSessionEntity(entity);
     }
 }

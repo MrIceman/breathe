@@ -7,6 +7,6 @@ export class UUIDBuilder {
     }
 
     public buildUUID(): string {
-        return this.deviceManager.isEmulator() ? 'EMULATOR_' + Date.now() : uuid.v1();
+        return uuid.v1();
     }
 }

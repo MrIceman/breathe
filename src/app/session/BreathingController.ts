@@ -14,6 +14,8 @@ export class BreathingController {
                 private readonly resultFormatter: ResultFormatter,
                 private readonly dialogManager: DialogManager) {
         this.onDone = this.onDone.bind(this);
+        this.onClickedDone = this.onClickedDone.bind(this);
+        this.onSaveSession = this.onSaveSession.bind(this);
     }
 
     public onSaveSession(amountOfRounds: number, custom: boolean, retentionTime: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>
@@ -25,6 +27,7 @@ export class BreathingController {
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaved: true});
             }, (_error) => {
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaveFailed: true});
+                this.dialogManager.buildSimpleAlert('Failed to persist SessionEntity');
             });
     }
 
@@ -68,16 +71,18 @@ export class BreathingController {
             message: `Are you done with your Session? It will be persisted and used for statistics. If you are authenticated then the results will be synced on all your devices connected to this Account. You can also review your results on the website.`,
             yesText: 'Yes',
             noText: 'No',
-            yesCallBack: this.onDone,
+            yesCallBack: () => this.onDone,
             noCallBack: () => {
+                this.onDone()
             },
             neutralText: 'Add Note',
             neutralCallback: () => {
+                this.onDone()
             }
         });
     }
 
     public onDone() {
-
+        this.onSaveSession(this.amountOfRounds, false, this.retentionMap, this.amountOfBreaths, this.notes);
     }
 }
