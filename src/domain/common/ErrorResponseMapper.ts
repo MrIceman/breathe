@@ -1,6 +1,6 @@
 import {ResponseMapper} from "./ResponseMapper";
 import {ErrorEntity} from "../../model/entity/ErrorEntity";
-import {ErrorResponse} from "../../model/domain/ErrorResponse";
+import {ErrorResponse} from "../../data/ErrorResponse";
 import {ErrorCodes} from "../../utils/Constants";
 
 export class ErrorResponseMapper implements ResponseMapper<ErrorEntity, ErrorResponse> {

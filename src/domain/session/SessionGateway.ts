@@ -1,16 +1,14 @@
-import {Session} from "../../data/session/Session";
+import {SessionEntity} from "../../model/session/SessionEntity";
+import {SessionRequest} from "../../model/request/SessionRequest";
 
 export interface SessionGateway {
-    getSessionById(id: number): Promise<Session>;
 
+    getSessionById(id: string): Promise<SessionEntity>;
 
-    createSession(amountOfRounds: number,
-                       custom: boolean,
-                       retentionTimeMap: Map<number, number>,
-                       amountOfBreathsPerRetention: Map<number, number>,
-                       notes: string): Promise<Session>;
+    createSession(session: SessionRequest): Promise<SessionEntity>;
 
-    updateSession(session: Session): Promise<Session>;
+    updateSession(session: SessionRequest): Promise<SessionEntity>;
 
-    getAllSessions(): Promise<Array<Session>>;
+    getAllSessions(): Promise<Array<SessionEntity>>;
+
 }

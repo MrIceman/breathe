@@ -1,14 +1,16 @@
 import {SessionManager} from "../SessionManager";
-import {Session} from "../../../data/session/Session";
 import {SessionGateway} from "../SessionGateway";
 import {InMemoryRepository} from "../../UserRepository";
-import {SessionFactory} from "../../../data/session/SessionFactory";
+import {SessionFactory} from "../model/SessionFactory";
 import {NetworkChecker} from "../../../utils/NetworkChecker";
 import {AuthManager} from "../../auth/AuthManager";
+import {SessionEntity} from "../../../model/session/SessionEntity";
 
 export class SessionManagerImpl implements SessionManager {
 
-    constructor(private readonly gateway: SessionGateway, private readonly repository: InMemoryRepository, private readonly networkChecker: NetworkChecker,
+    constructor(private readonly gateway: SessionGateway,
+                private readonly repository: InMemoryRepository,
+                private readonly networkChecker: NetworkChecker,
                 private readonly sessionFactory: SessionFactory,
                 private readonly authManager: AuthManager) {
     }
@@ -17,12 +19,11 @@ export class SessionManagerImpl implements SessionManager {
                          custom: boolean,
                          retentionTimeMap: Map<number, number>,
                          amountOfBreathsPerRetention: Map<number, number>,
-                         notes: string): Promise<Session> {
+                         notes: string): Promise<SessionEntity> {
 
-        const session = this.sessionFactory.createNewSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes);
-        return new Promise<Session>((resolve, _reject) => {
-            this.repository.insertSession(session)
-                .then(async (cachedSession: Session) => {
+        return new Promise<SessionEntity>((resolve, _reject) => {
+            this.repository.persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes)
+                .then(async (cachedSession: SessionEntity) => {
                     const isDeviceOnline = await this.networkChecker.isDeviceConnected();
                     if (isDeviceOnline) {
                         // Device is connected to the internet, checking now if user is authenticated
@@ -42,29 +43,34 @@ export class SessionManagerImpl implements SessionManager {
         })
     }
 
-    async getAllSessions(): Promise<Array<Session>> {
-        return new Promise<Array<Session>>(async (resolve, _reject) => {
+    async getAllSessions(): Promise<Array<SessionEntity>> {
+        return new Promise<Array<SessionEntity>>(async (resolve, _reject) => {
             const isDeviceOnline = await this.networkChecker.isDeviceConnected();
             const isUserAuthenticated = await this.authManager.isAuthenticated();
             if (isDeviceOnline && isUserAuthenticated) {
-                this.gateway.getAllSessions().then((sessions) => {
-                    resolve(sessions);
+                this.gateway.getAllSessions().then((entities) => {
+                    resolve(entities);
                 });
             } else {
-                const result = await this.repository.getAllSessions();
+                const result = await this.repository.getAllPersistedSessionEntities();
                 resolve(result);
             }
 
         });
     }
 
-    getSessionById(id: number): Promise<Session> {
+    getSessionById(id: number): Promise<SessionEntity> {
         id.toString();
         return undefined;
     }
 
-    createSessionGlobal(session: Session): Promise<Session> {
-        return this.gateway.createSession(session.amountOfRounds, session.custom, session.retentionTimeMap, session.amountOfBreathsPreRetention, session.notes);
+    createSessionGlobal(session: SessionEntity): Promise<SessionEntity> {
+        return new Promise<SessionEntity>((resolve, reject) => {
+                this.gateway.createSession(this.sessionFactory.makeSessionRequest(session)).then((entity) => {
+                    resolve(entity);
+                })
+            }
+        );
     }
 
     /*

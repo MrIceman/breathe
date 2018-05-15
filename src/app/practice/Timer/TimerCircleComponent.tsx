@@ -71,6 +71,7 @@ export class TimerCircleComponent extends React.Component<TimerCircleProps, Time
         this.setState(() => {
             return {...this.state, currentDisplayString: displayString, currentTimer: 0, isLaunched: true}
         });
+
         this.currentIntervall = setInterval(() => {
             this.updateTime()
         }, this.VELOCITY_MS);
@@ -90,7 +91,7 @@ export class TimerCircleComponent extends React.Component<TimerCircleProps, Time
         if (currentSeconds == 60 * tempMinute)
             tempMinute++;
 
-        displayString = `${this.state.currentMinute - 1}:${tempSeconds - (tempMinute - 1) * 60}`;
+        displayString = `${tempMinute - 1}:${tempSeconds - (tempMinute - 1) * 60}`;
 
         this.setState(() => {
             return {
