@@ -30,7 +30,7 @@ export class ManagerFactory {
     }
 
     public static buildSessionManger(): SessionManager {
-        if (this.sessionManager === null)
+        if (this.sessionManager == null)
             this.sessionManager =
                 new SessionManagerImpl(
                     new SessionGatewayImpl(new SessionResponseMapper(), this.httpService, new ErrorResponseMapper()),

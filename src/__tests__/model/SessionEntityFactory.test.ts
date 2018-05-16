@@ -18,7 +18,7 @@ it('builds a valid entity out of values', () => {
     expect(result).toEqual(new SessionEntity(
         '1',
         date,
-        [new RoundEntity(1, 30, 14), new RoundEntity(2, 15, 15)],
+        [new RoundEntity(1, 0, 14), new RoundEntity(2, 0, 15)],
         notes
     ))
 });

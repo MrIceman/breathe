@@ -16,13 +16,14 @@ const sessionEntity = mock(SessionEntity);
 const subject = new SessionGatewayImpl(instance(responseMapper), instance(httpService), instance(errorMapper));
 
 it('makes a successful create request', async () => {
-    const httpResponse = mock(HttpResponse);
+    const httpResponseMock = mock(HttpResponse);
     const sessionRequest = instance(mock(SessionRequest));
-
-    when(httpService.makeSignedRequest(sessionRequest)).thenResolve(instance(httpResponse));
+    const httpResponse = instance(httpResponseMock);
+    when(httpResponseMock.data).thenReturn('');
+    when(httpService.makeSignedRequest(sessionRequest)).thenResolve(httpResponse);
 
     await subject.createSession(sessionRequest);
-    verify(responseMapper.parseSessionEntity(instance(httpResponse))).once();
+    verify(responseMapper.parseSessionEntity(httpResponse.data)).once();
 });
 
 it('gets all sessions of user correctly', async () => {
