@@ -23,8 +23,10 @@ export class SessionEntityFactory extends EntityFactory<SessionEntity> {
 
     public createNewRoundsArray(breaths: Map<number, number>, retentions: Map<number, number>): Array<RoundEntity> {
         const rounds: Array<RoundEntity> = [];
-        breaths.forEach((breathValue, breathKey) => {
-            rounds.push(new RoundEntity(breathKey, breathValue, retentions.get(breathKey)))
+        console.log('Creatng new rounds array');
+        retentions.forEach((retentionValue, retentionKey) => {
+            rounds.push(new RoundEntity(retentionKey, 0, retentionValue));
+            console.log('pushed round entity');
         });
         return rounds;
     }

@@ -23,11 +23,10 @@ export class BreathingController {
         this.sessionManager.createAndSaveSession(amountOfRounds, custom, retentionTime, amountOfBreathsPerRetention, notes)
             .then((_result) => {
                 // updateState ui
-                this.dialogManager.buildSimpleAlert('Persisted SessionEntity');
+                this.dialogManager.buildSimpleAlert('Persisted SessionEntity ' + _result.toJSONString());
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaved: true});
             }, (_error) => {
                 this.breathingComponent.updateState({...this.breathingComponent.getState(), sessionSaveFailed: true});
-                this.dialogManager.buildSimpleAlert('Failed to persist SessionEntity');
             });
     }
 

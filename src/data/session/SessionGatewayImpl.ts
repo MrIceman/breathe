@@ -17,9 +17,8 @@ export class SessionGatewayImpl implements SessionGateway {
 
     createSession(sessionHttpRequest: SessionRequest): Promise<SessionEntity> {
         return new Promise<SessionEntity>((resolve, reject) => {
-            alert('bravo 1 here!');
             this.httpService.makeSignedRequest(sessionHttpRequest).then((result) => {
-                    const entity = this.sessionResponseMapper.parseSessionEntity(result);
+                    const entity = this.sessionResponseMapper.parseSessionEntity(result.data);
                     resolve(entity);
                 }
                 , (error) => {

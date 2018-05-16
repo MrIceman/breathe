@@ -17,7 +17,7 @@ export class SessionEntity implements Entity {
 
     toJSONString(): string {
 
-        return JSON.stringify(this);
+        return JSON.stringify({"uuid": this.uuid, "notes": this.notes, "rounds": this.rounds});
     }
 
     fromJSONString(json: string): SessionEntity {

@@ -11,7 +11,7 @@ it('parses a correct request', () => {
     expect(subject.method).toEqual('POST');
     expect(subject.body).toEqual(
         JSON.stringify({
-            "id": 1,
+            "uuid": "1",
             "rounds": [
                 {
                     "roundOrder": 1,

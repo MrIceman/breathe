@@ -1,4 +1,6 @@
 import {SessionResponseMapper} from "../../../../data/SessionResponseMapper";
+import {SessionEntity} from "../../../../model/session/SessionEntity";
+import {RoundEntity} from "../../../../model/session/RoundEntity";
 
 const subject = new SessionResponseMapper();
 
@@ -14,28 +16,35 @@ it('maps a correct request object out of json', () => {
     amountsOfBreathsPerRound.set(3, 10);
 
     const json = `
-        {
-            "date": 123,
-            "uuid": "129041",
-            "retentionTimeMap": {
-                "1": 63,
-                "2": 33,
-                "3": 73
-            },
-            "amountsOfBreathsPerRound": {
-                "1": 15,
-                "2": 12,
-                "3": 10
-            },
-            "notes": "your mom",
-            "localId": 123,
-            "globalId": 321
-        }
+{
+    "amountOfRounds": 1, 
+    "createdOn": "Wed, 16 May 2018 22:05:41 GMT",
+    "notes": "", 
+    "rounds": 
+        [{
+           "breathes": 0,
+            "createdOn": "Wed, 16 May 2018 22:05:41 GMT",
+            "id": 15, 
+            "inhaleHoldDuration": 0, 
+            "retentionTime": 2,
+             "totalTime": 0,
+             "roundOrder": 1
+           }
+         ], 
+    "userId": 1,
+    "uuid": "45e1fa90-5955-11e8-ab41-39e934700ff3"
+}
+
+
         `;
+
     const sessionResponse = JSON.parse(json);
 
-    const request = subject.parseSessionEntity(sessionResponse);
+    const request: SessionEntity = subject.parseSessionEntity(sessionResponse);
     // expect(request).toEqual(new SessionEntity(123, 3, false, retentionTimeMap, amountsOfBreathsPerRound, 'your mom',
     //    123, 321));
-    expect(1).toEqual(1);
+    expect(request).toEqual(new SessionEntity('45e1fa90-5955-11e8-ab41-39e934700ff3', new Date("Wed, 16 May 2018 22:05:41 GMT").getTime(),
+        [new RoundEntity(1, 0, 2, 0,
+            0, new Date('Wed, 16 May 2018 22:05:41 GMT').getTime())],
+        ''));
 });

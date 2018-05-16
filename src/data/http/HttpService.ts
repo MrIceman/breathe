@@ -47,8 +47,7 @@ export class HttpService {
                         }).then((httpResult: Response) => {
                             let response: HttpResponse = new HttpResponse();
                             httpResult.json().then((result: any) => {
-                                response.token = result.token;
-                                httpResult.toString();
+                                response.data = JSON.parse(result);
                                 resolve(response);
                             });
                         }).catch((httpError) => {

@@ -22,7 +22,7 @@ export class SessionRequest extends HttpRequest {
                 public readonly sessionEndpoint: string = 'session/create',
                 public readonly sessinoMethod: string = 'POST') {
         super(sessionEndpoint, sessinoMethod, {
-            id,
+            uuid: id,
             rounds,
             notes
         });
