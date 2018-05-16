@@ -103,6 +103,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
         super(props);
         this.state = this.getDefaultState();
         this.controller = new BreathingController(this, ManagerFactory.buildSessionManger(), new ResultFormatter(), new DialogManager());
+        this.controller.onDone = this.controller.onDone.bind(this.controller);
         this.updateState = this.updateState.bind(this);
         this.stopTimer = this.stopTimer.bind(this);
     }
@@ -180,7 +181,7 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
                 </View>
                 <View style={style.bottomView}>
                     <TouchableOpacity onPress={() => {
-                        this.controller.onClickedDone();
+                        this.controller.onDone();
                     }}>
                         <Text style={style.finishSessionText}>Done</Text>
                     </TouchableOpacity>

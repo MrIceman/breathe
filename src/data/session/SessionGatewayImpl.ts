@@ -7,7 +7,7 @@ import {SessionRequest} from "../../model/request/SessionRequest";
 
 export class SessionGatewayImpl implements SessionGateway {
     private string;
-    ENDPOINT = 'http://localhost:5000/session';
+    ENDPOINT = 'http://localhost:5000/';
 
     constructor(private readonly sessionResponseMapper: SessionResponseMapper,
                 private readonly httpService: HttpService,
@@ -18,7 +18,7 @@ export class SessionGatewayImpl implements SessionGateway {
     createSession(sessionHttpRequest: SessionRequest): Promise<SessionEntity> {
         return new Promise<SessionEntity>((resolve, reject) => {
             this.httpService.makeSignedRequest(sessionHttpRequest).then((result) => {
-                    const entity = this.sessionResponseMapper.parseSessionEntity(result);
+                    const entity = this.sessionResponseMapper.parseSessionEntity(result.data);
                     resolve(entity);
                 }
                 , (error) => {
@@ -28,7 +28,7 @@ export class SessionGatewayImpl implements SessionGateway {
     };
 
     getAllSessions(): Promise<Array<SessionEntity>> {
-        const getAllRequest = new SessionRequest(undefined, undefined, undefined, '/session/search', 'GET');
+        const getAllRequest = new SessionRequest(undefined, undefined, undefined, 'http://localhost:5000/session/search', 'GET');
         return new Promise<Array<SessionEntity>>((resolve, reject) => {
             this.httpService.makeSignedRequest(getAllRequest).then((result) => {
                 resolve(this.sessionResponseMapper.parseSessionEntityArray(result));

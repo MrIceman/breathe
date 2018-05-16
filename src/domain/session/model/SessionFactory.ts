@@ -11,8 +11,7 @@ export class SessionFactory {
     }
 
     public makeSessionRequest(session: SessionEntity): SessionRequest {
-        const timestamp = Date.now();
-        return new SessionRequest(-1, [], '');
+        return new SessionRequest(session.uuid, session.rounds, session.notes, 'http://localhost:5000/session/create', 'POST');
     }
 
     public parseEntityToModel(entity: SessionEntity): Session {
