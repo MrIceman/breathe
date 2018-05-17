@@ -7,13 +7,16 @@ import {SessionEntity} from "../../model/session/SessionEntity";
 import {SessionEntityFactory} from "../../model/session/SessionEntityFactory";
 import {UUIDBuilder} from "./UUIDBuilder";
 import {DeviceManager} from "../../utils/DeviceManager";
+import {ColdSessionEntity} from "../../model/cold_session/ColdSessionEntity";
+import {ColdSessionEntityFactory} from "../../model/cold_session/ColdSessionEntityFactory";
 
 export class LocalRepository implements InMemoryRepository {
     private static instance: LocalRepository;
 
     private constructor(private readonly source: LocalDataSource,
                         private readonly mapper: SessionEntityMapper,
-                        private readonly sessionEntityFactory: SessionEntityFactory) {
+                        private readonly sessionEntityFactory: SessionEntityFactory,
+                        private readonly coldSessionEntityFactory: ColdSessionEntityFactory = new ColdSessionEntityFactory()) {
     }
 
     public static getInstance() {
@@ -189,5 +192,13 @@ export class LocalRepository implements InMemoryRepository {
     persistSession(amountOfRounds, custom, retentionTimeMap, amountOfBreathsPerRetention, notes): Promise<SessionEntity> {
         const entity = this.sessionEntityFactory.createFromValues(notes, amountOfBreathsPerRetention, retentionTimeMap, 0);
         return this.insertSessionEntity(entity);
+    }
+
+    persistColdSession(duration: number, type: string, notes: string): Promise<ColdSessionEntity> {
+        return undefined;
+    }
+
+    updateColdSession(session: ColdSessionEntity): Promise<ColdSessionEntity> {
+        return undefined;
     }
 }

@@ -1,4 +1,5 @@
 import {SessionEntity} from "../model/session/SessionEntity";
+import {ColdSessionEntity} from "../model/cold_session/ColdSessionEntity";
 
 export interface InMemoryRepository {
     isAuthTokenPersisted(): Promise<boolean>;
@@ -22,5 +23,9 @@ export interface InMemoryRepository {
     clearAuthToken(): Promise<boolean>;
 
     deleteSession(id: string): Promise<boolean>;
+
+    persistColdSession(duration: number, type: string, notes: string): Promise<ColdSessionEntity>;
+
+    updateColdSession(session: ColdSessionEntity): Promise<ColdSessionEntity>;
 
 }

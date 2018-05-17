@@ -1,5 +1,5 @@
-import {Manager} from "../Manager";
 import {SessionEntity} from "../../model/session/SessionEntity";
+import {PracticeManager} from "../PracticeManager";
 
 
 /**
@@ -8,7 +8,7 @@ import {SessionEntity} from "../../model/session/SessionEntity";
  * to the app layer
  */
 
-export interface SessionManager extends Manager {
+export interface SessionManager extends PracticeManager<SessionEntity> {
 
     /**
      * Creates a SessionEntity out of the given parameters.
@@ -24,9 +24,4 @@ export interface SessionManager extends Manager {
     createAndSaveSession(amountOfRounds: number, custom: boolean, retentionTimeMap: Map<number, number>, amountOfBreathsPerRetention: Map<number, number>,
                          notes: string): Promise<SessionEntity>;
 
-    createSessionGlobal(localSession: SessionEntity): Promise<SessionEntity>;
-
-    getAllSessions(): Promise<Array<SessionEntity>>;
-
-    getSessionById(id: number): Promise<SessionEntity>;
 }
