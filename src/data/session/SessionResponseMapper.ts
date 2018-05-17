@@ -1,5 +1,5 @@
-import {SessionEntity} from "../model/session/SessionEntity";
-import {RoundEntity} from "../model/session/RoundEntity";
+import {SessionEntity} from "../../model/session/SessionEntity";
+import {RoundEntity} from "../../model/session/RoundEntity";
 
 export class SessionResponseMapper {
 

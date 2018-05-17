@@ -1,7 +1,7 @@
 import {SessionGateway} from "../../domain/session/SessionGateway";
 import {SessionEntity} from "../../model/session/SessionEntity";
 import {HttpService} from "../http/HttpService";
-import {SessionResponseMapper} from "../SessionResponseMapper";
+import {SessionResponseMapper} from "./SessionResponseMapper";
 import {ErrorResponseMapper} from "../../domain/common/ErrorResponseMapper";
 import {SessionRequest} from "../../model/request/SessionRequest";
 

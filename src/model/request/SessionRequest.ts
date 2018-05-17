@@ -2,20 +2,7 @@ import {HttpRequest} from "../../data/HttpRequest";
 import {RoundEntity} from "../session/RoundEntity";
 
 export class SessionRequest extends HttpRequest {
-    /*
-    {"notes": "Custom Created ",
-        "rounds": [
-            { "round_order": 1,
-                "breathes": 30,
-                "retention_time": 50
-            },
-            {
-                "round_order": 2,
-                "breathes": 20,
-                "retention_time": 60
-            }]
-    }
-    */
+
     constructor(public readonly id: string,
                 public readonly rounds: Array<RoundEntity>,
                 public readonly notes: string,

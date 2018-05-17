@@ -1,6 +1,6 @@
-import {SessionResponseMapper} from "../../../../data/SessionResponseMapper";
-import {SessionEntity} from "../../../../model/session/SessionEntity";
-import {RoundEntity} from "../../../../model/session/RoundEntity";
+import {SessionResponseMapper} from "../../../data/session/SessionResponseMapper";
+import {SessionEntity} from "../../../model/session/SessionEntity";
+import {RoundEntity} from "../../../model/session/RoundEntity";
 
 const subject = new SessionResponseMapper();
 

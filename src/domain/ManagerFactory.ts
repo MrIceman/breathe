@@ -10,7 +10,7 @@ import {SessionManagerImpl} from "./session/impl/SessionManagerImpl";
 import {NetworkChecker} from "../utils/NetworkChecker";
 import {SessionFactory} from "./session/model/SessionFactory";
 import {SessionGatewayImpl} from "../data/session/SessionGatewayImpl";
-import {SessionResponseMapper} from "../data/SessionResponseMapper";
+import {SessionResponseMapper} from "../data/session/SessionResponseMapper";
 import {HttpService} from "../data/http/HttpService";
 
 export class ManagerFactory {

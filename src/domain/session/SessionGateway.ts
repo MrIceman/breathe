@@ -1,14 +1,8 @@
 import {SessionEntity} from "../../model/session/SessionEntity";
 import {SessionRequest} from "../../model/request/SessionRequest";
+import {PracticeGateway} from "../PracticeGateway";
 
-export interface SessionGateway {
+export interface SessionGateway extends PracticeGateway<SessionEntity, SessionRequest> {
 
-    getSessionById(id: string): Promise<SessionEntity>;
-
-    createSession(session: SessionRequest): Promise<SessionEntity>;
-
-    updateSession(session: SessionRequest): Promise<SessionEntity>;
-
-    getAllSessions(): Promise<Array<SessionEntity>>;
 
 }
