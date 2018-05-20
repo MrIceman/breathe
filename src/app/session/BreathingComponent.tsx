@@ -6,6 +6,7 @@ import {ManagerFactory} from "../../domain/ManagerFactory";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {ResultFormatter} from "./ResultFormatter";
 import {DialogManager} from "../common/DialogManager";
+import {NavigationScreenProps} from "react-navigation";
 
 const style = StyleSheet.create({
     content: {
@@ -96,10 +97,10 @@ export interface BreathingComponentState {
     results: string[]
 }
 
-export class BreathingComponent extends React.Component<{}, BreathingComponentState> {
+export class BreathingComponent extends React.Component<NavigationScreenProps, BreathingComponentState> {
     private controller: BreathingController;
 
-    constructor(props: {}) {
+    constructor(props) {
         super(props);
         this.state = this.getDefaultState();
         this.controller = new BreathingController(this, ManagerFactory.buildSessionManger(), new ResultFormatter(), new DialogManager());
@@ -157,6 +158,9 @@ export class BreathingComponent extends React.Component<{}, BreathingComponentSt
 
     }
 
+    public navigateToStatistics() {
+        this.props.navigation.navigate('Statistics');
+    }
 
     render() {
         return <View style={style.content}>

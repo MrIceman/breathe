@@ -4,6 +4,7 @@ import {StackNavigator, TabBarBottom, TabNavigator} from "react-navigation";
 import {HomeComponent} from "./app/home/HomeComponent";
 import {BreathingComponent} from "./app/session/BreathingComponent";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {StatisticsComponent} from "./app/statistics/StatisticsComponent";
 
 const PracticeStack = StackNavigator({
     Practice: {screen: PracticeComponent},
@@ -19,6 +20,21 @@ const PracticeStack = StackNavigator({
             fontWeight: 'bold',
         },
     },
+});
+
+const StatisticsStack = StackNavigator({
+    Statistics: {screen: StatisticsComponent},
+}, {
+    navigationOptions: {
+        headerStyle: {
+            backgroundColor: '#1976D2',
+        },
+        title: 'Statistics',
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    }
 });
 
 const HomeStack = StackNavigator({
@@ -46,7 +62,7 @@ export default TabNavigator(
             screen: PracticeStack,
         },
         Statistics: {
-            screen: PracticeComponent,
+            screen: StatisticsStack,
         },
         Community: {
             screen: PracticeComponent,

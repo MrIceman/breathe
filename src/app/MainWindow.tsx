@@ -18,7 +18,7 @@ export class MainWindow extends React.Component {
             },
             navBar: {
                 height: 55,
-                backgroundColor: '#1976D2',
+                backgroundColor: '#000000',
                 elevation: 3,
                 paddingHorizontal: 15,
                 alignItems: 'center',
